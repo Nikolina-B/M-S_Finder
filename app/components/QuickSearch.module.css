@@ -1,0 +1,35 @@
+
+.quickSearch {
+  display: flex;
+  align-items: center;
+  margin-left: 4rem; 
+  margin-top: -4px;    
+}
+
+
+.quickSearch input {
+  width: 190px; 
+  padding: 0.5rem 0.8rem; 
+  font-size: 1rem; 
+  font-weight: 500; 
+  border-radius: 6px 0 0 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.quickSearch button {
+  padding: 0.5rem 0.9rem; 
+  font-size: 1rem; 
+  font-weight: 600; 
+  border-radius: 0 6px 6px 0;
+  border: 1px solid #ccc;
+  background-color: #4fd1c5;
+  color: #1a1f36;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.quickSearch button:hover {
+  background-color: #81e6d9;
+  transform: scale(1.05);
+}
