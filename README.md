@@ -27,7 +27,9 @@
 
 - Link to Assignment 1: [**Assignment 1**](https://github.com/Nikolina-B/M-S_Finder/tree/Nikolina-B-Assignment-1) <!-- Replace with actual URL -->
 - Link to Assignment 2: [**Assignment 2**](https://www.notion.so/User-Personas-Information-Arhitecture-29ce0e6ef9d380b6b2c4dd1a16553ae5?source=copy_link) <!-- Replace with actual URL -->
-- Link to Assignment 3: [**Assignment 3**](https://m-s-finder.vercel.app/) <!-- Replace with actual URL -->
+- Link to Assignment 3: [**Assignment 3**](https://m-s-finder.vercel.app/)
+- Link to Assignment 3: [**Assignment 4**]
+- Link to Assignment 3: [**Assignment 5**] 
 <!-- Add more assignments as necessary -->
 
 ## Project Requirements
