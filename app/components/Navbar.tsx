@@ -6,7 +6,7 @@ import Link from "next/link";
 import styles from "./Navbar.module.css";
 import QuickSearch from "./QuickSearch";
 
-type MenuName = "explore" | "community" | "support" | "profile" | "signin" | null;
+type MenuName = "community" | "support" | "profile" | "signin" | null; // Uklonjeno "explore"
 type SubMenuName = "sortOptions" | null;
 
 export default function Navbar() {
@@ -36,7 +36,7 @@ export default function Navbar() {
 
   return (
     <nav className={styles.navbar}>
-     
+      
       <div className={styles.left}>
         <Link href="/" className={styles.logo}>
           M&S Finder
@@ -47,38 +47,17 @@ export default function Navbar() {
       <ul className={styles.center}>
         <li><Link href="/">Home</Link></li>
 
-        <li className={styles.dropdown}>
-          <span
-            onClick={() => toggleMenu("explore")}
-            className={openMenu === "explore" ? styles.open : ""}
-          >
+        {/* PROMJENA: "Explore" je sada samo direktan link na /explore */}
+        <li>
+          <Link href="/explore">
             Explore
-          </span>
-          {openMenu === "explore" && (
-            <div className={styles.dropdownMenu}>
-              <Link href="/explore/genre">By Genre</Link>
-              <Link href="/explore/year">By Year</Link>
-              <Link href="/explore/awards">By Awards</Link>
-
-              <div
-                className={styles.hasSubmenu}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleSubMenu("sortOptions");
-                }}
-              >
-                <a href="#">Sort Options</a>
-                {openSubMenu === "sortOptions" && (
-                  <div className={styles.dropdownMenu}>
-                    <Link href="/explore/sort/popular">Most Popular</Link>
-                    <Link href="/explore/sort/newest">Newest</Link>
-                    <Link href="/explore/sort/rated">Highest Rated</Link>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+          </Link>
         </li>
+        {/*
+        Ako želite da podopcije "By Genre", "By Year" itd.
+        budu dostupne, morat ćete ih postaviti na drugu stavku
+        izbornika (ili zadržati padajući izbornik na Explore stranici).
+        */}
 
         <li className={styles.dropdown}>
           <span
@@ -115,7 +94,7 @@ export default function Navbar() {
         </li>
       </ul>
 
-     
+      
       <div className={styles.right}>
         <div className={styles.dropdown}>
           <button onClick={() => toggleMenu("profile")}>Profile ▾</button>
@@ -143,3 +122,19 @@ export default function Navbar() {
   );
 }
 
+// VAŽNA NAPOMENA:
+// Vaša komponenta ExplorePage trebala bi biti u zasebnoj datoteci 
+// (npr. u app/explore/page.tsx ili pages/explore.js)
+// Ne smije se nalaziti u istoj datoteci kao Navbar.
+// Ovdje je samo ostavljena radi podsjetnika.
+
+/*
+export default function ExplorePage() {
+  return (
+    <div>
+      <h1>Explore Page</h1>
+      <p></p>
+    </div>
+  );
+}
+*/
