@@ -3,7 +3,7 @@
 .quickSearch {
     display: flex;
     align-items: center;
-    border-radius: 6px;
+    border-radius: 25px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
     width: 350px; 
@@ -24,16 +24,18 @@
     
     flex-shrink: 0; 
     padding: 0.5rem 0.9rem; 
-    font-size: 1rem; 
+    font-size: 0.9rem; 
     font-weight: 600; 
     border: none;
     border-radius: 5px;
-    background-color: #4fd1c5; 
+    background-color: #5d46e2; 
+  
     color: #1a1f36;
     cursor: pointer;
-    transition: background-color 0.3s;
+   transition: all 0.3s;
 }
 
 .quickSearch button:hover {
-    background-color: #81e6d9; 
+    background-color: #5d46e2; 
+    transform: scale(1.05);
 }

@@ -1,0 +1,117 @@
+.container {
+ 
+  width: 100%;
+  max-width: 480px; 
+  margin: 80px auto;
+  padding: 40px;
+  
+
+  background-color:  #2d2d44; 
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  
+  color: #fffffe; 
+  font-family: 'Inter', sans-serif;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fffffe;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fffffe;
+}
+
+.input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 6px;
+  
+ 
+  background-color: #121629; 
+  border: 1px solid #1b1f35; 
+  
+  color: #b8c1ec; 
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input::placeholder {
+  color: #4b526d;
+}
+
+.input:focus {
+  border-color: #6246ea; 
+}
+
+
+.avatarPreview {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.poster {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #6246ea; 
+  background-color: #121629;
+}
+
+.removeButton {
+  background: transparent;
+  border: none;
+  color: #e16162; 
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
+.saveButton {
+  width: 100%;
+  margin-top: 30px;
+  padding: 14px;
+  background-color: #6246ea; 
+  color: #fffffe;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.saveButton:hover {
+  background-color: #5239c7; 
+}
+
+.message {
+  margin-top: 20px;
+  text-align: center;
+  color: #b8c1ec;
+  font-size: 0.9rem;
+}

@@ -16,9 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     
     <Navbar />
     
-    {/* HERO JE MORAO BITI UKLONJEN ODAVDE DA BI EXPLORE STRANICA RADILA ISPRAVNO */}
-    {/* Ako se Hero i dalje nalazi ovdje, onda ga uklonite: */}
-    {/* <Hero /> */}
+  
   
     <main className="main-content">
       {children}

@@ -1,0 +1,98 @@
+.mainContainer {
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  min-height: 100vh;
+}
+
+
+.sectionCard {
+  width: 100%;
+  max-width: 500px; 
+  padding: 40px;
+  background-color: #2d2d44; 
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  color: #fffffe;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fffffe;
+}
+
+.text {
+  color: #b8c1ec;
+  line-height: 1.7;
+  text-align: center;
+  font-size: 1rem;
+}
+
+
+.formList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fffffe;
+}
+
+.inputField {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  background-color: #121629; 
+  border: 1px solid #121629;
+  color: #b8c1ec;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.inputField:focus {
+  border-color: #6246ea; 
+}
+
+.submitBtn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  background-color: #6246ea; 
+  color: #fffffe;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.submitBtn:hover {
+  background-color: #5239c7;
+}
+
+.submitBtn:active {
+  transform: scale(0.98);
+}
+
+.statusMessage {
+  margin-top: 15px;
+  text-align: center;
+  color: #b8c1ec;
+  font-weight: 600;
+}

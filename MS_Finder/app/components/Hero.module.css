@@ -1,16 +1,18 @@
-
+/* 
 .hero {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-image: url('/slika.jpg'); 
+ 
+  background: radial-gradient(circle, rgba(58, 72, 110, 0.8) 0%, rgba(29, 38, 66, 1) 100%), 
+              url('/slika.jpg');
   background-size: cover;            
   background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  z-index: 1;
+
 }
 
 .overlay {
@@ -29,13 +31,13 @@
 .content {
   position: relative;
   text-align: center;
-  color: #f0f0f0;
+  color: #ffffff;
   max-width: 900px;
   z-index: 3;
 }
 
 .content h1 {
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
@@ -43,6 +45,7 @@
 .content p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .content button {
@@ -83,5 +86,69 @@
 
   .content button {
     padding: 0.6rem 1.5rem;
+  }
+} */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  /* Gradijent koji simulira dubinu sa slike + tvoja pozadinska slika */
+  background: radial-gradient(circle, rgba(58, 72, 110, 0.8) 0%, rgba(29, 38, 66, 1) 100%), 
+              url('/slika.jpg'); 
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.content {
+  text-align: center;
+  color: #ffffff; /* Čista bijela kao na slici */
+  max-width: 850px;
+  padding: 20px;
+  z-index: 3;
+}
+
+.content h1 {
+  font-size: 4rem; /* Veći font za glavni naslov */
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+  color: white;
+}
+
+.content p {
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9); /* Blago prozirno za podnaslov */
+  margin-bottom: 2.5rem;
+}
+
+.content button {
+  background-color: #ffffff;
+  border: none;
+  color: #1d2642; /* Tamna boja teksta u gumbu */
+  padding: 1rem 2.5rem;
+  border-radius: 50px; /* Potpuno zaobljeni gumb kao na slici */
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.content button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+/* Responzivnost */
+@media (max-width: 768px) {
+  .content h1 {
+    font-size: 2.5rem;
+  }
+  .content p {
+    font-size: 1.1rem;
   }
 }

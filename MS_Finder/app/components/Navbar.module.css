@@ -3,9 +3,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.5rem;
+  padding: 0 2 rem;
   height: 70px;
-  background-color: #1a1f36;
+  background-color: #0b0b22;;
   color: #f0f0f0;
   position: sticky;
   top: 0;
@@ -15,9 +15,29 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.center li a {
+  text-decoration: none;
+  color: #f0f0f0;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-.left { flex: 1; }
-.logo { font-size: 1.8rem; font-weight: bold; color: #4fd1c5; text-decoration: none; }
+
+.center li a.active {
+  background-color: #5d46e2; 
+  color: white;
+  font-weight: 600;
+}
+
+
+.center li a:hover:not(.active) {
+  background-color: rgba(93, 70, 226, 0.2); 
+}
+
+
+.left { flex: 1;margin-left: 1.5rem; }
+.logo { font-size: 1.8rem; font-weight: bold; color: #ffffff; text-decoration: none; }
 
 
 .center {
@@ -78,7 +98,7 @@
 }
 
 .right button {
-  background-color: #4fd1c5;
+  background-color: #5d46e2;
   border: none;
   color: #1a1f36;
   padding: 0.5rem 1rem;
@@ -89,7 +109,7 @@
 }
 
 .right button:hover {
-  background-color: #81e6d9;
+  background-color: #7c69ef;
   transform: scale(1.05);
 }
 
@@ -126,7 +146,7 @@
 }
 
 .dropdownMenu a:hover {
-  background-color: #4fd1c5;
+  background-color: #5d46e2;
   color: #1a1f36;
   border-radius: 5px;
 }
@@ -169,7 +189,7 @@
   font-size: 0.9rem;
   border-radius: 0 4px 4px 0;
   border: 1px solid #ccc;
-  background-color: #4fd1c5;
+  background-color: #5d46e2;
   color: #1a1f36;
   font-weight: bold;
   cursor: pointer;
@@ -177,10 +197,32 @@
 }
 
 .quickSearch button:hover {
-  background-color: #81e6d9;
+  background-color: #5d46e2;
   transform: scale(1.05);
 }
 
+.dropdownMenu a, 
+.logoutBtn {
+  background: none !important;
+  color: white !important;     
+  padding: 10px 15px;
+  text-align: left;
+  width: 100%;
+  display: block;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+  text-decoration: none;       
+  transition: background-color 0.2s ease;
+}
+
+
+.dropdownMenu a:hover,
+.logoutBtn:hover {
+  background-color: #333 !important; 
+  color: white !important;
+}
 
 @media (max-width: 768px) {
   .center { display: none; }
