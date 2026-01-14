@@ -2,6 +2,8 @@
 "use client";
 import React, { useRef } from 'react';
 import styles from './Testimonials.module.css';
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import { HiOutlineChevronRight } from "react-icons/hi";
 
 const testimonialsData = [
   {
@@ -68,7 +70,7 @@ const Testimonials = () => {
           onClick={() => scroll('left')}
           aria-label="Scroll left"
         >
-          &lt;
+          <HiOutlineChevronLeft />
         </button>
         
         <div className={styles.testimonialsGrid} ref={scrollRef}>
@@ -88,7 +90,7 @@ const Testimonials = () => {
           onClick={() => scroll('right')}
           aria-label="Scroll right"
         >
-          &gt;
+        <HiOutlineChevronRight />
         </button>
       </div>
     </section>

@@ -1,6 +1,6 @@
 .testimonialsSection {
   padding: 80px 20px;
-  background-color: #4a4a8a;
+  background-color: #4F4E7E;
   color: white;
   text-align: center;
   width: 100%;
@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 20px;
   max-width: 1200px;
   
   margin: 0 auto;
@@ -73,6 +73,7 @@
   line-height: 1.5;
   color: #e0e0e0;
   font-weight: 300;
+  padding: 0 10px;
 }
 
 
@@ -93,53 +94,67 @@
 }
 
 
-@media (max-width: 768px) {
-  .testimonialsGrid {
-    overflow-x: auto;
-    justify-content: flex-start;
-    padding-bottom: 20px;
-  }
-  
-  .testimonialCard {
-    min-width: 250px;
-  }
-
-  .sliderArrow {
-    display: none; 
-  }
-}
-.testimonialsGrid {
-  display: flex;
-  justify-content: flex-start;
-  gap: 20px; 
-  flex-wrap: nowrap;
-  overflow-x: hidden; 
-  scroll-behavior: smooth;
-  width: 100%; 
-}
-
-.testimonialCard {
-
-  flex: 0 0 calc((100% - 40px) / 3); 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.3s ease;
-}
-
-
+/* --- TABLET (max-width: 1024px) - 2 OSOBE --- */
 @media (max-width: 1024px) {
+  .sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .testimonialsContainer {
+    gap: 10px; /* Smanjujemo gap da strelice budu bliže */
+    padding: 0 10px;
+  }
+
   .testimonialCard {
-    flex: 0 0 calc((100% - 20px) / 2);
+    /* Izračun za 2 osobe: (100% - razmak između njih) / 2 */
+    flex: 0 0 calc((100% - 20px) / 2); 
+  }
+
+  .imageContainer {
+    width: 110px; /* Smanjujemo sliku malo za tablet */
+    height: 110px;
   }
 }
 
-
-@media (max-width: 600px) {
-  .testimonialCard {
-    flex: 0 0 100%;
+/* --- MOBITEL (max-width: 650px) - 1 OSOBA --- */
+@media (max-width: 650px) {
+  .testimonialsSection {
+    padding: 40px 10px; /* Smanjujemo padding cijele sekcije */
   }
-}
-.testimonialCard {
-  flex: 0 0 calc((100% - 40px) / 3); 
+
+  .sectionTitle {
+    font-size: 1.6rem;
+  }
+
+  .testimonialsContainer {
+    gap: 0px; /* Strelice skroz uz karticu */
+  }
+
+  .testimonialsGrid {
+    gap: 0; /* Isključujemo gap jer imamo samo jednu karticu */
+  }
+
+  .testimonialCard {
+    flex: 0 0 100%; /* Točno jedna osoba zauzima cijelu širinu */
+    padding: 0 10px;
+  }
+
+  .imageContainer {
+    width: 100px; /* Kompaktnije za mobitel */
+    height: 100px;
+  }
+
+  .testimonialText {
+    font-size: 0.9rem;
+    padding: 0 20px; /* Više zraka sa strana za tekst */
+  }
+
+  /* Strelice na mobitelu */
+  .sliderArrow {
+    font-size: 2rem;
+    padding: 5px;
+    display: flex !important; /* Osiguravamo da se vide ako su negdje bile skrivene */
+    z-index: 10;
+  }
 }

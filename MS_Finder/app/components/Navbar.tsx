@@ -122,13 +122,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./Navbar.module.css";
 import QuickSearch from "./QuickSearch";
+import Image from "next/image";
+import { HiMenu, HiX } from "react-icons/hi"; // Ikone za hamburger
 
 // Ovdje ostavljamo samo "profile" i "signin" jer jedino oni imaju dropdown
 type MenuName = "profile" | "signin" | null;
 
 export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<MenuName>(null);
   const router = useRouter();
+
+  // Zatvori menu kad se klikne na link
+  const closeMenu = () => setIsMenuOpen(false);
 
   const toggleMenu = (menuName: MenuName) => {
     setOpenMenu(openMenu === menuName ? null : menuName);
@@ -147,7 +153,7 @@ export default function Navbar() {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (!target.closest(`.${styles.navbar}`)) {
-        setOpenMenu(null);
+        setIsMenuOpen(false);
       }
     };
     document.addEventListener("click", handleClickOutside);
@@ -155,34 +161,31 @@ export default function Navbar() {
   }, []);
 
   return (
+    <>
     <nav className={styles.navbar}>
       <div className={styles.left}>
-        <Link href="/" className={styles.logo}>M&S Finder</Link>
+        <Link href="/" className={styles.logo}>
+        <Image 
+      src="/logo.png"         
+      alt="M&S Finder Logo" 
+      width={50}             
+      height={50}             
+                    
+    />
+        </Link>
       </div>
 
+      {/* CENTER MENU */}
       <ul className={styles.center}>
-        <li><Link href="/">Home</Link></li>
-        <li><Link href="/explore">Explore</Link></li>
+          <li><Link href="/">Home</Link></li>
+          <li><Link href="/explore">Explore</Link></li>
+          <li><Link href="/community">Community</Link></li>
+          <li><Link href="/support">Support</Link></li>
+        </ul>
 
-        {/* COMMUNITY - Sad je običan link, nema više span-a i toggleMenu-a */}
-        <li>
-          <Link href="/community" onClick={() => setOpenMenu(null)}>
-            Community
-          </Link>
-        </li>
-
-        {/* SUPPORT - Sad je običan link */}
-        <li>
-          <Link href="/support" onClick={() => setOpenMenu(null)}>
-            Support
-          </Link>
-        </li>
-
-        <li><QuickSearch /></li>
-      </ul>
-
-      <div className={styles.right}>
-        {/* PROFILE DROPDOWN */}
+   {/* PROFILE DROPDOWN */}
+      {/* <div className={styles.right}>
+     
         <div className={styles.dropdown}>
           <button onClick={() => toggleMenu("profile")}>Profile ▾</button>
           {openMenu === "profile" && (
@@ -192,10 +195,29 @@ export default function Navbar() {
               <Link href="/profile/edit-profile" onClick={() => setOpenMenu(null)}>Edit Profile</Link>
             </div>
           )}
+        </div> */}
+        <div className={styles.right}>
+     
+        <div className={styles.searchWrapper}>
+          <QuickSearch />
         </div>
 
+        <div className={styles.authButtons}>
+          <Link href="/signin">
+            <button className={styles.signInBtn}>Sign In</button>
+          </Link>
+          <Link href="/signup">
+            <button className={styles.signUpBtn}>Sign Up</button>
+          </Link>
+        </div>
+       <div
+            className={styles.hamburger}
+            onClick={() => setIsMenuOpen(true)}
+          >
+            <HiMenu />
+        </div>
         {/* SIGN IN / SIGN OUT DROPDOWN */}
-        <div className={styles.dropdown}>
+        {/* <div className={styles.dropdown}>
           <button onClick={() => toggleMenu("signin")}>Sign In ▾</button>
           {openMenu === "signin" && (
             <div className={styles.dropdownMenu}>
@@ -203,8 +225,22 @@ export default function Navbar() {
               <button onClick={handleSignOut} className={styles.logoutBtn}>Sign Out</button>
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </nav>
+ {/* SIDEBAR */}
+      {isMenuOpen && (
+        <div className={styles.sidebar}>
+          <div className={styles.closeIcon} onClick={closeMenu}>
+            <HiX />
+          </div>
+
+          <Link href="/" onClick={closeMenu}>Home</Link>
+          <Link href="/explore" onClick={closeMenu}>Explore</Link>
+          <Link href="/community" onClick={closeMenu}>Community</Link>
+          <Link href="/support" onClick={closeMenu}>Support</Link>
+        </div>
+      )}
+    </>
   );
 }

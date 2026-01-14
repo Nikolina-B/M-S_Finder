@@ -4,8 +4,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 2 rem;
-  height: 70px;
-  background-color: #0b0b22;;
+  height: 80px;
+  background-color: #0C0D32;;
   color: #f0f0f0;
   position: sticky;
   top: 0;
@@ -18,14 +18,15 @@
 .center li a {
   text-decoration: none;
   color: #f0f0f0;
-  padding: 0.6rem 1.2rem;
-  border-radius: 20px;
+  padding: 0.7rem 1.4rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 
 .center li a.active {
-  background-color: #5d46e2; 
+  background-color: #5D3FD3; 
   color: white;
   font-weight: 600;
 }
@@ -37,7 +38,7 @@
 
 
 .left { flex: 1;margin-left: 1.5rem; }
-.logo { font-size: 1.8rem; font-weight: bold; color: #ffffff; text-decoration: none; }
+.logo { font-size: 2rem; font-weight: bold; color: #ffffff; text-decoration: none; }
 
 
 .center {
@@ -90,26 +91,38 @@
 
 .right {
   display: flex;
-  gap: 0.8rem;
+  gap: 1.5rem;
   flex: 1;
   justify-content: flex-end;
   align-items: center;
   margin-right: 3rem;
 }
-
+.authButtons {
+  display: flex;
+  gap: 1rem; /* Razmak između Sign In i Sign Up gumba */
+}
 .right button {
-  background-color: #5d46e2;
-  border: none;
-  color: #1a1f36;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  font-weight: bold;
+  padding: 0.6rem 1.3rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
+  white-space: nowrap;
+}
+.signInBtn {
+  background: #5D3FD3;
+  color: #ffffff;
+  border: none;
+}
+
+.signUpBtn {
+  background-color: #ffffff;
+  color: #0C0D32;
+  border: none;
 }
 
 .right button:hover {
-  background-color: #7c69ef;
   transform: scale(1.05);
 }
 
@@ -224,6 +237,66 @@
   color: white !important;
 }
 
-@media (max-width: 768px) {
-  .center { display: none; }
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  background: #0C0D32;
+  padding: 90px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 2000;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.3rem;
+}
+
+/* CLOSE ICON */
+.closeIcon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .center {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+
+/* Mobiteli - Prikaz jedne i pol kartice (da se vidi da ima još) */
+@media (max-width: 650px) {
+  .card {
+    flex: 0 0 calc(85% - 10px); /* 85% širine, tako da se vidi rub sljedeće kartice */
+  }
+  
+  .section h2 {
+    font-size: 1.6rem;
+  }
+  
+  .scrollBtn {
+    display: none; /* Na mobitelu ljudi koriste prst za swipe */
+  }
 }

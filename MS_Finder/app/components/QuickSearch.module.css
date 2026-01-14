@@ -2,25 +2,32 @@
 
 .quickSearch {
     display: flex;
+    position: relative;
     align-items: center;
     border-radius: 25px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
-    width: 350px; 
+    width: 280px; 
 }
 
-
+.icon {
+  position: absolute;
+  right: 20px;
+  font-size: 1rem;
+  color: #6b6b80;
+  pointer-events: none;
+}
 .quickSearch input {
-    width: 100%; 
+    flex: 1;
     padding: 0.5rem 0.8rem; 
     font-size: 1rem; 
     font-weight: 500; 
     border: none;
-    border-radius: 5;
+    border-radius: 25px;
     outline: none;
 }
 
-.quickSearch button {
+/* .quickSearch button {
     
     flex-shrink: 0; 
     padding: 0.5rem 0.9rem; 
@@ -38,4 +45,47 @@
 .quickSearch button:hover {
     background-color: #5d46e2; 
     transform: scale(1.05);
+} */
+
+@media (max-width: 1024px) {
+    .quickSearch {
+        width: 40px;          /* Širina samo za ikonu */
+        height: 40px;         /* Da bude pravilan krug/kvadrat */
+        background: transparent; /* Mičemo pozadinu inputa */
+        box-shadow: none;     /* Mičemo sjenu */
+        justify-content: center;
+        cursor: pointer;
+    }
+  
+
+    .quickSearch input {
+        display: none;        /* Sakrivamo polje za kucanje */
+    }
+
+    .icon {
+        position: static;     /* Mičemo je iz kuta u centar */
+        color: white;         /* Bijela ikona jer je pozadina navbar tamna */
+        font-size: 1.5rem;    /* Povećavamo ikonu da bude uočljiva */
+        pointer-events: all;  /* Dopusti klik na ikonu na mobitelu */
+    }
+    .icon:hover{
+        transform: scale(1.1);
+    }
+}
+
+/* --- MOBITEL (max-width: 650px) --- */
+@media (max-width: 650px) {
+    /* Na mobitelu obično želimo da search i dalje bude samo ikona 
+       kako bi Sign In gumbi stali u red. */
+    .quickSearch {
+        width: 35px;
+        height: 35px;
+    }
+
+    .icon {
+        font-size: 1.3rem;
+    }
+    .icon:hover{
+        transform: scale(1.1);
+    }
 }

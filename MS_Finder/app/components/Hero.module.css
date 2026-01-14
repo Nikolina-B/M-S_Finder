@@ -91,45 +91,55 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 80vh;
+
+  padding-top: 0;
   /* Gradijent koji simulira dubinu sa slike + tvoja pozadinska slika */
-  background: radial-gradient(circle, rgba(58, 72, 110, 0.8) 0%, rgba(29, 38, 66, 1) 100%), 
-              url('/slika.jpg'); 
+  background: radial-gradient(
+      circle at center,
+      rgba(58, 72, 110, 0.4) 0%, 
+      rgba(12, 13, 50, 1) 90%
+    ), 
+    url('/slika.jpg'); 
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
 }
 
 .content {
-  text-align: center;
+  text-align: left;
   color: #ffffff; /* Čista bijela kao na slici */
-  max-width: 850px;
-  padding: 20px;
+  max-width: 1200px;
+  padding: 100px;
   z-index: 3;
 }
 
 .content h1 {
-  font-size: 4rem; /* Veći font za glavni naslov */
+  font-size: 5rem; /* Veći font za glavni naslov */
   font-weight: 700;
   margin-bottom: 0.5rem;
   letter-spacing: -1px;
   color: white;
+  white-space: nowrap;
 }
 
 .content p {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.9); /* Blago prozirno za podnaslov */
   margin-bottom: 2.5rem;
+  
+  white-space: nowrap;
 }
 
 .content button {
+
   background-color: #ffffff;
   border: none;
-  color: #1d2642; /* Tamna boja teksta u gumbu */
+  color: #0C0D32; /* Tamna boja teksta u gumbu */
   padding: 1rem 2.5rem;
   border-radius: 50px; /* Potpuno zaobljeni gumb kao na slici */
   font-size: 1.1rem;
@@ -140,7 +150,7 @@
 
 .content button:hover {
   background-color: #f0f0f0;
-  transform: translateY(-2px);
+  transform: scale(1.05);
 }
 
 /* Responzivnost */
@@ -150,5 +160,57 @@
   }
   .content p {
     font-size: 1.1rem;
+  }
+}
+@media (max-width: 1024px) {
+  .content h1 {
+    font-size: 3rem; /* Smanjujemo naslov */
+    white-space: normal; /* Dozvoljavamo da se naslov lomi u dva reda */
+    text-align: center;
+  }
+  
+  .content p {
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 0 auto 2.5rem auto; /* Centrira paragraf */
+  }
+
+  .hero {
+    padding-left: 0; /* Uklanjamo lijevi padding da centriranje bude točno */
+    justify-content: center;
+  }
+
+  .content {
+    align-items: center; /* Sve unutar contenta ide u sredinu */
+  }
+
+}
+
+@media (max-width: 768px) {
+  .hero {
+    height: 60vh; /* Smanjena visina sekcije */
+    padding-left: 0;
+    justify-content: center;
+  }
+
+  .content {
+    text-align: center;
+    align-items: center;
+  }
+
+  .content h1 {
+    font-size: 2.2rem; /* Još manje za mobitel */
+    white-space: normal;
+    line-height: 1.2;
+  }
+
+  .content p {
+    font-size: 1rem; /* Smanjen opis */
+    margin-bottom: 1.5rem;
+  }
+
+  .content button {
+    padding: 0.6rem 1.7rem; /* Smanjen gumb */
+    font-size: 0.9rem; /* Manji tekst na gumbu */
   }
 }

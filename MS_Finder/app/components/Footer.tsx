@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Footer.module.css';
+import Image from "next/image";
 import { FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from 'react-icons/fa'; // Instaliraj react-icons ako nemaš
 
 const Footer = () => {
@@ -7,10 +8,13 @@ const Footer = () => {
     <footer className={styles.footerContainer}>
       <div className={styles.topSection}>
         <div className={styles.logoInfo}>
-          <div className={styles.logoCircle}>
-             {/* Ovdje možeš staviti svoj logo image */}
-             <img src="/logo-small.png" alt="M&S Finder" />
-          </div>
+          <Image 
+                src="/logo.png"         
+                alt="M&S Finder Logo" 
+                width={50}             
+                height={50}             
+                              
+              />
           <p className={styles.tagline}>
             Discover your next favorite show instantly. Your personalized movie and series companion.
           </p>

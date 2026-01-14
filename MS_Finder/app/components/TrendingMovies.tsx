@@ -121,6 +121,7 @@
 
 import { useState, useEffect } from "react";
 import styles from "./TrendingMovies.module.css";
+import { HiOutlineArrowRight } from "react-icons/hi";
 
 /* ------------------ PODACI ------------------ */
 
@@ -226,17 +227,31 @@ function StarRating({
 /* ------------------ MAIN COMPONENT ------------------ */
 
 export default function TrendingMovies() {
-  const itemsPerPage = 4;
+  const [itemsPerPage, setItemsPerPage] = useState(4);
   const [page, setPage] = useState(0);
   const [watchlistIds, setWatchlistIds] = useState<number[]>([]);
 
   /* --- učitaj watchlist --- */
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1024 && window.innerWidth > 650) {
+        setItemsPerPage(2); // Na tabletu prikaži 2
+      } else if (window.innerWidth <= 650) {
+        setItemsPerPage(1); // Na mobitelu prikaži 1
+      } else {
+        setItemsPerPage(4); // Na desktopu prikaži 4
+      }
+    };
+
+    handleResize(); // Pokreni odmah pri učitavanju
+    window.addEventListener("resize", handleResize);
+   
     const stored = localStorage.getItem("watchlist");
     if (stored) {
       const list = JSON.parse(stored);
       setWatchlistIds(list.map((item: any) => item.id));
     }
+     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   /* --- dodaj / makni iz watchlista --- */
@@ -265,6 +280,11 @@ export default function TrendingMovies() {
   const endIndex = startIndex + itemsPerPage;
   const visibleMovies = movies.slice(startIndex, endIndex);
 
+  // Resetiraj stranicu na 0 ako se promijeni broj itemsPerPage da ne ostaneš u "praznom" prostoru
+  useEffect(() => {
+    setPage(0);
+  }, [itemsPerPage]);
+  
   const handleNext = () => {
     if (endIndex < movies.length) setPage(page + 1);
   };
@@ -320,6 +340,9 @@ export default function TrendingMovies() {
               >
                 {watchlistIds.includes(movie.id) ? "✓" : "+"}
               </button>
+              <div className={styles.arrowIcon}>
+                <HiOutlineArrowRight />
+              </div>
             </div>
           ))}
         </div>

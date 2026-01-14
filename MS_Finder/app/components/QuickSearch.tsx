@@ -4,6 +4,7 @@
 
 import { useState } from "react";
 import styles from "./QuickSearch.module.css"; 
+import { HiOutlineSearch } from "react-icons/hi";
 
 
 interface QuickSearchProps {
@@ -29,15 +30,17 @@ export default function QuickSearch({ onSearch }: QuickSearchProps) {
 
   return (
     <form onSubmit={handleSearch} className={styles.quickSearch}>
+  
       <input
         type="text"
         placeholder="Search..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button type="submit">
+      <HiOutlineSearch className={styles.icon} />
+{/*       <button type="submit">
         Search
-      </button>
+      </button> */}
     </form>
   );
 }
