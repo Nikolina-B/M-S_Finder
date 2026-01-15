@@ -1,8 +1,26 @@
-.footerContainer {
-  background-color: #1A1C4E; /* Najtamnija nijansa plave s dna slike */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; 
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #1A1C4E;
+}
+
+
+
+ .footerContainer {
+  background-color: #1A1C4E; 
   color: white;
   padding: 60px 10% 20px 10%;
   font-family: sans-serif;
+  width: 100%;       
+  flex-shrink: 0;    
+  box-sizing: border-box;
 }
 
 .topSection {
@@ -90,6 +108,7 @@
 .socialIcons a:hover {
   opacity: 0.7;
 }
+
 
 /* Prilagodba za mobitele */
 @media (max-width: 768px) {

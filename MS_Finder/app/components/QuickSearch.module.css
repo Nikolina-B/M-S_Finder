@@ -68,8 +68,43 @@
         font-size: 1.5rem;    /* Povećavamo ikonu da bude uočljiva */
         pointer-events: all;  /* Dopusti klik na ikonu na mobitelu */
     }
+    .quickSearch .expanded {
+        width: 200px; /* Širi se i omogućuje unos */
+        background-color: white;
+        padding-left: 10px;
+        border-radius: 25px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .quickSearch .expanded .icon {
+        position: absolute;
+        right: 12px;
+        font-size: 1rem;
+        color: #6b6b80;
+        pointer-events: none;
+        }
     .icon:hover{
         transform: scale(1.1);
+    }
+    
+    .quickSearch:not(.expanded) .searchInput {
+        width: 0;
+        padding: 0;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+
+    .quickSearch:not(.expanded) .icon {
+        position: static;
+        color: white;
+        font-size: 1.5rem;
+    }
+    .quickSearch.expanded .searchInput {
+        width: 100%;
+        opacity: 1;
+        pointer-events: auto;
+        color: #1a1f36;
     }
 }
 

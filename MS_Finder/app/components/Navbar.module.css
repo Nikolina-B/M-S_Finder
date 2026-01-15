@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2 rem;
+  /* padding: 0 40px; */
   height: 80px;
   background-color: #0C0D32;;
   color: #f0f0f0;
@@ -11,7 +11,6 @@
   top: 0;
   width: 100%;
   z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -37,17 +36,22 @@
 }
 
 
-.left { flex: 1;margin-left: 1.5rem; }
+.left { 
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 10px;
+ }
 .logo { font-size: 2rem; font-weight: bold; color: #ffffff; text-decoration: none; }
 
 
 .center {
   display: flex;
-  gap: 3rem;
+  gap: 30px;
   list-style: none;
   margin: 0;
   padding: 0;
-  flex: 2;
+  flex: 1;
   justify-content: center;
   align-items: center;
 }
@@ -55,6 +59,7 @@
 .center li {
   display: flex;
   align-items: center;
+  
 }
 
 .center > li > a {
@@ -62,6 +67,7 @@
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
+ 
 }
 
 
@@ -83,24 +89,16 @@
 
 
 
-
-
-
-
-
-
 .right {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   flex: 1;
   justify-content: flex-end;
   align-items: center;
-  margin-right: 3rem;
+  margin-right: 20px;
+  margin-left: 70px;
 }
-.authButtons {
-  display: flex;
-  gap: 1rem; /* Razmak između Sign In i Sign Up gumba */
-}
+
 .right button {
   padding: 0.6rem 1.3rem;
   border-radius: 25px;
@@ -113,12 +111,6 @@
 .signInBtn {
   background: #5D3FD3;
   color: #ffffff;
-  border: none;
-}
-
-.signUpBtn {
-  background-color: #ffffff;
-  color: #0C0D32;
   border: none;
 }
 
@@ -276,13 +268,13 @@
 }
 
 .center li a:hover:not(.active) {
-  background-color: rgba(93, 70, 226, 0.15); 
+  background-color: #5D3FD3; 
   color: #ffffff;
   transform: translateY(-2px); /* Lagani pomak prema gore */
 }
 /* Za Sign In dugme na desnoj strani */
 .signInBtn.activePage {
-  background-color: #4a32a8 !important; /* Nešto tamnija nijansa da se vidi da je "pritisnuto" */
+  background-color: #5D3FD3!important; /* Nešto tamnija nijansa da se vidi da je "pritisnuto" */
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
   transform: scale(0.98);
 }
@@ -301,31 +293,66 @@
   left: 20px;
   font-size: 2rem;
   cursor: pointer;
+  color: #ffffff;
 }
 
 /* RESPONSIVE */
-@media (max-width: 1024px) {
-  .center {
-    display: none;
+@media (max-width: 1024px) and (min-width: 791px) {
+  .navbar {
+    padding: 0 10px; /* Minimalni padding sa strana */
   }
 
-  .hamburger {
-    display: block;
+  /* Smanjujemo logo maksimalno za ovu rezoluciju */
+  .left {
+    margin-left: 5px;
   }
+  
+  .logoStyle {
+    width: 40px !important; /* Smanjeno sa 70px */
+    height: 40px !important;
+  }
+
+  /* Linkovi u sredini */
+  .center {
+    gap: 10px; /* Minimalni razmak */
+  }
+  
+  .center li a {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem; /* Smanjen font za bolju čitljivost na uskom prostoru */
+  }
+
+  /* Desni dio - Search i Sign In */
+  .right {
+    margin-left: 5px;
+    margin-right: 20px;
+    gap: 8px;
+  }
+
+  .signInBtn {
+    padding: 0.4rem 0.7rem !important;
+    font-size: 0.8rem !important;
+    white-space: nowrap !important; /* KLJUČNO: sprječava lomljenje gumba */
+    min-width: max-content; 
+  }
+
+  
 }
 
 
 /* Mobiteli - Prikaz jedne i pol kartice (da se vidi da ima još) */
-@media (max-width: 650px) {
-  .card {
-    flex: 0 0 calc(85% - 10px); /* 85% širine, tako da se vidi rub sljedeće kartice */
+@media (max-width: 790px) {
+  .center {
+    display: none; /* Sakriva horizontalni meni */
+  }
+
+  .hamburger {
+    display: block; /* Prikazuje ikonu menija */
+    margin-right: 15px;
   }
   
-  .section h2 {
-    font-size: 1.6rem;
-  }
-  
-  .scrollBtn {
-    display: none; /* Na mobitelu ljudi koriste prst za swipe */
+  /* Na mobitelu možemo sakriti search bar da ne smeta logu i hamburgeru */
+  .quickSearch {
+    display: none; 
   }
 }
