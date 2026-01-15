@@ -9,10 +9,10 @@ const Footer = () => {
       <div className={styles.topSection}>
         <div className={styles.logoInfo}>
           <Image 
-                src="/logo.png"         
+                src="/logo1.png"         
                 alt="M&S Finder Logo" 
-                width={50}             
-                height={50}             
+                width={60}             
+                height={60}             
                               
               />
           <p className={styles.tagline}>

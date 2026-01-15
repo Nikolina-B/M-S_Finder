@@ -166,10 +166,10 @@ export default function Navbar() {
       <div className={styles.left}>
         <Link href="/" className={styles.logo}>
         <Image 
-      src="/logo.png"         
+      src="/logo1.png"         
       alt="M&S Finder Logo" 
-      width={50}             
-      height={50}             
+      width={70}             
+      height={70}             
                     
     />
         </Link>
@@ -205,9 +205,6 @@ export default function Navbar() {
         <div className={styles.authButtons}>
           <Link href="/signin">
             <button className={styles.signInBtn}>Sign In</button>
-          </Link>
-          <Link href="/signup">
-            <button className={styles.signUpBtn}>Sign Up</button>
           </Link>
         </div>
        <div
