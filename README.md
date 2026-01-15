@@ -30,7 +30,7 @@
 - Link to Assignment 3: [**Assignment 3**](https://m-s-finder.vercel.app/)
 - Link to Assignment 4: [**Assignment 4**](https://github.com/Nikolina-B/m_s_Finder/blob/main/Assignments/Assignment4/MSFinder_homepage.png)
 - Link to Assignment 5: [**Assignment 5**](https://msfinder23.vercel.app/)
-- Link to Assignment 6: [**Assignment 6**](https://msfinder24.vercel.app/)
+- Link to Assignment 6: [**Assignment 6**](https://m-s-finder-sigma.vercel.app/)
 <!-- Add more assignments as necessary -->
 
 ## Project Requirements
