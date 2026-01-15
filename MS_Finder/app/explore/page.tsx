@@ -185,7 +185,7 @@ export default function ExplorePage() {
   return (
     <div style={pageContainerStyle}>
       
-      <h1 style={{ textAlign: 'center', marginBottom: '40px' }}>Explore Movies and Series</h1>
+      <h1 style={{ textAlign: 'center', marginBottom: '40px',color:'white' }}>Explore Movies and Series</h1>
       
       <div style={searchContainerStyle}>
          <QuickSearch onSearch={handleInternalSearch}/> 
