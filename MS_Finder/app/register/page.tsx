@@ -93,14 +93,16 @@ export default function RegisterPage() {
            <div className={styles.inputGroup}>
             <label className={styles.label}>Password</label>
             <div className={styles.passwordWrapper}>
-              <input 
-                type={ showPassword ? "" : "password" }
-                className={`${styles.input} ${styles.passwordInput}${error ? styles.inputError : ""}`}
-                placeholder="Enter your password" 
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
+             <input 
+  type={showPassword ? "text" : "password"} // ✅ text ili password
+  name="password"                             // OBAVEZNO za handleChange
+  className={`${styles.input} ${styles.passwordInput}${error ? styles.inputError : ""}`}
+  placeholder="Enter your password" 
+  value={formData.password}
+  onChange={handleChange}
+  required
+/>
+
               <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
