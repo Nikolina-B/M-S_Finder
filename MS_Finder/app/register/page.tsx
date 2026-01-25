@@ -1,20 +1,22 @@
-
 "use client";
 
 import styles from "../signin/SignIn.module.css"; 
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/app/lib/auth/auth-client"; 
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    full_name: "",
+    name: "", // Better Auth koristi 'name' za puno ime
     email: "",
     password: ""
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,36 +29,33 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError("");
     setSuccess("");
 
-    try {
-      const response = await fetch("/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        setError(result.message || "Registration failed");
-        return;
-      }
-
-      setSuccess("✅ Registration successful! Redirecting to sign in...");
-      setTimeout(() => {
-        router.push("/signin");
-      }, 2000);
-    } catch (err) {
-      setError("An error occurred. Please try again.");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+    // Pozivamo Better Auth signUp metodu umjesto fetch-a
+    await authClient.signUp.email({
+      email: formData.email,
+      password: formData.password,
+      name: formData.name,
+      callbackURL: "/", // Kamo preusmjeriti nakon uspjeha
+    }, {
+      onRequest: () => {
+        setLoading(true);
+      },
+      onResponse: () => {
+        setLoading(false);
+      },
+      onError: (ctx) => {
+        // Prikazuje točnu grešku (npr. "Email already in use")
+        setError(ctx.error.message);
+      },
+      onSuccess: () => {
+        setSuccess("Registration successful! Redirecting...");
+        setTimeout(() => {
+          router.push("/"); // Vodi korisnika na početnu stranicu
+        }, 1500);
+      },
+    });
   };
 
   return (
@@ -66,20 +65,20 @@ export default function RegisterPage() {
         
         <form onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
-            <label>Full Name</label>
+            <label className={styles.label}>Full Name</label>
             <input 
               type="text" 
-              name="full_name"
+              name="name" // Promijenjeno u 'name' kako bi odgovaralo authClient-u
               className={styles.input} 
               placeholder="Enter your name"
-              value={formData.full_name}
+              value={formData.name}
               onChange={handleChange}
               required
             />
           </div>
 
           <div className={styles.inputGroup}>
-            <label>Email</label>
+            <label className={styles.label}>Email</label>
             <input 
               type="email" 
               name="email"
@@ -91,17 +90,26 @@ export default function RegisterPage() {
             />
           </div>
 
-          <div className={styles.inputGroup}>
-            <label>Password</label>
-            <input 
-              type="password" 
-              name="password"
-              className={styles.input} 
-              placeholder="Create a password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+           <div className={styles.inputGroup}>
+            <label className={styles.label}>Password</label>
+            <div className={styles.passwordWrapper}>
+              <input 
+                type={ showPassword ? "" : "password" }
+                className={`${styles.input} ${styles.passwordInput}${error ? styles.inputError : ""}`}
+                placeholder="Enter your password" 
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className={styles.passwordToggle}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? <AiOutlineEye size={16}/> : <AiOutlineEyeInvisible size={16}/>}
+              </button>
+            </div>
           </div>
 
           {error && <p style={{ color: "#ef4444", fontSize: "0.9rem", marginTop: "10px" }}>{error}</p>}

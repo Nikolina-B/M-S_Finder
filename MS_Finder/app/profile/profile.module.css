@@ -1,0 +1,345 @@
+.container {
+  min-height: 100vh;
+  background-color: #5d5d94;
+  /* //background-color: hsl(240 20% 10%); */
+}
+
+/* Main Content */
+.main {
+  display: flex;
+  min-height: calc(100vh - 4rem);
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+.content {
+  width: 100%;
+  max-width: 48rem;
+}
+
+/* Profile Header */
+.profileHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .profileHeader {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.avatarWrapper {
+  position: relative;
+}
+
+.avatar {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7e7eb8, #9b9bcf);
+  border: 3px solid #9b9bcf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  color: #fff;
+}
+
+.avatar:hover {
+  opacity: 0.85;
+}
+.avatar::after {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: black;
+  color: white;
+  font-size: 12px;
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.avatarIcon {
+  color: #e6e3e3;
+}
+
+.avatarBadge {
+  position: absolute;
+  bottom: 0.25rem;
+  right: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #9b9bcf;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #5d5d94;
+}
+
+.avatarBadgeIcon {
+  color: white;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.profileInfo {
+  text-align: center;
+  flex: 1;
+}
+
+@media (min-width: 640px) {
+  .profileInfo {
+    text-align: left;
+  }
+}
+
+.profileName {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 0.25rem 0;
+}
+
+.profileEmail {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 1rem 0;
+}
+
+.profileStats {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .profileStats {
+    justify-content: flex-start;
+  }
+}
+
+.stat {
+  text-align: center;
+}
+
+.statValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  display: block;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Cards */
+.card {
+  border-radius: 0.75rem;
+  border: 1px solid #6b6ba0;
+  background-color: #4a4a7a;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* .cardIcon {
+  color: hsl(240 80% 65%);
+  width: 1.25rem;
+  height: 1.25rem;
+} */
+
+/* Menu List */
+.menuList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.menuItem {
+  margin: 0;
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1rem;
+  background-color: #555588;
+  border: 1px solid #6b6ba0;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: white;
+  transition: all 0.2s;
+}
+
+.menuLink:hover {
+  background-color: #6060a0;
+  border-color: #9b9bcf;
+}
+
+.menuIconWrapper {
+  width: 2.5rem;
+  height: 2.5rem;
+  /* background-color: hsl(240 80% 60% / 0.15); */
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menuIcon {
+  color: #c5c5e8;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.menuContent {
+  flex: 1;
+}
+
+.menuTitle {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: white;
+  margin: 0 0 0.125rem 0;
+}
+
+.menuDescription {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.menuArrow {
+  color: rgba(255, 255, 255, 0.4);
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.2s;
+}
+
+.menuLink:hover .menuArrow {
+  transform: translateX(4px);
+  color: #c5c5e8;
+}
+
+.buttonccontent{
+    display: flex;
+    justify-content: center;
+}
+/* Logout Button */
+.logoutBtn {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem;
+  background-color: #47476d;
+  border: 1px solid  #47476d;
+  border-radius:25px;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+  background-color: #47476d;
+  border: 1px solid  #9b9bcf;
+  color: #fff;
+}
+
+.logoutIcon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* Tablet - 791px to 1024px */
+@media (max-width: 1024px) and (min-width: 791px) {
+  .content {
+    max-width: 40rem;
+  }
+
+  .profileName {
+    font-size: 1.5rem;
+  }
+
+  .avatar {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+/* Mobile - 790px and below */
+@media (max-width: 790px) {
+  .main {
+    padding: 1.5rem 1rem;
+  }
+
+  .profileHeader {
+    margin-bottom: 2rem;
+  }
+
+  .avatar {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .profileName {
+    font-size: 1.375rem;
+  }
+
+  .profileStats {
+    gap: 1rem;
+  }
+
+  .statValue {
+    font-size: 1.125rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+
+  .menuLink {
+    padding: 0.875rem;
+  }
+
+  .menuIconWrapper {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .menuTitle {
+    font-size: 0.875rem;
+  }
+
+  .menuDescription {
+    font-size: 0.75rem;
+  }
+}

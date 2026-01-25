@@ -7,10 +7,12 @@ import styles from "./Navbar.module.css";
 import QuickSearch from "./QuickSearch";
 import Image from "next/image";
 import { HiMenu, HiX } from "react-icons/hi";
+import { authClient } from "@/app/lib/auth/auth-client";
 
 type MenuName = "profile" | "signin" | null;
 
 export default function Navbar() {
+  const { data: session, isPending } = authClient.useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false); //za hamburger meni
   const [openMenu, setOpenMenu] = useState<MenuName>(null);
   const router = useRouter();
@@ -22,14 +24,35 @@ export default function Navbar() {
     setOpenMenu(openMenu === menuName ? null : menuName);
   };
 
-  const handleSignOut = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const confirmLogout = window.confirm("Are you sure you want to sign out?");
-    if (confirmLogout) {
-      setOpenMenu(null);
-      router.push("/"); 
-    }
+  // Funkcija za dobivanje inicijala
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .substring(0, 2);
   };
+
+  // const handleSignOut = (e: React.MouseEvent) => {
+  //   e.preventDefault();
+  //   const confirmLogout = window.confirm("Are you sure you want to sign out?");
+  //   if (confirmLogout) {
+  //     setOpenMenu(null);
+  //     router.push("/"); 
+  //   }
+  // };
+  // Funkcija za odjavu (Sign Out)
+  const handleActualSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+          router.refresh(); // Osvježava stanje da nestane krug
+        },
+      },
+    });
+  }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -81,14 +104,40 @@ export default function Navbar() {
            
           </div>
 
-          <div className={styles.authButtons}>
-            <Link href="/signin">
-              {/* Sign In dugme dobija aktivnu klasu ako si na toj stranici */}
-              <button className={`${styles.signInBtn} ${pathname === "/signin" ? styles.activePage : ""}`}>
-                Sign In
-              </button>
-            </Link>
-          </div>
+         <div className={styles.authButtons}>
+              {isPending ? (
+                /* Loader dok provjerava sesiju */
+                <div className={styles.avatarPlaceholder} />
+              ) : session ? (
+                /* Ako je korisnik prijavljen - KRUG S INICIJALIMA */
+                <div className={styles.userProfileWrapper} onClick={() => toggleMenu("profile")}>
+                  <div className={styles.avatarCircle}>
+                    {getInitials(session.user.name)}
+                  </div>
+                  
+                  {/* Dropdown za odjavu koji se pojavi na klik */}
+                  {openMenu === "profile" && (
+                    <div className={styles.dropdownMenu}>
+                      <div className={styles.dropdownHeader}>
+                      <p className={styles.userName}>{session.user.name}</p>
+                      </div>
+                      <hr />
+                      <Link href="/profile" onClick={() => setOpenMenu(null)}>My Profile</Link>
+                      <button onClick={handleActualSignOut} className={styles.signOutLink}>
+                        Sign Out
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                /* Ako NIJE prijavljen - SIGN IN GUMB */
+                <Link href="/signin">
+                  <button className={`${styles.signInBtn} ${pathname === "/signin" ? styles.activePage : ""}`}>
+                    Sign In
+                  </button>
+                </Link>
+              )}
+            </div>
           
           <div className={styles.hamburger} onClick={() => setIsMenuOpen(true)}>
             <HiMenu />

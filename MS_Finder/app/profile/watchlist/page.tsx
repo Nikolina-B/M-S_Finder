@@ -1,90 +1,94 @@
-// "use client";
-
-// import { useEffect, useState } from "react";
-// import styles from "./Watchlist.module.css";
-
-// type WatchItem = {
-//   id: number;
-//   title: string;
-//   type: "movie" | "tv";
-// };
-
-// export default function WatchlistPage() {
-//   const [watchlist, setWatchlist] = useState<WatchItem[]>([]);
-
-//   useEffect(() => {
-//     const stored = localStorage.getItem("watchlist");
-//     if (stored) {
-//       setWatchlist(JSON.parse(stored));
-//     }
-//   }, []);
-
-//   return (
-//     <main className={styles.container}>
-//       <h1 className={styles.title}>My Watchlist</h1>
-
-//       {watchlist.length === 0 ? (
-//         <p className={styles.empty}>
-//           You don't have anything in your watchlist yet.
-//         </p>
-//       ) : (
-//         <div className={styles.list}>
-//           {watchlist.map((item) => (
-//             <div key={item.id} className={styles.card}>
-//               <div className={styles.cardTitle}>{item.title}</div>
-//               <div className={styles.cardType}>{item.type}</div>
-//             </div>
-//           ))}
-//         </div>
-//       )}
-//     </main>
-//   );
-// }
-"use client";
-
-import { useEffect, useState } from "react";
+import { db } from "@/app/lib/db";
+import { watchlist } from "@/app/lib/db/schema";
+import { auth } from "@/app/lib/auth/auth";
+import { headers } from "next/headers";
+import { eq, desc } from "drizzle-orm";
+import Link from "next/link";
 import styles from "./Watchlist.module.css";
+import { HiOutlineArrowRight } from "react-icons/hi";
+import { FaTrash, FaStar } from "react-icons/fa";
+import { toggleWatchlistAction } from "@/app/actions/watchlist";
+import { revalidatePath } from "next/cache";
 
-type WatchItem = {
-  id: number;
-  title: string;
-  type: "movie" | "tv";
-//   image?: string; 
-};
+const createSlug = (title: string) => title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-');
 
-export default function WatchlistPage() {
-  const [watchlist, setWatchlist] = useState<WatchItem[]>([]);
+export default async function WatchlistPage() {
+  const session = await auth.api.getSession({ headers: await headers() });
 
-  useEffect(() => {
-    const stored = localStorage.getItem("watchlist");
-    if (stored) {
-      setWatchlist(JSON.parse(stored));
-    }
-  }, []);
+  if (!session) return <div className={styles.container}>Molimo prijavite se.</div>;
+
+  const results = await db
+    .select()
+    .from(watchlist)
+    .where(eq(watchlist.userId, session.user.id))
+    .orderBy(desc(watchlist.createdAt));
 
   return (
-    <main className={styles.container}>
-      <h1 className={styles.title}>My Watchlist</h1>
+    <main className={styles.exploreContainer}>
+      <h1 className={styles.mainTitle}>My Watchlist</h1>
+      
 
-      {watchlist.length === 0 ? (
-        <p className={styles.empty}>
-          You don't have anything in your watchlist yet.
-        </p>
-      ) : (
-        <div className={styles.list}>
-          {watchlist.map((item) => (
-            <div key={item.id} className={styles.card}>
-              {/* {item.image && (
+      <div className={styles.movieGrid}>
+        {results.map((movie) => (
+          <div key={movie.movieId} className={styles.card}>
+            <div className={styles.imageContainer}>
+              <Link href={`/explore/${movie.movieId}-${createSlug(movie.title)}`}>
                 <img
-                  src={item.image}
-                  alt={item.title}
-                  className={styles.poster}
+                  src={movie.poster !== 'N/A' ? movie.poster! : 'https://via.placeholder.com/300x450?text=No+Poster'}
+                  alt={movie.title}
+                  className={styles.trailerImage}
                 />
-              )} */}
-              <div className={styles.cardTitle}>{item.title}</div>
+              </Link>
+              
+              {/* TRASH GUMB - Poziva istu akciju za micanje */}
+              <form action={async () => {
+                "use server";
+                await toggleWatchlistAction({
+                    imdbID: movie.movieId,
+                    Title: movie.title,
+                    imdbRating:movie.imdbRating || "",
+                    Year: movie.year || "",
+                    Genre: movie.genre || "",
+                    Poster: movie.poster || ""
+                });
+              }}>
+                <button type="submit" className={styles.trashBtn} aria-label="Remove from Watchlist">
+                  <FaTrash />
+                </button>
+              </form>
+
+              <div className={styles.gradientOverlay}></div>
+              
+              {/* Prikaz rejtinga (ako ga spremaš u bazu, inače možeš izbaciti) */}
+              <div className={styles.ratingBadge}>
+                <span className={styles.starIcon}><FaStar/></span>
+                <span className={styles.ratingValue}>{movie.imdbRating}</span>
+              </div>
             </div>
-          ))}
-        </div>
+
+            <div className={styles.cardFooter}>
+              <span className={styles.movieTitle}>{movie.title}</span>
+              <span className={styles.year}>{movie.year}</span>
+              <div className={styles.genreContainer}>
+                {movie.genre?.split(',').map((g) => (
+                  <span key={g} className={styles.genreTag}>{g.trim()}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Strelica za detalje - u Server komponenti koristimo Link umjesto router.push */}
+            <Link 
+              href={`/explore/${movie.movieId}-${createSlug(movie.title)}`}
+              className={styles.arrowIcon}
+            >
+              <HiOutlineArrowRight />
+            </Link>
+          </div>
+        ))}
+      </div>
+      
+      {results.length === 0 && (
+        <p className={styles.errorMessage}>Your watchlist is empty.</p>
       )}
     </main>
   );

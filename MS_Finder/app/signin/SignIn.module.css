@@ -4,19 +4,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 80vh;
+  min-height: calc(100vh - 4rem);
   color: white;
+  padding: 3rem 1rem;
   font-family: Arial, sans-serif;
 }
 
 .card {
   background-color: #2d2d44; 
   padding: 2rem;
-  border-radius: 12px; /* Ovdje je bilo viška slovo 'c' */
+  border-radius: 12px; 
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); 
   border: 1px solid #3f3f5a; 
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   text-align: center;
 }
 .title {
@@ -24,21 +25,101 @@
   font-size: 1.8rem;
   color:white;
 }
+.subtitle{
+  margin-bottom: 2.5rem;
+  font-size: 1rem;
+  color: #bcb9b9;
+}
 
 .inputGroup {
   margin-bottom: 1rem;
   text-align: left;
 }
+.label{
+  padding-left: 15px;
 
+}
 .input {
   width: 100%;
   padding: 10px;
-  margin-top: 5px;
-  border-radius: 4px;
+  margin-top: 10px;
+  border-radius: 25px;
   border: 1px solid #444;
   background: #0f0f1b;
   color: white;
 }
+.inputError {
+  border-color: #ef4444 !important; /* Crvena boja sa slike greške */
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.2); /* Opcionalni blagi crveni sjaj */
+}
+
+/* Ako želiš da i labela pocrveni kad je greška (opcionalno) */
+.inputError::placeholder {
+  color: rgba(239, 68, 68, 0.6);
+}
+.passwordWrapper{
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 60%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: hsl(240 10% 50%);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.passwordToggle:hover {
+  color: white;
+}
+.options{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.rememberLabel{
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: hsl(240 10% 55%);
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid hsl(240 15% 25%);
+  background-color: hsl(240 15% 18%);
+  accent-color: hsl(240 80% 60%);
+}
+.forgotLink{
+  font-size: 0.875rem;
+  color: hsl(240 80% 65%);
+  text-decoration: none;
+  transition: color 0.2s;
+  margin-right: 5px;
+}
+.forgotLink:hover {
+  color: #fff;
+}
+
 
 .button {
   width: 100%;
@@ -46,12 +127,155 @@
   background-color: #6366f1;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 25px;
   cursor: pointer;
   font-weight: bold;
+  font-size: 1rem;
   margin-top: 10px;
 }
 
 .button:hover {
   background-color: #4f46e5;
+}
+
+
+.divider {
+  position: relative;
+  margin: 2rem 0;
+}
+
+.dividerLine {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+}
+
+.dividerLineBorder {
+  width: 100%;
+  margin-bottom: 3rem;
+  border-top: 1px solid hsl(240 10% 55%);
+}
+.dividerText {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 0 0.75rem;
+}
+
+
+
+.socialButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.socialBtn {
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  background-color: hsl(240 15% 18%);
+  border: 1px solid hsl(240 15% 25%);
+  border-radius: 25px;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.socialBtn:hover {
+  background-color: hsl(240 15% 22%);
+}
+
+.socialIcon {
+  width: 1rem;
+  height: 1rem;
+}
+@media (max-width: 1024px) and (min-width: 791px) {
+
+  .formWrapper {
+    max-width: 26rem;
+  }
+
+  .card {
+    padding: 1.75rem;
+  }
+
+  .title {
+    font-size: 1.375rem;
+  }
+}
+/* Tablet i manji laptopi */
+@media (max-width: 1024px) {
+  .card {
+    max-width: 400px;
+    padding: 2rem;
+  }
+}
+
+/* Mobiteli (ispod 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    min-height: 100vh; 
+    justify-content: center;
+  }
+
+  .card {
+    padding: 1.5rem;
+    border: none; 
+    box-shadow: none; 
+    background-color: transparent; 
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+  }
+
+  /* Održavamo ih u istom redu osim na jako malim mobitelima */
+  .options {
+    flex-direction: row; 
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .input {
+    font-size: 16px; /* Jako važno: sprečava iOS auto-zoom na inpute */
+    padding: 12px 15px;
+  }
+
+  .button, .socialBtn {
+    height: 3rem; 
+    font-size: 0.9rem;
+  }
+
+  .divider {
+    margin: 2rem 0;
+  }
+}
+
+/* Ekstremno mali uređaji (ispod 380px) */
+@media (max-width: 380px) {
+  .options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .forgotLink {
+    margin-left: 5px;
+  }
 }
