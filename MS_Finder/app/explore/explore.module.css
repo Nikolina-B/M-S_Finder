@@ -182,10 +182,29 @@
   color: rgba(255, 221, 0, 0.91);
 }
 
+.WishWatchbuttons {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between; /* Plus lijevo, Srce desno */
+  padding: 0 10px;
+  z-index: 10; /* Iznad svega */
+  pointer-events: none;
+}
+.heartIconActive {
+  color: #e74c3c; /* Crvena boja za aktivno srce */
+  font-size: 18px;
+}
 
+.heartIcon {
+  font-size: 18px;
+  color: #0b0e2a;
+}
 /* --- ACTION BUTTONS (addBtn i arrowIcon) --- */
 .addBtn {
-  position: absolute;
+  pointer-events: auto;
   bottom: 10px;
   left: 10px;
   width: 36px;
@@ -231,6 +250,101 @@
   transform: translateX(5px);
   opacity: 1;
 }
+
+
+.filterBars{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* {--- filter-zanrovi---} */
+
+
+/* Container za dropdown */
+.FilterContainer {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+
+/* Button wrapper */
+.dropdownWrapper {
+  display: flex;
+  align-items: center;
+  background-color: #6246ea;
+  border-radius: 25px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.dropdownWrapper:hover {
+  background-color: #7058ff;
+}
+
+/* Main button text */
+.dropdownToggle {
+  background: transparent;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Arrow */
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.9rem;
+  color: white;
+  font-size: 1.4rem;
+  transition: transform 0.2s ease;
+}
+
+/* Dropdown menu */
+.customDropdown {
+  position: absolute;
+  top: 120%;
+  width: 100%; 
+  background: #141427;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  overflow: hidden;
+  z-index: 999;
+  animation: dropdownFade 0.15s ease;
+}
+
+
+/* Dropdown item */
+.dropdownItem {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.dropdownItem:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateX(3px);
+}
+
+/* Active genre */
+.activeItem {
+  background: #6246ea;
+}
+
 
 /* --- PAGINATION --- */
 .paginationWrapper {

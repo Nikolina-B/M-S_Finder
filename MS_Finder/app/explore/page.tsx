@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {authClient} from "@/app/lib/auth/auth-client"
 import { HiOutlineArrowRight } from "react-icons/hi";
 import QuickSearch from "../components/QuickSearch";
@@ -10,14 +10,27 @@ import styles from "./explore.module.css"
 import { FaStar } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
 import { toggleWatchlistAction } from '../actions/watchlist';
+import DropdownGenre   from './dropdowns/dropdownGenre';
+import DropdownType from './dropdowns/dropdownType';
+import DropdownYear from './dropdowns/dropdownYear';
+import  IMDBRating  from './imbdRating';
+import WishlistButton from './wishlistHandle';
+import FavoritesButton from './wishlistHandle';
 
 const API_KEY = process.env.NEXT_PUBLIC_MOVIE_DB_API_KEY; 
 const API_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
+const YEAR = ["2026","2025","2024","2023","2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011","2010",
+"2009","2008","2007","2006","2005","2004","2003","2002","2001","2000",
+"1999","1998","1997","1996","1995","1994","1993","1992","1991","1990"];
+
 const DEFAULT_SEARCH_TERM = "2025";
+const TYPE = ["All","Movie","Series"];
+const GENRES = ["All","Action","Adventure","Animation","Fantasy", "Comedy", "Drama", "Horor", "Romance", "Sci-Fi", "Thriller"]
 
 interface MovieResult {
   Title: string;
   Year: string;
+  Released: string;
   imdbRating: string;
   Genre: string;
   imdbID: string;
@@ -39,35 +52,32 @@ const createSlug = (title: string): string => {
 export default function ExplorePage() {
 
     const { data: session } = authClient.useSession();
+    const router = useRouter();
+
     const [results, setResults] = useState<MovieResult[]> ([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const router = useRouter();
+   
+   
+   
 
+    //za implementaciju watchliste i wishliste 
+    const [watchlistIds, setWatchlistIds] = useState<string[]>([]);
+    const [favoritesIds, setFavoritesIds] = useState<string[]>([]);
+
+    //filter
+    const [filter, setFilter] = useState<'All' | 'Movie' | 'Series'>('All');
+    const [genreFilter, setGenreFilter] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [currentQuery, setCurrentQuery] = useState(DEFAULT_SEARCH_TERM);
-    const [isInitialLoad, setIsInitialLoad] = useState(true);
-
-    //za implementacij uwatchliste
-    const [watchlistIds, setWatchlistIds] = useState<string[]>([]);
-
-    //filter
-    const [filter, setFilter] = useState<'all' | 'movie' | 'series'>('all');
-
-    // useEffect(() => {
-    //     if (isInitialLoad) {
-    //       setIsLoading(true);
-    //       fetchMovies(DEFAULT_SEARCH_TERM, 1, false);
-    //     }
-    //   }, [isInitialLoad]);
+  
 
 // 1. Dohvaćanje inicijalnih ID-ova iz tvoje baze kod učitavanja
   useEffect(() => {
     const fetchWatchlistIds = async () => {
       if (session?.user) {
         try {
-          // Napomena: Trebat ćeš napraviti ovaj API route koji vraća samo niz ID-ova
           const res = await fetch('/api/watchlist/ids');
           if (res.ok) {
             const ids = await res.json();
@@ -81,12 +91,24 @@ export default function ExplorePage() {
     fetchWatchlistIds();
   }, [session]);
 
+  useEffect(() => {
+    const fetchFavoritesIds = async () => {
+      if (session?.user) {
+        try {
+          const res = await fetch('/api/favorites/ids');
+          if (res.ok) setFavoritesIds(await res.json());
+        } catch (err) { console.error("Favorites fetch error:", err); }
+      }
+    };
+    fetchFavoritesIds();
+  }, [session]);
+
    //  Glavna funkcija za API poziv prema OMDB
   const fetchMovies = async (query: string, page: number, append: boolean = false) => {
       setIsLoading(true);
       setError(null);
     try {
-      const typeParam = filter !== 'all' ? `&type=${filter}` : '';
+      const typeParam = filter !== 'All' ? `&type=${filter}` : '';
       const isYear = /^\d{4}$/.test(query);
     const searchUrl = isYear
       ? `${API_URL}&s=movie&y=${query}&page=${page}${typeParam}`
@@ -136,7 +158,16 @@ export default function ExplorePage() {
 
   useEffect(()=>{
     fetchMovies(currentQuery,1,false);
-  },[filter]);
+  },[filter,currentQuery]);
+
+
+const filteredResults = useMemo(() => {
+        if (genreFilter === "All") return results;
+        return results.filter((movie) => {
+            if (!movie.Genre || movie.Genre === "N/A") return false;
+            return movie.Genre.toLowerCase().includes(genreFilter.toLowerCase());
+        });
+    }, [results, genreFilter]);
 
 /* ------------------ ADD TO WATCHLIST ------------------ */
 
@@ -178,20 +209,6 @@ export default function ExplorePage() {
     }
   };
 
-/* ------------------ RATING ------------------ */
-
-function IMDBRating(
-  {rating}:{rating:string}
-) {
-  if (!rating || rating === "N/A") return null;
-
-  return (
-    <div className={styles.ratingBadge}>
-      <span className={styles.starIcon}><FaStar/></span>
-      <span className={styles.ratingValue}>{rating}</span>
-    </div>
-  );
-}
 
 
 
@@ -200,18 +217,28 @@ function IMDBRating(
       <h1 className={styles.mainTitle}>Explore Movies & Series</h1>
 
       {/* Filteri */}
-      <div className={styles.filterBar}>
-        {['all', 'movie', 'series'].map((f) => (
-          <button 
-            key={f}
-            className={`${styles.filterBtn} ${filter === f ? styles.activeFilter : ""}`}
-            onClick={() => setFilter(f as any)}
-          >
-            {f.toUpperCase()}
-          </button>
-        ))}
-      </div>
-
+        <div className={styles.filterBars}>
+          <DropdownType
+            TYPE={TYPE}
+            typeFilter={filter}
+            setTypeFilter={(value)=> setFilter(value as 'All' | 'Movie' | 'Series')}
+            />
+        {/* Žanrovi */}
+          <DropdownGenre
+              GENRES={GENRES}
+              genreFilter={genreFilter}
+              setGenreFilter={setGenreFilter}
+          />
+          <DropdownYear
+          YEAR={YEAR}
+          yearFilter={isNaN(Number(currentQuery)) ? "" : currentQuery}
+          setYearFilter={(value) => {
+            setCurrentQuery(value);
+            fetchMovies(value, 1, false);
+          }}
+      />
+        </div>
+            
       {/* Pretraga */}
       <div className={styles.searchWrapper}>
         <QuickSearch onSearch={(q) => fetchMovies(q, 1, false)} />
@@ -221,7 +248,7 @@ function IMDBRating(
 
       {/* Grid s filmovima */}
       <div className={styles.movieGrid}>
-        {results.map((movie) => (
+        {filteredResults.map((movie) => (
           <div key={movie.imdbID} className={styles.card}>
             {/* Poster/Trailer link */}
             <div className={styles.imageContainer}>
@@ -232,13 +259,20 @@ function IMDBRating(
                 className={styles.trailerImage}
               />
             </Link>
-            <button
-                className={`${styles.addBtn} ${watchlistIds.includes(movie.imdbID) ? styles.added : ""}`}
-                onClick={(e) => handleWatchlistToggle(e, movie)}
-                aria-label="Toggle Watchlist"
-              >
-                {watchlistIds.includes(movie.imdbID) ? "✓" : "+"}
-              </button>
+            <div className={styles.WishWatchbuttons}>
+              <button
+                  className={`${styles.addBtn} ${watchlistIds.includes(movie.imdbID) ? styles.added : ""}`}
+                  onClick={(e) => handleWatchlistToggle(e, movie)}
+                  aria-label="Toggle Watchlist"
+                >
+                  {watchlistIds.includes(movie.imdbID) ? "✓" : "+"}
+                </button>
+                <FavoritesButton 
+                  movie={movie} 
+                  initialFavoritesIds={favoritesIds} // tvoj state iz page.tsx
+                  session={session} 
+                />
+              </div>
             <div className={styles.gradientOverlay}></div>
             <IMDBRating  rating = {movie.imdbRating}/>
             </div>
@@ -248,9 +282,13 @@ function IMDBRating(
               <span className={styles.movieTitle}>{movie.Title}</span>
               <span className={styles.year}>{movie.Year}</span>
               <div className={styles.genreContainer}>
-                {movie.Genre.split(',').map((g) => (
-                <span key={g} className={styles.genreTag}>{g.trim()}</span>
-                ))}
+                {movie.Genre && movie.Genre !== "N/A" ? (
+                  movie.Genre.split(',').map((g) => (
+                    <span key={g} className={styles.genreTag}>{g.trim()}</span>
+                  ))
+                ) : (
+                  <span className={styles.genreTag}>N/A</span>
+                )}
               </div>
               
             </div>
@@ -286,3 +324,5 @@ function IMDBRating(
  );
 }
   
+// dodaj da se prikazuju odredeni filmovi prema osjecajima ili stanju korisnika 
+//sredi filtriranje prema zanrovima godinama malo bolje  i dodaj labele povise gumbova 

@@ -23,6 +23,14 @@ export default function Navbar() {
   const toggleMenu = (menuName: MenuName) => {
     setOpenMenu(openMenu === menuName ? null : menuName);
   };
+  // DODAJ OVU FUNKCIJU:
+  const handleNavbarSearch = (query: string) => {
+    if (query.trim()) {
+      // Preusmjeravamo korisnika na explore stranicu sa search parametrom
+      router.push(`/explore?q=${encodeURIComponent(query)}`);
+      setOpenMenu(null); // Zatvori menije ako su otvoreni
+    }
+  };
 
   // Funkcija za dobivanje inicijala
   const getInitials = (name: string) => {

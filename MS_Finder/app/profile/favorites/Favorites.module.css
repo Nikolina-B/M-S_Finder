@@ -1,54 +1,55 @@
 .container {
-  padding: 2.5rem;
+  padding: 100px 20px 40px;
+  min-height: 100vh;
+  background: #0C0D32;
+  color: white;
 }
 
 .title {
-  font-size: 2.2rem;
-  color: #ffffff;
-  margin-bottom: 2rem;
   text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.5rem;
 }
 
-.empty {
-  color: #9ca3af;
-  font-style: italic;
-  text-align: center;
-  margin-top: 3rem;
-  font-size: 1.1rem;
-}
-
-
-.list {
+/* Iskoristi isti grid sustav kao na Explore stranici */
+.movieGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-
-.card {
-  background: linear-gradient(145deg, #1f243a, #181c2f);
-  border-radius: 16px;
-  padding: 1.2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+/* Stil za gumb za uklanjanje (crveno srce) */
+.removeBtn {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+.removeBtn:hover {
+  transform: scale(1.1);
 }
 
-.cardTitle {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 0.4rem;
+.heartIconActive {
+  color: #e74c3c;
+  font-size: 1.2rem;
 }
 
+.emptyWrapper {
+  text-align: center;
+  margin-top: 50px;
+}
 
-.cardType {
-  font-size: 0.85rem;
-  color: #9ca3af;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.exploreLink {
+  color: #7c69ef;
+  text-decoration: underline;
+  font-size: 1.1rem;
 }

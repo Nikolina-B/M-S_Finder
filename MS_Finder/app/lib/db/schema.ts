@@ -21,4 +21,27 @@ export const watchlist = pgTable('watchlist',{
     poster: text("poster"),
     createdAt: timestamp("createdAt").defaultNow(),
 
-})
+});
+
+export const favorites = pgTable('favorites',{
+    id: text("id").primaryKey(),
+    userId: text("userId").notNull().references(() => user.id),
+    movieId: text("movieId").notNull(),
+    title: text("title").notNull(),
+    year: text("year"),
+    genre: text("genre"),
+    imdbRating: text("imdbRating"),
+    poster: text("poster"),
+    createdAt: timestamp("createdAt").defaultNow(),
+
+});
+
+export const contact_messages = pgTable('contact_messages',{
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("userId").references(() => user.id).notNull(),
+    name: text("name").notNull(),
+    email: text("email").notNull(),
+    message: text("message").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+
+});

@@ -93,3 +93,4 @@ export default async function WatchlistPage() {
     </main>
   );
 }
+//dodati strelicu za vratiti se nazad na profile

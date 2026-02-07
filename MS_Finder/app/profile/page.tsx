@@ -145,3 +145,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+//dodat funkciju koja azurira broj dodanih filmova ili serija u watchlistu ili favorites
