@@ -183,11 +183,26 @@ const filteredResults = useMemo(() => {
     const isAlreadyIn = watchlistIds.includes(movie.imdbID);
 
     // OPTIMISTIC UI - Odmah promijeni stanje na gumbu
+    // if (isAlreadyIn) {
+    //   setWatchlistIds(prev => prev.filter(id => id !== movie.imdbID));
+    // } else {
+    //   setWatchlistIds(prev => [...prev, movie.imdbID]);
+    // }
     if (isAlreadyIn) {
-      setWatchlistIds(prev => prev.filter(id => id !== movie.imdbID));
-    } else {
-      setWatchlistIds(prev => [...prev, movie.imdbID]);
-    }
+    setWatchlistIds(prev => {
+      const updated = prev.filter(id => id !== movie.imdbID);
+      window.localStorage.setItem("watchlist", JSON.stringify(updated));
+      window.dispatchEvent(new Event("watchlistUpdated")); // 👈 event za ProfilePage
+      return updated;
+    });
+  } else {
+    setWatchlistIds(prev => {
+      const updated = [...prev, movie.imdbID];
+      window.localStorage.setItem("watchlist", JSON.stringify(updated));
+      window.dispatchEvent(new Event("watchlistUpdated")); // 👈 event za ProfilePage
+      return updated;
+    });
+  }
 
     try {
       await toggleWatchlistAction({
@@ -198,15 +213,30 @@ const filteredResults = useMemo(() => {
         Genre: movie.Genre,
         Poster: movie.Poster,
       });
-    } catch (err) {
-      console.error("Action failed:", err);
-      // Ako akcija ne uspije, vrati stanje na staro
-      if (isAlreadyIn) {
-        setWatchlistIds(prev => [...prev, movie.imdbID]);
-      } else {
-        setWatchlistIds(prev => prev.filter(id => id !== movie.imdbID));
-      }
     }
+      catch (err) {
+    console.error("Action failed:", err);
+    // Vrati stanje ako akcija ne uspije
+    if (isAlreadyIn) {
+      setWatchlistIds(prev => [...prev, movie.imdbID]);
+    } else {
+      setWatchlistIds(prev => prev.filter(id => id !== movie.imdbID));
+    }
+    const updated = isAlreadyIn
+      ? [...watchlistIds, movie.imdbID]
+      : watchlistIds.filter(id => id !== movie.imdbID);
+    window.localStorage.setItem("watchlist", JSON.stringify(updated));
+    window.dispatchEvent(new Event("watchlistUpdated"));
+  }
+    // } catch (err) {
+    //   console.error("Action failed:", err);
+    //   // Ako akcija ne uspije, vrati stanje na staro
+    //   if (isAlreadyIn) {
+    //     setWatchlistIds(prev => [...prev, movie.imdbID]);
+    //   } else {
+    //     setWatchlistIds(prev => prev.filter(id => id !== movie.imdbID));
+    //   }
+    // }
   };
 
 

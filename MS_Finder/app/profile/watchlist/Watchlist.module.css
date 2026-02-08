@@ -241,3 +241,27 @@
 .arrowIcon:hover {
   transform: translateX(5px);
 }
+.topBar {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 1rem auto;
+  display: flex;
+  align-items: center;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  color: #1e3a8a; /* Tamno plava (npr. Tailwind blue-900) */
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.backLink:hover {
+  color: #3b82f6; /* Svjetlija plava na hover za feedback */
+  transform: translateX(-2px); /* Lagani pomak ulijevo */
+}
+
+.backLink svg {
+  font-size: 1.6rem; /* Smanjena veličina strelice */
+}

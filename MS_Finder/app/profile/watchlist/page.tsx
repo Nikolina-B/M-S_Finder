@@ -9,7 +9,7 @@ import { HiOutlineArrowRight } from "react-icons/hi";
 import { FaTrash, FaStar } from "react-icons/fa";
 import { toggleWatchlistAction } from "@/app/actions/watchlist";
 import { revalidatePath } from "next/cache";
-
+import { HiOutlineArrowLeft } from "react-icons/hi";
 const createSlug = (title: string) => title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-');
 
 export default async function WatchlistPage() {
@@ -25,6 +25,8 @@ export default async function WatchlistPage() {
 
   return (
     <main className={styles.exploreContainer}>
+
+
       <h1 className={styles.mainTitle}>My Watchlist</h1>
       
 
@@ -51,6 +53,15 @@ export default async function WatchlistPage() {
                     Genre: movie.genre || "",
                     Poster: movie.poster || ""
                 });
+                revalidatePath("/profile");
+  revalidatePath("/profile/watchlist");
+  // ✨ update localStorage i event
+  const stored = JSON.parse(localStorage.getItem("watchlist") || "[]");
+  const updated = stored.filter((id: string) => id !== movie.movieId);
+  localStorage.setItem("watchlist", JSON.stringify(updated));
+  window.dispatchEvent(new Event("watchlistUpdated"));
+
+
               }}>
                 <button type="submit" className={styles.trashBtn} aria-label="Remove from Watchlist">
                   <FaTrash />
@@ -93,4 +104,3 @@ export default async function WatchlistPage() {
     </main>
   );
 }
-//dodati strelicu za vratiti se nazad na profile

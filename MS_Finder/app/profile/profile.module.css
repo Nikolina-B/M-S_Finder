@@ -25,6 +25,12 @@
   gap: 1.5rem;
   margin-bottom: 2.5rem;
 }
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
 @media (min-width: 640px) {
   .profileHeader {

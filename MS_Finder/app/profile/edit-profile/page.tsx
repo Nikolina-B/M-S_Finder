@@ -23,14 +23,14 @@ export default function EditProfilePage() {
 
   // Učitavanje profila iz localStorage
   useEffect(() => {
-    const stored = localStorage.getItem("userProfile");
-    if (stored) {
-      try {
-        setProfile(JSON.parse(stored));
-      } catch (error) {
-        console.error("Greška pri čitanju profila:", error);
-      }
-    }
+    // const stored = localStorage.getItem("userProfile");
+    // if (stored) {
+    //   try {
+    //     setProfile(JSON.parse(stored));
+    //   } catch (error) {
+    //     console.error("Greška pri čitanju profila:", error);
+    //   }
+    // }
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,13 +53,32 @@ export default function EditProfilePage() {
     setProfile((prev) => ({ ...prev, avatar: "" }));
   };
 
+  // const handleSave = () => {
+  //   localStorage.setItem("userProfile", JSON.stringify(profile));
+  //   setMessage("Profil je uspješno spremljen!");
+    
+  //   setTimeout(() => setMessage(""), 3000);
+  // };
   const handleSave = () => {
+    // 1. Spremanje trenutnih podataka
     localStorage.setItem("userProfile", JSON.stringify(profile));
-    setMessage("Profil je uspješno spremljen!");
+    
+    // 2. Slanje signala Navbaru da osvježi sliku
+    window.dispatchEvent(new Event("profileUpdated"));
+
+    // 3. PRAŽNJENJE POLJA (Labela/Inputa)
+    setProfile({
+      name: "",
+      email: "",
+      password: "",
+      avatar: "",
+    });
+
+    // 4. Poruka uspjeha
+    setMessage("Profil je uspješno spremljen i polja su očišćena!");
     
     setTimeout(() => setMessage(""), 3000);
   };
-
   return (
     <main className={styles.container}>
       <h1 className={styles.title}>Edit Profil</h1>
