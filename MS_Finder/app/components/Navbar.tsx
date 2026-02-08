@@ -107,9 +107,9 @@ export default function Navbar() {
 
         <div className={styles.right}>
           <div className={styles.searchWrapper}>
-           
+{/*            
                 <QuickSearch />
-           
+            */}
           </div>
 
          <div className={styles.authButtons}>
