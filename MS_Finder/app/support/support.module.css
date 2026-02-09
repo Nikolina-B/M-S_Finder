@@ -336,6 +336,7 @@
 }
 
 
+
 @media (max-width: 1024px) {
   .headerTextWrapper .title {
     font-size: 3.2rem; 
@@ -401,3 +402,5 @@
     padding: 10px;
   }
 }
+
+
