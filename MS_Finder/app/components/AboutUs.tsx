@@ -8,16 +8,15 @@ const AboutUs = () => {
       <div className={styles.content}>
         <h2 className={styles.title}>About Us</h2>
         <p className={styles.description}>
-          M&S Finder is an application created to stop endless scrolling 
-          and make finding the perfect movie or series an immediate 
-          and precise experience. M&S Finder gives you complete 
-          control over your entertainment, becoming your reliable 
-          cinematic friend.
+         "M&S Finder is designed to simplify your entertainment experience. We’ve replaced the frustration of choice overload with a curated journey tailored to your unique taste. From hidden gems to the latest global hits, we provide the tools to explore, decide, and dive into great stories effortlessly. Your time is valuable—let us help you spend it watching, not searching."
         </p>
         {/* <button className={styles.learnMoreBtn}>Learn more</button> */}
-        <Link href="/support" className={styles.learnMoreBtn}>
+        {/* <Link href="/support" className={styles.learnMoreBtn}>
           Learn more
-        </Link>
+        </Link> */}
+        <Link href="/abouts" className={styles.learnMoreBtn}>
+  Learn more
+</Link>
       </div>
       
       <div className={styles.imageWrapper}>
