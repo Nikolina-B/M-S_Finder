@@ -20,13 +20,13 @@ export default function CommunityPage() {
   }
   
 
-  const handleProtectedAction = (e:React.MouseEvent)=>{
-    if(!session?.user){
-      e.preventDefault();
-      setShowPopup(true);
+  const handleAction = (modalType: "join" | "create") => {
+    if (!session?.user) {
+      setShowPopup(true); // Ako nije prijavljen, pokaži popup
+    } else {
+      setActiveModal(modalType); // Ako je prijavljen, otvori željeni modal
     }
   };
-
   
   const requireAuth = () => {
     setShowPopup(true);
@@ -92,7 +92,7 @@ export default function CommunityPage() {
         {/* <JoinButton session={session} onAuthRequired={() => setShowPopup(true)} /> */}
          <button 
           className={styles.submitBtn}
-          onClick={() => setActiveModal("join")}
+          onClick={() => handleAction("join")}
         >
           Join Community
         </button>
@@ -104,31 +104,17 @@ export default function CommunityPage() {
         <p className={styles.text}>
          Create new community hub and chat with other users about movies and series! Check what other users recommend.
         </p>
-        {/* <Link href="/community/reviews" className={styles.submitBtn} >
-          Create 
-        </Link> */}
-        {/* <CreateCommunity session={session} onAuthRequired={() => setShowPopup(true)} /> */}
+        
           
         <button 
           className={styles.submitBtn}
-          onClick={() => setActiveModal("create")}
+          onClick={() => handleAction("create")}
         >
           Create Community
         </button>
       </section>
 
-      {/* <section className={styles.sectionCard} style={{ textAlign: 'center' }}>
-        <div className={styles.statsContainer}>
-          <div>
-            <h3 className={styles.statsNumber}>1.2k</h3>
-            <p className={styles.text}>Reviews</p>
-          </div>
-          <div>
-            <h3 className={styles.statsNumber}>500+</h3>
-            <p className={styles.text}>Members</p>
-          </div>
-        </div>
-      </section> */}
+      
 
    
     </main>
@@ -137,4 +123,3 @@ export default function CommunityPage() {
 }
 
 
-//u profile dodaj my communities i na community pageu dodaj da se vidu 

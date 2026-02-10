@@ -1,39 +1,44 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { authClient } from "@/app/lib/auth/auth-client";
 import styles from "./EditProfile.module.css"; 
 
 type UserProfile = {
   name: string;
   email: string;
   password: string;
+  currentPassword: string;
   avatar?: string;
 };
 
 export default function EditProfilePage() {
+
+  const {data:session, isPending} = authClient.useSession();
   const [profile, setProfile] = useState<UserProfile>({
     name: "",
     email: "",
     password: "",
+    currentPassword:"",
     avatar: "",
   });
 
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   
 
-  // Učitavanje profila iz localStorage
+  
   useEffect(() => {
-    // const stored = localStorage.getItem("userProfile");
-    // if (stored) {
-    //   try {
-    //     setProfile(JSON.parse(stored));
-    //   } catch (error) {
-    //     console.error("Greška pri čitanju profila:", error);
-    //   }
-    // }
-  }, []);
+   if(session?.user){
+    setProfile((prev)=>({
+      ...prev,
+      name:session.user.name || "",
+      email:session.user.email || "",
+      avatar:session.user.image || "",
+    }));
+   }
+  }, [session]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -56,26 +61,60 @@ export default function EditProfilePage() {
   };
 
  
-  const handleSave = () => {
-    // 1. Spremanje trenutnih podataka
-    localStorage.setItem("userProfile", JSON.stringify(profile));
+  const handleSave = async() => {
     
-    // 2. Slanje signala Navbaru da osvježi sliku
-    window.dispatchEvent(new Event("profileUpdated"));
-
-    // 3. PRAŽNJENJE POLJA (Labela/Inputa)
-    setProfile({
-      name: "",
-      email: "",
-      password: "",
-      avatar: "",
-    });
-
-    // 4. Poruka uspjeha
-    setMessage("Profile update success!");
+    setLoading(true);
+    setMessage("");
+    let updateSuccess = true;
     
-    setTimeout(() => setMessage(""), 3000);
+    try{
+      const{error:userError} = await authClient.updateUser({
+        name:profile.name,
+        image:profile.avatar,
+      });
+      
+      if (userError) {
+        updateSuccess = false;
+        setMessage("Greška pri ažuriranju profila: " + userError.message);
+        setLoading(false);
+        return;
+      }
+
+     
+      if (profile.password && profile.password.trim() !== "") {
+
+        if(!profile.currentPassword){
+          setMessage("You need to enter current password to change it!");
+          setLoading(false);
+          return;
+        }
+        const { error: passwordError } = await authClient.changePassword({
+          newPassword: profile.password,
+          currentPassword:profile.currentPassword,
+          revokeOtherSessions: true, 
+        });
+
+        if (passwordError) {
+          updateSuccess = false;
+          setMessage("Profile is updated, but password is not. " + passwordError.message);
+        }
+      }
+
+      if (updateSuccess) {
+          window.dispatchEvent(new Event("profileUpdated"));
+          setMessage("Changes have submitted!");
+          setProfile(prev => ({ ...prev, password: "", currentPassword: "" }));
+      }
+
+    } catch (err) {
+      setMessage("There was a mistake. Try again!");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (isPending) return <div className={styles.container}>Učitavanje...</div>;
+
   return (
     <main className={styles.container}>
       <h1 className={styles.title}>Edit Profile</h1>
@@ -98,8 +137,21 @@ export default function EditProfilePage() {
             type="email"
             name="email"
             value={profile.email}
+            disabled
+            className={styles.input}
+            style={{ opacity: 0.5 }}
+          />
+        </div>
+
+        <div className={styles.card}>
+          <label className={styles.cardTitle}>Current Password</label>
+          <input
+            type="password"
+            name="currentPassword"
+            value={profile.currentPassword}
             onChange={handleChange}
             className={styles.input}
+            placeholder="Unesite trenutnu lozinku"
           />
         </div>
 
@@ -111,6 +163,7 @@ export default function EditProfilePage() {
             value={profile.password}
             onChange={handleChange}
             className={styles.input}
+            placeholder="New password"
           />
         </div>
 
@@ -139,7 +192,7 @@ export default function EditProfilePage() {
         </div>
       </div>
 
-      <button className={styles.saveButton} onClick={handleSave}>
+      <button className={styles.saveButton} onClick={handleSave} disabled={loading}>
         Save changes
       </button>
 
@@ -147,4 +200,4 @@ export default function EditProfilePage() {
     </main>
   );
 }
-//popravi ne radi za updateanje imena samo slika radi vjv ne radi ni gmail ni password!! mora se slat u bazu ne localstorage 
+

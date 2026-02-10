@@ -7,12 +7,12 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    // 1. Dohvati sesiju preko Better-Auth
+    // 1. Dohvacamo sesiju preko better autha
     const session = await auth.api.getSession({
       headers: await headers(),
     });
 
-    // 2. Ako korisnik nije prijavljen, vrati prazan niz (nije greška, samo nema liste)
+    // 2. Ako korisnik nije prijavljen, vrati prazan niz 
     if (!session || !session.user) {
       return NextResponse.json([]);
     }
@@ -25,7 +25,7 @@ export async function GET() {
       .from(favorites)
       .where(eq(favorites.userId, session.user.id));
 
-    // 4. Pretvori niz objekata [{movieId: 'tt123'}, ...] u niz stringova ['tt123', ...]
+    
     const idsOnly = userFavorites.map((item) => item.movieId);
 
     return NextResponse.json(idsOnly);
