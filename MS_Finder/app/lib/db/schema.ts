@@ -70,3 +70,16 @@ export const community_members = pgTable('community_members',{
 
 
 });
+
+export const community_messages = pgTable('community_messages',{
+    id: uuid("id").defaultRandom().primaryKey(),
+    content:text("content").notNull(),
+    userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }), //onDelete automatski brise sve poruke vezane za obrisani hub
+    communityId: uuid("community_id")
+    .notNull()
+    .references(() => communities.id, { onDelete: "cascade" }), 
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+
+});

@@ -46,9 +46,9 @@
 }
 
 .communityItem:hover {
-  background: #1f2a48;
-  border-color: #6366f1;
-  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(98, 70, 234, 0.3);
+  
 }
 .communityItem:hover .openBtn {
   background: #6366f1;
