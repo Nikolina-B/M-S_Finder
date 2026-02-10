@@ -15,5 +15,5 @@ export async function middleware(request: NextRequest) {
 export const config = {
     // Ovdje upiši sve rute koje želiš zaključati
     // npr. ["/profile", "/movies", "/explore"]
-    matcher: ["/profile", "/explore","/community"], 
+    matcher: ["/profile", "/explore"], 
 };

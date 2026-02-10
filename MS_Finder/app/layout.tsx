@@ -60,3 +60,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+//makni bijelu pozadinu sa favicona

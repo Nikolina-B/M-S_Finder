@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
+import { pgTable, text, timestamp, uuid, integer } from 'drizzle-orm/pg-core'
 import { sql } from 'drizzle-orm'
 import { user } from './auth-schema'
 
@@ -43,5 +43,30 @@ export const contact_messages = pgTable('contact_messages',{
     email: text("email").notNull(),
     message: text("message").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
+
+});
+export const communities = pgTable('communities',{
+    id: uuid("id").defaultRandom().primaryKey(),
+    name: text("name").notNull().unique(),
+    slug: text("slug").notNull().unique(),
+    adminId: text("admin_id")
+        .notNull()
+        .references(() => user.id), 
+    memberCount: integer("member_count").default(1),
+    createdAt: timestamp("created_at").defaultNow(),
+
+});
+export const community_members = pgTable('community_members',{
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id")
+    .notNull()
+    .references(() => user.id),
+
+    communityId: uuid("community_id")
+    .notNull()
+    .references(() => communities.id),
+
+    joinedAt: timestamp("joined_at").defaultNow(),
+
 
 });

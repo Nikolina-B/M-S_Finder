@@ -83,3 +83,81 @@
 .statsNumber {
   color: #6246ea;
 }
+
+/* Popup window za neregistrirane korisnike*/
+
+.overlay {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75); 
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  z-index: 9999; 
+  backdrop-filter: blur(4px); 
+}
+
+
+.popupCard {
+  position: relative;
+  background: #1a1a2e; 
+  padding: 2.5rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+.popupActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+
+.actionBtn {
+  padding: 0.6rem 1.3rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+  background: #5D3FD3;
+  color: #ffffff;
+  border: none;
+}
+.actionBtn:hover {
+  background: linear-gradient(135deg, #4829b2, #6246ea);
+  transform: scale(1.03);
+}
+.iconContainer{
+  position: absolute;
+  top: 15px;      
+  right: 15px;    
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  
+  
+  
+}
+
+.iconX {
+  font-size: 1.5rem; 
+  color: white;     
+  opacity: 0.7;
+}
+
+.iconX:hover {
+  opacity: 1;
+}

@@ -4,12 +4,9 @@
   max-width: 480px; 
   margin: 80px auto;
   padding: 40px;
-  
-
   background-color:  #2d2d44; 
   border-radius: 12px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  
   color: #fffffe; 
   font-family: 'Inter', sans-serif;
 }
@@ -37,18 +34,16 @@
 .cardTitle {
   font-size: 0.95rem;
   font-weight: 600;
+  margin-left: 15px;
   color: #fffffe;
 }
 
 .input {
   width: 100%;
   padding: 14px;
-  border-radius: 6px;
-  
- 
+  border-radius: 25px;
   background-color: #121629; 
   border: 1px solid #1b1f35; 
-  
   color: #b8c1ec; 
   font-size: 1rem;
   outline: none;
@@ -98,7 +93,7 @@
   background-color: #6246ea; 
   color: #fffffe;
   border: none;
-  border-radius: 6px;
+  border-radius: 25px;
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;

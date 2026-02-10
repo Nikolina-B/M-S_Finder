@@ -159,6 +159,7 @@ import { HiOutlineFilm } from "react-icons/hi";
 import { FaChevronRight } from "react-icons/fa6";
 import { FaRegHeart } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
+import { RiUserCommunityLine } from "react-icons/ri";
 
 import { authClient } from "@/app/lib/auth/auth-client";
 
@@ -342,10 +343,24 @@ useEffect(() => {
                   <FaChevronRight className={styles.menuArrow} />
                 </Link>
               </li>
+              <li className={styles.menuItem}>
+                <Link href="/profile/myCommunites" className={styles.menuLink}>
+                  <div className={styles.menuIconWrapper}>
+                    <RiUserCommunityLine className={styles.menuIcon} />
+                  </div>
+                  <div className={styles.menuContent}>
+                    <p className={styles.menuTitle}>Communites</p>
+                    <p className={styles.menuDescription}>
+                      Check your community hubs
+                    </p>
+                  </div>
+                  <FaChevronRight className={styles.menuArrow} />
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* LOGOUT (ako želiš) */}
+          {/* LOGOUT  */}
           {/*
           <button onClick={handleLogOut} className={styles.logoutBtn}>
             <FiLogOut />
@@ -357,3 +372,5 @@ useEffect(() => {
     </div>
   );
 }
+
+//prerpavi funkcije ne valjaju i ucitaj podatke azurirane

@@ -20,6 +20,8 @@ export default function EditProfilePage() {
   });
 
   const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
+  
 
   // Učitavanje profila iz localStorage
   useEffect(() => {
@@ -53,12 +55,7 @@ export default function EditProfilePage() {
     setProfile((prev) => ({ ...prev, avatar: "" }));
   };
 
-  // const handleSave = () => {
-  //   localStorage.setItem("userProfile", JSON.stringify(profile));
-  //   setMessage("Profil je uspješno spremljen!");
-    
-  //   setTimeout(() => setMessage(""), 3000);
-  // };
+ 
   const handleSave = () => {
     // 1. Spremanje trenutnih podataka
     localStorage.setItem("userProfile", JSON.stringify(profile));
@@ -75,13 +72,13 @@ export default function EditProfilePage() {
     });
 
     // 4. Poruka uspjeha
-    setMessage("Profil je uspješno spremljen i polja su očišćena!");
+    setMessage("Profile update success!");
     
     setTimeout(() => setMessage(""), 3000);
   };
   return (
     <main className={styles.container}>
-      <h1 className={styles.title}>Edit Profil</h1>
+      <h1 className={styles.title}>Edit Profile</h1>
 
       <div className={styles.list}>
         <div className={styles.card}>
@@ -143,10 +140,11 @@ export default function EditProfilePage() {
       </div>
 
       <button className={styles.saveButton} onClick={handleSave}>
-        Spremi promjene
+        Save changes
       </button>
 
       {message && <p className={styles.message}>{message}</p>}
     </main>
   );
 }
+//popravi ne radi za updateanje imena samo slika radi vjv ne radi ni gmail ni password!! mora se slat u bazu ne localstorage 

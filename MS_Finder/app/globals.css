@@ -23,10 +23,12 @@ html, body {
   overflow-x: hidden; 
  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color:#0C0D32;
+  transform: none !important;
 }
 #__next {
   width: 100%;
   min-height: 100vh;
+  transform: none !important;
 }
 
 

@@ -1,361 +1,264 @@
-// "use client";
 
-// import { useState, useEffect } from "react";
-// import styles from "./TrendingMovies.module.css";
+"use client"; 
 
-// const movies = [
-//   { id: 1, title: "Anyone But You", rating: 4, image: "anyone-but-you.jpg", trailer: "https://www.youtube.com/watch?v=UcmsKd61rS0" },
-//   { id: 2, title: "F1 The Movie", rating: 5, image: "f1.jpg", trailer: "https://www.youtube.com/watch?v=8yh9BPUBbbQ" },
-//   { id: 3, title: "Kpop Demon Hunters", rating: 4, image: "kpop.png", trailer: "https://www.youtube.com/watch?v=3JTVQTk36R8" },
-//   { id: 4, title: "Weapons", rating: 4, image: "weapons.jpg", trailer: "https://www.youtube.com/watch?v=OpThntO9ixc" },
-//   { id: 5, title: "Avatar", rating: 5, image: "avatar33.jpg", trailer: "https://www.youtube.com/watch?v=CM79GTEm2ps" },
-//   { id: 6, title: "Stranger Things 5", rating: 5, image: "st555.jpg", trailer: "https://www.youtube.com/watch?v=PssKpzB0Ah0" },
-//   { id: 7, title: "Shrek", rating: 5, image: "shrek.jpg", trailer: "https://www.youtube.com/watch?v=HLQ1cK9Edhc&list=RDHLQ1cK9Edhc&start_radio=1" },
-//     { id: 8, title: "Top Gun", rating: 5, image: "topGun.jpg", trailer: "https://www.youtube.com/watch?v=qSqVVswa420" },
-// ];
+import { useState, useEffect } from "react"; 
+import styles from "./TrendingMovies.module.css"; 
+import { HiOutlineArrowRight } from "react-icons/hi"; 
+import  IMBDRating  from "../explore/imbdRating"; 
+import FavoritesButton from '../explore/wishlistHandle'; 
+import {authClient} from "@/app/lib/auth/auth-client" 
+import Link from 'next/link'; 
+import { toggleWatchlistAction } from '../actions/watchlist'; 
+import { useRouter } from 'next/navigation'; 
 
-// function StarRating({ movieId, initialRating }: { movieId: number; initialRating: number }) {
-//   const [rating, setRating] = useState(initialRating);
-//   const [mounted, setMounted] = useState(false);
+ 
 
-//   useEffect(() => {
-//     setMounted(true);
-//     const saved = localStorage.getItem(`rating-${movieId}`);
-//     if (saved) setRating(Number(saved));
-//   }, [movieId]);
+ 
 
-//   const handleSetRating = (value: number) => {
-//     setRating(value);
-//     localStorage.setItem(`rating-${movieId}`, value.toString());
-//   };
+const API_KEY = process.env.NEXT_PUBLIC_MOVIE_DB_API_KEY; 
+const API_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`; 
 
-//   if (!mounted) return null;
 
-//   return (
-//     <div className={styles.stars}>
-//       {[1, 2, 3, 4, 5].map((star) => (
-//         <span
-//           key={star}
-//           onClick={() => handleSetRating(star)}
-//           className={star <= rating ? styles.filled : styles.empty}
-//         >
-//           ★
-//         </span>
-//       ))}
-//     </div>
-//   );
-// }
+const TRENDING_IDS = ["tt33046197","tt8740790","tt8036976","tt32642706","tt12637874", "tt31193180", "tt1399664", "tt4574334","tt30144839", "tt27543632", "tt32916440", "tt14186672"]; 
 
-// export default function TrendingMovies() {
-//   const itemsPerPage = 4;
-//   const [page, setPage] = useState(0);
+ 
 
-//   const startIndex = page * itemsPerPage;
-//   const endIndex = startIndex + itemsPerPage;
-//   const visibleMovies = movies.slice(startIndex, endIndex);
+const createSlug = (title: string): string => { 
 
-//   const handleNext = () => {
-//     if (endIndex < movies.length) setPage(page + 1);
-//   };
+    if (!title) return ''; 
 
-//   const handlePrev = () => {
-//     if (startIndex > 0) setPage(page - 1);
-//   };
+    return title 
+        .toLowerCase() 
+        .replace(/[^a-z0-9\s-]/g, '') 
+        .trim() 
+        .replace(/\s+/g, '-'); 
 
-//  return (
-//   <section className={styles.section}>
-//     <h2>Trending </h2>
-//     <div className={styles.sliderWrapper}>
-//       {/* Strelica lijevo */}
-//       <button
-//         onClick={handlePrev}
-//         className={`${styles.scrollBtn} ${styles.left}`}
-//         disabled={startIndex === 0}
-//       >
-//         {/* ← */}
-//         &#10094;
-//       </button>
-    
-//       {/* Slider */}
-//       <div className={styles.slider}>
-//         {visibleMovies.map((movie) => (
-//           <div key={movie.id} className={styles.card}>
-//             {/* Samo slika vodi na trailer */}
-//             <a href={movie.trailer} target="_blank" rel="noopener noreferrer">
-//               <img
-//                 src={movie.image}
-//                 alt={movie.title}
-//                 className={styles.trailerImage}
-//               />
-//             </a>
+}; 
 
-//             {/* Naslov i zvjezdice ostaju interaktivni */}
-//             <div className={styles.cardFooter}>
-//               <span>{movie.title}</span>
-//               <StarRating movieId={movie.id} initialRating={movie.rating} />
-//             </div>
-//     {/* Plus dugme u lijevom donjem kutu */}
-//   <button className={styles.addBtn}>+</button>
-//           </div>
-      
-//         ))}
-//       </div>
-     
+ 
 
-//       {/* Strelica desno */}
-//       <button
-//         onClick={handleNext}
-//         className={`${styles.scrollBtn} ${styles.right}`}
-//         disabled={endIndex >= movies.length}
-//       >
-//         {/* → */}
-//         &#10095;
-//       </button>
-   
+/* ------------------ MAIN COMPONENT ------------------ */ 
 
-//     </div>
-//   </section>
-// );
-// }
-"use client";
+ 
 
-import { useState, useEffect } from "react";
-import styles from "./TrendingMovies.module.css";
-import { HiOutlineArrowRight } from "react-icons/hi";
+export default function TrendingMovies() { 
 
-/* ------------------ PODACI ------------------ */
+  const { data: session } = authClient.useSession(); 
+  const router = useRouter(); 
 
-const movies = [
-  {
-    id: 1,
-    title: "Anyone But You",
-    rating: 4,
-    image: "anyone-but-you.jpg",
-    trailer: "https://www.youtube.com/watch?v=UcmsKd61rS0",
-  },
-  {
-    id: 2,
-    title: "F1 The Movie",
-    rating: 5,
-    image: "f1.jpg",
-    trailer: "https://www.youtube.com/watch?v=8yh9BPUBbbQ",
-  },
-  {
-    id: 3,
-    title: "Kpop Demon Hunters",
-    rating: 4,
-    image: "kpop.png",
-    trailer: "https://www.youtube.com/watch?v=3JTVQTk36R8",
-  },
-  {
-    id: 4,
-    title: "Weapons",
-    rating: 4,
-    image: "weapons.jpg",
-    trailer: "https://www.youtube.com/watch?v=OpThntO9ixc",
-  },
-  {
-    id: 5,
-    title: "Avatar",
-    rating: 5,
-    image: "avatar33.jpg",
-    trailer: "https://www.youtube.com/watch?v=CM79GTEm2ps",
-  },
-  {
-    id: 6,
-    title: "Stranger Things 5",
-    rating: 5,
-    image: "st555.jpg",
-    trailer: "https://www.youtube.com/watch?v=PssKpzB0Ah0",
-  },
-  {
-    id: 7,
-    title: "Shrek",
-    rating: 5,
-    image: "shrek.jpg",
-    trailer: "https://www.youtube.com/watch?v=HLQ1cK9Edhc",
-  },
-  {
-    id: 8,
-    title: "Top Gun",
-    rating: 5,
-    image: "topGun.jpg",
-    trailer: "https://www.youtube.com/watch?v=qSqVVswa420",
-  },
-];
+ 
 
-/* ------------------ STAR RATING ------------------ */
+  const [movies, setMovies] = useState<any[]>([]); 
+  const [itemsPerPage, setItemsPerPage] = useState(4); 
+  const [page, setPage] = useState(0); 
+  const [loading, setLoading] = useState(true); 
+  const [watchlistIds, setWatchlistIds] = useState<string[]>([]); 
+  const [favoritesIds, setFavoritesIds] = useState<string[]>([]); 
 
-function StarRating({
-  movieId,
-  initialRating,
-}: {
-  movieId: number;
-  initialRating: number;
-}) {
-  const [rating, setRating] = useState(initialRating);
-  const [mounted, setMounted] = useState(false);
+ 
 
-  useEffect(() => {
-    setMounted(true);
-    const saved = localStorage.getItem(`rating-${movieId}`);
-    if (saved) setRating(Number(saved));
-  }, [movieId]);
+ 
 
-  const handleSetRating = (value: number) => {
-    setRating(value);
-    localStorage.setItem(`rating-${movieId}`, value.toString());
-  };
+ /* --- 1. Dohvaćanje podataka o filmovima --- */ 
 
-  if (!mounted) return null;
+    useEffect(() => { 
 
-  return (
-    <div className={styles.stars}>
-      {[1, 2, 3, 4, 5].map((star) => (
-        <span
-          key={star}
-          onClick={() => handleSetRating(star)}
-          className={star <= rating ? styles.filled : styles.empty}
-        >
-          ★
-        </span>
-      ))}
-    </div>
-  );
-}
+        const fetchTrending = async () => { 
+            setLoading(true); 
 
-/* ------------------ MAIN COMPONENT ------------------ */
+            try { 
 
-export default function TrendingMovies() {
-  const [itemsPerPage, setItemsPerPage] = useState(4);
-  const [page, setPage] = useState(0);
-  const [watchlistIds, setWatchlistIds] = useState<number[]>([]);
+                const promises = TRENDING_IDS.map(id => fetch(`${API_URL}&i=${id}`).then(res => res.json())); 
+                const results = await Promise.all(promises); 
+                setMovies(results.filter(m => m.Response === "True")); 
 
-  /* --- učitaj watchlist --- */
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 1024 && window.innerWidth > 650) {
-        setItemsPerPage(2); // Na tabletu prikaži 2
-      } else if (window.innerWidth <= 650) {
-        setItemsPerPage(1); // Na mobitelu prikaži 1
-      } else {
-        setItemsPerPage(4); // Na desktopu prikaži 4
-      }
-    };
+            } catch (err) { 
 
-    handleResize(); // Pokreni odmah pri učitavanju
-    window.addEventListener("resize", handleResize);
-   
-    const stored = localStorage.getItem("watchlist");
-    if (stored) {
-      const list = JSON.parse(stored);
-      setWatchlistIds(list.map((item: any) => item.id));
-    }
-     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+                console.error("Error fetching trending movies:", err); 
 
-  /* --- dodaj / makni iz watchlista --- */
-  const toggleWatchlist = (movie: any) => {
-    const stored = localStorage.getItem("watchlist");
-    let list = stored ? JSON.parse(stored) : [];
+            } finally { 
+                setLoading(false); 
+            } 
 
-    if (list.some((item: any) => item.id === movie.id)) {
-      list = list.filter((item: any) => item.id !== movie.id);
-    } else {
-      list.push({
-        id: movie.id,
-        title: movie.title,
-        image: movie.image,
-        type: "movie",
-      });
-    }
+        }; 
 
-    localStorage.setItem("watchlist", JSON.stringify(list));
+        fetchTrending(); 
 
-    setWatchlistIds(list.map((item: any) => item.id));
-  };
+    }, []); 
 
-  /* --- pagination --- */
-  const startIndex = page * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const visibleMovies = movies.slice(startIndex, endIndex);
+ 
 
-  // Resetiraj stranicu na 0 ako se promijeni broj itemsPerPage da ne ostaneš u "praznom" prostoru
-  useEffect(() => {
-    setPage(0);
-  }, [itemsPerPage]);
-  
-  const handleNext = () => {
-    if (endIndex < movies.length) setPage(page + 1);
-  };
+ /* --- 2. Sinkronizacija Watchlist i Favorites ID-ova --- */ 
 
-  const handlePrev = () => {
-    if (startIndex > 0) setPage(page - 1);
-  };
+    useEffect(() => { 
 
-  /* ------------------ JSX ------------------ */
+        const fetchUserLists = async () => { 
 
-  return (
-    <section className={styles.section}>
-      <h2>Trending</h2>
+            if (session?.user) { 
+                try { 
+                    const [resW, resF] = await Promise.all([ 
 
-      <div className={styles.sliderWrapper}>
-        {/* ← */}
-        <button
-          onClick={handlePrev}
-          className={`${styles.scrollBtn} ${styles.left}`}
-          disabled={startIndex === 0}
-        >
-          &#10094;
-        </button>
+                        fetch('/api/watchlist/ids'), 
+                        fetch('/api/favorites/ids') 
 
-        {/* SLIDER */}
-        <div className={styles.slider}>
-          {visibleMovies.map((movie) => (
-            <div key={movie.id} className={styles.card}>
-              {/* Trailer link */}
-              <a href={movie.trailer} target="_blank" rel="noopener noreferrer">
-                <img
-                  src={movie.image}
-                  alt={movie.title}
-                  className={styles.trailerImage}
-                />
-              </a>
+                    ]); 
 
-              {/* Footer */}
-              <div className={styles.cardFooter}>
-                <span>{movie.title}</span>
-                <StarRating
-                  movieId={movie.id}
-                  initialRating={movie.rating}
-                />
-              </div>
+                    if (resW.ok) setWatchlistIds(await resW.json()); 
+                    if (resF.ok) setFavoritesIds(await resF.json()); 
 
-              {/* WATCHLIST BUTTON */}
-              <button
-                className={`${styles.addBtn} ${
-                  watchlistIds.includes(movie.id) ? styles.added : ""
-                }`}
-                onClick={() => toggleWatchlist(movie)}
-              >
-                {watchlistIds.includes(movie.id) ? "✓" : "+"}
-              </button>
-              <div className={styles.arrowIcon}>
-                <HiOutlineArrowRight />
-              </div>
-            </div>
-          ))}
-        </div>
+                } catch (err) { 
 
-        {/* → */}
-        <button
-          onClick={handleNext}
-          className={`${styles.scrollBtn} ${styles.right}`}
-          disabled={endIndex >= movies.length}
-        >
-          &#10095;
-        </button>
-      </div>
-    </section>
-  );
-}
+                    console.error("Error fetching user lists:", err); 
+
+                } 
+
+            } 
+
+        }; 
+
+        fetchUserLists(); 
+
+    }, [session]); 
+
+ 
+
+    /* --- 3. Responsive logic --- */ 
+
+    useEffect(() => { 
+
+        const handleResize = () => { 
+
+            if (window.innerWidth <= 1024 && window.innerWidth > 650) setItemsPerPage(2); 
+
+            else if (window.innerWidth <= 650) setItemsPerPage(1); 
+
+            else setItemsPerPage(4); 
+
+        }; 
+
+        handleResize(); 
+
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize); 
+
+    }, []); 
+
+ 
+
+    /* --- 4. Watchlist Toggle (Identično kao na Explore) --- */ 
+
+    const handleWatchlistToggle = async (e: React.MouseEvent, movie: any) => { 
+
+        e.preventDefault(); e.stopPropagation(); 
+
+        if (!session) return alert("Please login!"); 
+
+        const isAlreadyIn = watchlistIds.includes(movie.imdbID); 
+
+        setWatchlistIds(prev => isAlreadyIn ? prev.filter(id => id !== movie.imdbID) : [...prev, movie.imdbID]); 
+
+ 
+
+        try { 
+            await toggleWatchlistAction({ 
+                imdbID: movie.imdbID, 
+                Title: movie.Title, 
+                imdbRating: movie.imdbRating, 
+                Year: movie.Year, 
+                Genre: movie.Genre, 
+                Poster: movie.Poster, 
+            }); 
+        } catch (err) { 
+            setWatchlistIds(prev => isAlreadyIn ? [...prev, movie.imdbID] : prev.filter(id => id !== movie.imdbID)); 
+        } 
+    }; 
+
+ 
+
+    /* --- Pagination --- */ 
+
+    const startIndex = page * itemsPerPage; 
+    const visibleMovies = movies.slice(startIndex, startIndex + itemsPerPage); 
+
+    const handleNext = () => { if (startIndex + itemsPerPage < movies.length) setPage(page + 1); }; 
+    const handlePrev = () => { if (page > 0) setPage(page - 1); }; 
+
+    if (loading) return <div className={styles.loader}>Loading trending...</div>; 
+
+    return ( 
+
+        <section className={styles.section}> 
+            <h2 className={styles.mainTitle}>Trending</h2> 
+            <div className={styles.sliderWrapper}> 
+                <button onClick={handlePrev} className={`${styles.scrollBtn} ${styles.left}`} disabled={page === 0}> 
+                    &#10094; 
+                </button> 
+                <div className={styles.slider}> 
+                    {visibleMovies.map((movie) => ( 
+                        <div key={movie.imdbID} className={styles.card}> 
+                            {/* Gornji dio: Poster i Gumbi */} 
+                            <div className={styles.imageContainer}> 
+                                <Link href={`/explore/${movie.imdbID}-${createSlug(movie.Title)}`}> 
+                                    <img 
+                                        src={movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450'} 
+                                        alt={movie.Title} 
+                                        className={styles.trailerImage} 
+                                    /> 
+                                </Link> 
+
+                                <div className={styles.WishWatchbuttons}> 
+                                    <button 
+                                        className={`${styles.addBtn} ${watchlistIds.includes(movie.imdbID) ? styles.added : ""}`} 
+                                        onClick={(e) => handleWatchlistToggle(e, movie)} 
+                                    > 
+                                        {watchlistIds.includes(movie.imdbID) ? "✓" : "+"} 
+                                    </button> 
+                                    <FavoritesButton 
+                                        movie={movie} 
+                                        initialFavoritesIds={favoritesIds} 
+                                        session={session} 
+                                    /> 
+                                </div> 
+                                <div className={styles.gradientOverlay}></div> 
+                                <IMBDRating rating={movie.imdbRating} /> 
+                            </div> 
+
+ 
+
+                            {/* Donji dio: Info */} 
+                            <div className={styles.cardFooter}> 
+                                <span className={styles.movieTitle}>{movie.Title}</span> 
+                                <span className={styles.year}>{movie.Year}</span> 
+                                <div className={styles.genreContainer}> 
+                                    {movie.Genre !== "N/A" ? ( 
+                                        movie.Genre.split(',').slice(0, 2).map((g: string) => ( 
+                                            <span key={g} className={styles.genreTag}>{g.trim()}</span> 
+
+                                        )) 
+                                    ) : <span className={styles.genreTag}>N/A</span>} 
+                                </div> 
+                            </div> 
+
+                            {/* Strelica */} 
+                            <div
+                                className={styles.arrowIcon} 
+                                onClick={() => router.push(`/explore/${movie.imdbID}-${createSlug(movie.Title)}`)} 
+                            > 
+                                <HiOutlineArrowRight /> 
+                            </div> 
+                        </div> 
+                    ))} 
+                </div> 
+
+ 
+
+                <button onClick={handleNext} className={`${styles.scrollBtn} ${styles.right}`} disabled={startIndex + itemsPerPage >= movies.length}> 
+                    &#10095; 
+                </button> 
+            </div> 
+        </section> 
+
+    ); 
+
+} 

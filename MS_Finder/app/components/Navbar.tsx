@@ -348,3 +348,5 @@ export default function Navbar() {
     </>
   );
 }
+
+//dodaj about us samo ukratko nesto !! button za profile popravit
