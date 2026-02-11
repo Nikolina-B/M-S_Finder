@@ -1,126 +1,61 @@
-
-
 .quickSearch {
-    display: flex;
-    position: relative;
-    align-items: center;
-    border-radius: 25px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
-    width: 280px; 
+  display: flex;
+  position: relative;
+  align-items: center;
+  border-radius: 25px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  width: 280px; 
+  transition: width 0.3s ease;
+  height: 38px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0 40px 0 20px;
+  font-size: 0,95rem;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  border-radius: 25px;
+  outline: none;
+  color: #1a1f36;
+  height: 100%;
 }
 
 .icon {
   position: absolute;
-  right: 20px;
-  font-size: 1rem;
+  right: 15px;
+  font-size: 1.2rem;
   color: #6b6b80;
-  pointer-events: none;
-}
-.quickSearch input {
-    flex: 1;
-    padding: 0.5rem 0.8rem; 
-    font-size: 1rem; 
-    font-weight: 500; 
-    border: none;
-    border-radius: 25px;
-    outline: none;
+  pointer-events: none; 
 }
 
-/* .quickSearch button {
-    
-    flex-shrink: 0; 
-    padding: 0.5rem 0.9rem; 
-    font-size: 0.9rem; 
-    font-weight: 600; 
-    border: none;
-    border-radius: 5px;
-    background-color: #5d46e2; 
-  
-    color: #1a1f36;
-    cursor: pointer;
-   transition: all 0.3s;
-}
-
-.quickSearch button:hover {
-    background-color: #5d46e2; 
-    transform: scale(1.05);
-} */
+/* reponzivnost */
 
 @media (max-width: 1024px) {
-    .quickSearch {
-        width: 40px;          /* Širina samo za ikonu */
-        height: 40px;         /* Da bude pravilan krug/kvadrat */
-        background: transparent; /* Mičemo pozadinu inputa */
-        box-shadow: none;     /* Mičemo sjenu */
-        justify-content: center;
-        cursor: pointer;
-    }
-  
-
-    .quickSearch input {
-        display: none;        /* Sakrivamo polje za kucanje */
-    }
-
-    .icon {
-        position: static;     /* Mičemo je iz kuta u centar */
-        color: white;         /* Bijela ikona jer je pozadina navbar tamna */
-        font-size: 1.5rem;    /* Povećavamo ikonu da bude uočljiva */
-        pointer-events: all;  /* Dopusti klik na ikonu na mobitelu */
-    }
-    .quickSearch .expanded {
-        width: 200px; /* Širi se i omogućuje unos */
-        background-color: white;
-        padding-left: 10px;
-        border-radius: 25px;
-        overflow: hidden;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-    .quickSearch .expanded .icon {
-        position: absolute;
-        right: 12px;
-        font-size: 1rem;
-        color: #6b6b80;
-        pointer-events: none;
-        }
-    .icon:hover{
-        transform: scale(1.1);
-    }
-    
-    .quickSearch:not(.expanded) .searchInput {
-        width: 0;
-        padding: 0;
-        opacity: 0;
-        pointer-events: none;
-    }
-
-
-    .quickSearch:not(.expanded) .icon {
-        position: static;
-        color: white;
-        font-size: 1.5rem;
-    }
-    .quickSearch.expanded .searchInput {
-        width: 100%;
-        opacity: 1;
-        pointer-events: auto;
-        color: #1a1f36;
-    }
+  .quickSearch {
+    width: 200px; 
+  }
 }
 
-/* --- MOBITEL (max-width: 650px) --- */
 @media (max-width: 650px) {
-    /* Na mobitelu obično želimo da search i dalje bude samo ikona 
-       kako bi Sign In gumbi stali u red. */
-    .quickSearch {
-        width: 35px;
-        height: 35px;
-    }
+  .quickSearch {
+    width: 150px; 
+  }
+  
+  .searchInput {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
 
-    .icon {
-        font-size: 1.3rem;
-    }
-    .icon:hover{
-        transform: scale(1.1);
-    }
+  .icon {
+    right: 12px;
+    font-size: 1rem;
+  }
+}
+
+
+.quickSearch:focus-within {
+  box-shadow: 0 0 0 2px #5d46e2; 
 }

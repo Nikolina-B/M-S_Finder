@@ -26,11 +26,11 @@ export default async function WishlistPage() {
 
   return (
     <main className={styles.exploreContainer}>
-      <div className={styles.topBar}>
+      {/* <div className={styles.topBar}>
         <Link href="/profile" className={styles.backLink}>
-          <HiOutlineArrowLeft /> Back to Profile
+          <HiOutlineArrowLeft /> 
         </Link>
-      </div>
+      </div> */}
 
       <h1 className={styles.mainTitle}>My Wishlist</h1>
 

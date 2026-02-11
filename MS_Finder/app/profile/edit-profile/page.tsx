@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { authClient } from "@/app/lib/auth/auth-client";
 import styles from "./EditProfile.module.css"; 
+import { FaCheckCircle } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type UserProfile = {
   name: string;
@@ -15,6 +18,7 @@ type UserProfile = {
 export default function EditProfilePage() {
 
   const {data:session, isPending} = authClient.useSession();
+  const router = useRouter();
   const [profile, setProfile] = useState<UserProfile>({
     name: "",
     email: "",
@@ -102,8 +106,13 @@ export default function EditProfilePage() {
 
       if (updateSuccess) {
           window.dispatchEvent(new Event("profileUpdated"));
-          setMessage("Changes have submitted!");
+          setIsSuccess(true);
+          // setMessage("Changes have submitted!");
           setProfile(prev => ({ ...prev, password: "", currentPassword: "" }));
+
+         setTimeout(() => {
+          router.push("/profile");
+        }, 3000);
       }
 
     } catch (err) {
@@ -117,7 +126,10 @@ export default function EditProfilePage() {
 
   return (
     <main className={styles.container}>
-      <h1 className={styles.title}>Edit Profile</h1>
+      
+      {!isSuccess ? (
+        <>
+        <h1 className={styles.title}>Edit Profile</h1>
 
       <div className={styles.list}>
         <div className={styles.card}>
@@ -195,8 +207,21 @@ export default function EditProfilePage() {
       <button className={styles.saveButton} onClick={handleSave} disabled={loading}>
         Save changes
       </button>
-
-      {message && <p className={styles.message}>{message}</p>}
+      </>
+      ):(
+          <div className={styles.success}>
+          <FaCheckCircle size={52} color="#4bb543" style={{ marginBottom: "1rem",alignSelf:'center' }} />
+          <h2 className={styles.title}>Success!</h2>
+          <p className={styles.text}>
+            Your profile has been updated successfully.
+            Redirecting to profile in 3 seconds...
+          </p>
+          <Link href="/profile" className={styles.saveButton} style={{ textDecoration: 'none', display: 'inline-block', marginTop: '1rem', textAlign:'center' }}>
+            Back to Profile
+          </Link>
+        </div>
+      )}
+      {/* {message && <p className={styles.message}>{message}</p>} */}
     </main>
   );
 }

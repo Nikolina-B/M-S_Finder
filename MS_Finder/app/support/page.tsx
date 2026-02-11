@@ -63,7 +63,7 @@ export default function SupportPage() {
     items: [
       { q: "Is my data secure?", a: "Yes, we use industry-standard encryption and Better-Auth to ensure your profile and wishlist stay private and secure." },
       { q: "Can I use MS Finder without an account?", a: "No, you have to create an account to access all features, but we promise it's quick and easy!" },
-      { q: "How do I change my profile picture?", a: "Currently, we use the avatar provided by your login provider (like Google or GitHub), but custom uploads are coming soon!" }
+      { q: "How do I change my profile picture?", a: "You can use the avatar provided by your login provider (like Google or GitHub) or change yours in edit-profile form." }
     ]
   },
   {
@@ -72,16 +72,18 @@ export default function SupportPage() {
     items: [
       { q: "Why are some movies missing posters?", a: "We fetch data from a global database. If a movie is very new or very old, a poster might not be available yet." },
       { q: "Can I watch movies directly on MS Finder?", a: "No, MS Finder is a discovery and tracking tool. We help you find what to watch and where it’s rated, but we do not host any video content." },
-      { q: "Does the search support multiple languages?", a: "Search works best with English titles. For local movies, try searching for its international English title." }
+      { q: "Does the search support multiple languages?", a: "Search works best with English titles. For local movies, try searching for its international English title." },
+      { q: "Why are some seasons of series missing episodes and plots?", a: "We fetch data from a global database. If a is very new or very old series, episode names and plots might not be available yet." },
     ]
   },
   {
     category: "Quick Start Guide",
     icon: <FaRocket className={styles.categoryIcon} />,
     items:[
-      { q: "How do I create a wishlist?", a: "Simply click the heart icon on any movie to add it to your wishlist. You can view and manage your wishlist from your profile." },
+      { q: "How do I create favorite movies?", a: "Simply click the heart icon on any movie to add it to your wishlist. You can view and manage your wishlist from your profile." },
       { q:"How to Search with Filters?" ,a:"Use the search bar at the top of the page. After typing your query, you can apply filters like genre, release year, and type to narrow down your results." },
-      {q:"How to Use the Watchlist Feature?", a:"Click the plus icon on any movie to add it to your watchlist. You can view and manage your watchlist from your profile." }
+      {q:"How to use the Watchlist Feature?", a:"Click the plus icon on any movie to add it to your watchlist. You can view and manage your watchlist from your profile." },
+      {q:"How to use community feature?", a:"You can simply create your own community hub and chat there about movies, series or you can join available hubs." }
     
     ]
   }

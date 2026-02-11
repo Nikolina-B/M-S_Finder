@@ -11,19 +11,34 @@
 
 .mainTitle {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   font-size: 2.5rem;
   font-weight: 700;
 }
 
+.controlsSection{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;          
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
 /* --- FILTER BAR --- */
-.filterBar {
+
+.filterBars{
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-bottom: 30px;
+  align-items: center;
+  gap: 12px;           
 }
 
+.filterBars > div {
+  margin: 0 !important; 
+  display: inline-flex;
+}
 .filterBtn {
   background-color: #2e3440;
   color: #d8dee9;
@@ -48,7 +63,9 @@
 .searchWrapper {
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
+  width: 100%;
+  max-width: 450px;
+  
 }
 
 /* --- GRID --- */
@@ -86,9 +103,9 @@
 
 .trailerImage {
   width: 100%;
-  height: 250px; 
+  height: 100%;
   object-fit: cover;
-  cursor: pointer;
+  display: block;
 }
 
 .gradientOverlay {
@@ -96,7 +113,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 40%; 
+  height: 50%;
   background: linear-gradient(
     to bottom,
     transparent 0%,
@@ -156,6 +173,8 @@
 .imageContainer {
   position: relative; 
   width: 100%;
+   height: 250px;
+   overflow: hidden;
 }
 
 .ratingBadge {
@@ -252,11 +271,6 @@
 }
 
 
-.filterBars{
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
 
 /* {--- filter-zanrovi---} */
 
@@ -314,7 +328,7 @@
   top: 120%;
   width: 100%; 
   background: #141427;
-  border-radius: 14px;
+  border-radius: 9px;
   box-shadow: 0 12px 30px rgba(0,0,0,0.4);
   overflow: hidden;
   z-index: 999;
@@ -339,7 +353,31 @@
   background: rgba(255,255,255,0.08);
   transform: translateX(3px);
 }
+.scrollableDropdown {
+  max-height: 250px; 
+  overflow-y: auto;  
+  overflow-x: hidden;
+  padding-right: 0 !important;
+}
 
+
+.scrollableDropdown::-webkit-scrollbar {
+ width: 5px;
+}
+
+.scrollableDropdown::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.scrollableDropdown::-webkit-scrollbar-thumb {
+  background: #6246ea; 
+  border-radius: 10px;
+}
+
+.scrollableDropdown::-webkit-scrollbar-thumb:hover {
+  background: #7c69ef;
+}
 /* Active genre */
 .activeItem {
   background: #6246ea;
@@ -372,26 +410,29 @@
 /* --- MEDIA QUERIES--- */
 @media (max-width: 1024px) {
   .exploreContainer { 
-    padding: 80px 1.5rem; /* Smanjen padding da ostane više mjesta za grid */
+    padding: 80px 1.5rem; 
   }
   .movieGrid { 
-    grid-template-columns: repeat(3, 1fr); /* 3 stupca umjesto 4 */
+    grid-template-columns: repeat(3, 1fr); 
     gap: 1.5rem;
   }
 }
 
-/* Mobiteli (Portrait i Landscape) */
+
 @media (max-width: 768px) {
   .mainTitle { 
     font-size: 1.8rem; 
     margin-top: 1rem;
   }
   .movieGrid { 
-    grid-template-columns: repeat(2, 1fr); /* 2 stupca su bolja za mobitel */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 1rem; 
   }
   .imageContainer {
-    height: 220px; /* Nešto niža slika za manje ekrane */
+    height: 220px; 
+  }
+  .gradientOverlay{
+    height: 40%;
   }
   .cardFooter {
     padding: 10px;
@@ -401,14 +442,14 @@
   }
 }
 
-/* Jako mali mobiteli (ispod 400px) */
+
 @media (max-width: 400px) {
   .movieGrid { 
-    grid-template-columns: 1fr; /* Tek ovdje idemo na jedan stupac */
+    grid-template-columns: 1fr; 
     justify-items: center;
   }
   .card { 
     width: 100%;
-    max-width: 320px; /* Malo šira kartica da bolje iskoristi prostor */
+    max-width: 320px; 
   }
 }

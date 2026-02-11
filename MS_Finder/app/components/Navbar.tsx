@@ -8,6 +8,8 @@ import styles from "./Navbar.module.css";
 import Image from "next/image";
 import { HiMenu, HiX } from "react-icons/hi";
 import { authClient } from "@/app/lib/auth/auth-client";
+import { CgProfile } from "react-icons/cg";
+import { PiSignOutBold } from "react-icons/pi";
 
 type MenuName = "profile" | "signin" | null;
 
@@ -150,9 +152,13 @@ export default function Navbar() {
                       <p className={styles.userName}>{session.user.name}</p>
                     </div>
                     <hr />
-                    <Link href="/profile" onClick={() => setOpenMenu(null)}>My Profile</Link>
-                    <button onClick={handleActualSignOut} className={styles.signOutLink}>
-                      Sign Out
+                    <Link href="/profile" onClick={() => setOpenMenu(null)} className={styles.menuItem}>
+                      <CgProfile className={styles.menuIcon} />
+                      <span>My Profile</span>
+                    </Link>
+                    <button onClick={handleActualSignOut} className={`${styles.menuItem} ${styles.signOutLink}`}>
+                      <PiSignOutBold className={styles.menuIcon} />
+                      <span>Sign Out</span>
                     </button>
                   </div>
                 )}
@@ -187,4 +193,3 @@ export default function Navbar() {
   );
 }
 
-//dodaj about us samo ukratko nesto !! button za profile popravit

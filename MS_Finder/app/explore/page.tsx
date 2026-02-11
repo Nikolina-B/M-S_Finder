@@ -14,7 +14,6 @@ import DropdownGenre   from './dropdowns/dropdownGenre';
 import DropdownType from './dropdowns/dropdownType';
 import DropdownYear from './dropdowns/dropdownYear';
 import  IMDBRating  from './imbdRating';
-import WishlistButton from './wishlistHandle';
 import FavoritesButton from './wishlistHandle';
 
 const API_KEY = process.env.NEXT_PUBLIC_MOVIE_DB_API_KEY; 
@@ -58,7 +57,8 @@ export default function ExplorePage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
    
-   
+    const [showMobileSearch, setShowMobileSearch]=useState(false);
+
    
 
     //za implementaciju watchliste i wishliste 
@@ -73,7 +73,7 @@ export default function ExplorePage() {
     const [currentQuery, setCurrentQuery] = useState(DEFAULT_SEARCH_TERM);
   
 
-// 1. Dohvaćanje inicijalnih ID-ova iz tvoje baze kod učitavanja
+// dohvacanje id-a kod ucitavanja za watchlistu
   useEffect(() => {
     const fetchWatchlistIds = async () => {
       if (session?.user) {
@@ -103,14 +103,14 @@ export default function ExplorePage() {
     fetchFavoritesIds();
   }, [session]);
 
-   //  Glavna funkcija za API poziv prema OMDB
+   //  Glavna funkcija za API poziv prema OMDB bazi
   const fetchMovies = async (query: string, page: number, append: boolean = false) => {
       setIsLoading(true);
       setError(null);
     try {
       const typeParam = filter !== 'All' ? `&type=${filter}` : '';
       const isYear = /^\d{4}$/.test(query);
-    const searchUrl = isYear
+      const searchUrl = isYear
       ? `${API_URL}&s=movie&y=${query}&page=${page}${typeParam}`
       : `${API_URL}&s=${encodeURIComponent(query)}&page=${page}${typeParam}`;
       
@@ -182,24 +182,14 @@ const filteredResults = useMemo(() => {
 
     const isAlreadyIn = watchlistIds.includes(movie.imdbID);
 
-    // OPTIMISTIC UI - Odmah promijeni stanje na gumbu
-    // if (isAlreadyIn) {
-    //   setWatchlistIds(prev => prev.filter(id => id !== movie.imdbID));
-    // } else {
-    //   setWatchlistIds(prev => [...prev, movie.imdbID]);
-    // }
     if (isAlreadyIn) {
-    setWatchlistIds(prev => {
+      setWatchlistIds(prev => {
       const updated = prev.filter(id => id !== movie.imdbID);
-      window.localStorage.setItem("watchlist", JSON.stringify(updated));
-      window.dispatchEvent(new Event("watchlistUpdated")); // 👈 event za ProfilePage
       return updated;
     });
   } else {
     setWatchlistIds(prev => {
       const updated = [...prev, movie.imdbID];
-      window.localStorage.setItem("watchlist", JSON.stringify(updated));
-      window.dispatchEvent(new Event("watchlistUpdated")); // 👈 event za ProfilePage
       return updated;
     });
   }
@@ -215,28 +205,14 @@ const filteredResults = useMemo(() => {
       });
     }
       catch (err) {
-    console.error("Action failed:", err);
+      console.error("Action failed:", err);
     // Vrati stanje ako akcija ne uspije
     if (isAlreadyIn) {
       setWatchlistIds(prev => [...prev, movie.imdbID]);
     } else {
       setWatchlistIds(prev => prev.filter(id => id !== movie.imdbID));
     }
-    const updated = isAlreadyIn
-      ? [...watchlistIds, movie.imdbID]
-      : watchlistIds.filter(id => id !== movie.imdbID);
-    window.localStorage.setItem("watchlist", JSON.stringify(updated));
-    window.dispatchEvent(new Event("watchlistUpdated"));
   }
-    // } catch (err) {
-    //   console.error("Action failed:", err);
-    //   // Ako akcija ne uspije, vrati stanje na staro
-    //   if (isAlreadyIn) {
-    //     setWatchlistIds(prev => [...prev, movie.imdbID]);
-    //   } else {
-    //     setWatchlistIds(prev => prev.filter(id => id !== movie.imdbID));
-    //   }
-    // }
   };
 
 
@@ -246,32 +222,35 @@ const filteredResults = useMemo(() => {
    <main className={styles.exploreContainer}>
       <h1 className={styles.mainTitle}>Explore Movies & Series</h1>
 
-      {/* Filteri */}
-        <div className={styles.filterBars}>
-          <DropdownType
-            TYPE={TYPE}
-            typeFilter={filter}
-            setTypeFilter={(value)=> setFilter(value as 'All' | 'Movie' | 'Series')}
+    <div className={styles.controlsSection}>
+        {/* Filteri */}
+          <div className={styles.filterBars}>
+            <DropdownType
+              TYPE={TYPE}
+              typeFilter={filter}
+              setTypeFilter={(value)=> setFilter(value as 'All' | 'Movie' | 'Series')}
+              />
+          {/* Žanrovi */}
+            <DropdownGenre
+                GENRES={GENRES}
+                genreFilter={genreFilter}
+                setGenreFilter={setGenreFilter}
             />
-        {/* Žanrovi */}
-          <DropdownGenre
-              GENRES={GENRES}
-              genreFilter={genreFilter}
-              setGenreFilter={setGenreFilter}
-          />
-          <DropdownYear
-          YEAR={YEAR}
-          yearFilter={isNaN(Number(currentQuery)) ? "" : currentQuery}
-          setYearFilter={(value) => {
-            setCurrentQuery(value);
-            fetchMovies(value, 1, false);
-          }}
-      />
+            <DropdownYear
+            YEAR={YEAR}
+            yearFilter={isNaN(Number(currentQuery)) ? "" : currentQuery}
+            setYearFilter={(value) => {
+              setCurrentQuery(value);
+              fetchMovies(value, 1, false);
+            }}
+            />
+          </div>
+        {/* Pretraga */}
+        <div className={styles.searchWrapper}>
+          <QuickSearch onSearch={(q) => fetchMovies(q, 1, false)} />
         </div>
+        
             
-      {/* Pretraga */}
-      <div className={styles.searchWrapper}>
-        <QuickSearch onSearch={(q) => fetchMovies(q, 1, false)} />
       </div>
 
       {error && <p className={styles.errorMessage}>{error}</p>}
@@ -299,7 +278,7 @@ const filteredResults = useMemo(() => {
                 </button>
                 <FavoritesButton 
                   movie={movie} 
-                  initialFavoritesIds={favoritesIds} // tvoj state iz page.tsx
+                  initialFavoritesIds={favoritesIds}
                   session={session} 
                 />
               </div>
@@ -354,5 +333,4 @@ const filteredResults = useMemo(() => {
  );
 }
   
-// dodaj da se prikazuju odredeni filmovi prema osjecajima ili stanju korisnika 
-//sredi filtriranje prema zanrovima godinama malo bolje  i dodaj labele povise gumbova 
+
