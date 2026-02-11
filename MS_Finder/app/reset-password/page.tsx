@@ -11,7 +11,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 
 
-// 2. Glavna komponenta koja samo omotava sadržaj
+
 export default function ResetPasswordPage() {
   return (
     <Suspense fallback={<div className={styles.container}>Loading...</div>}>
@@ -20,7 +20,7 @@ export default function ResetPasswordPage() {
   );
 }
 
-// 3. Tvoj postojeći kod seli u ovu "Content" komponentu
+
 function ResetPasswordContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -68,7 +68,7 @@ function ResetPasswordContent() {
             <label className={styles.label}>Password</label>
             <div className={styles.passwordWrapper}>
               <input 
-                type={ showPassword ? "text" : "password" } // Popravljeno: "text" umjesto ""
+                type={ showPassword ? "text" : "password" } 
                 className={`${styles.input} ${styles.passwordInput}${error ? styles.inputError : ""}`}
                 placeholder="Enter your password" 
                 value={password}

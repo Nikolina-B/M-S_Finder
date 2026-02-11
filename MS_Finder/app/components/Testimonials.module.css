@@ -94,7 +94,7 @@
 }
 
 
-/* --- TABLET (max-width: 1024px) - 2 OSOBE --- */
+/* --- TABLET (max-width: 1024px)  za 2 osobe */
 @media (max-width: 1024px) {
   .sectionTitle {
     font-size: 2rem;
@@ -102,17 +102,17 @@
   }
 
   .testimonialsContainer {
-    gap: 10px; /* Smanjujemo gap da strelice budu bliže */
+    gap: 10px; 
     padding: 0 10px;
   }
 
   .testimonialCard {
-    /* Izračun za 2 osobe: (100% - razmak između njih) / 2 */
+    
     flex: 0 0 calc((100% - 20px) / 2); 
   }
 
   .imageContainer {
-    width: 110px; /* Smanjujemo sliku malo za tablet */
+    width: 110px;
     height: 110px;
   }
 }
@@ -120,7 +120,7 @@
 /* --- MOBITEL (max-width: 650px) - 1 OSOBA --- */
 @media (max-width: 650px) {
   .testimonialsSection {
-    padding: 40px 10px; /* Smanjujemo padding cijele sekcije */
+    padding: 40px 10px; 
   }
 
   .sectionTitle {
@@ -128,33 +128,33 @@
   }
 
   .testimonialsContainer {
-    gap: 0px; /* Strelice skroz uz karticu */
+    gap: 0px; 
   }
 
   .testimonialsGrid {
-    gap: 0; /* Isključujemo gap jer imamo samo jednu karticu */
+    gap: 0; 
   }
 
   .testimonialCard {
-    flex: 0 0 100%; /* Točno jedna osoba zauzima cijelu širinu */
+    flex: 0 0 100%;
     padding: 0 10px;
   }
 
   .imageContainer {
-    width: 100px; /* Kompaktnije za mobitel */
+    width: 100px; 
     height: 100px;
   }
 
   .testimonialText {
     font-size: 0.9rem;
-    padding: 0 20px; /* Više zraka sa strana za tekst */
+    padding: 0 20px; 
   }
 
-  /* Strelice na mobitelu */
+
   .sliderArrow {
     font-size: 2rem;
     padding: 5px;
-    display: flex !important; /* Osiguravamo da se vide ako su negdje bile skrivene */
+    display: flex !important; 
     z-index: 10;
   }
 }

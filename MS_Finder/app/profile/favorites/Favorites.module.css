@@ -11,7 +11,7 @@
   font-size: 2.5rem;
 }
 
-/* Iskoristi isti grid sustav kao na Explore stranici */
+
 .movieGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

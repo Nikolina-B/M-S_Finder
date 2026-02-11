@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Footer.module.css';
 import Image from "next/image";
-import { FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from 'react-icons/fa'; // Instaliraj react-icons ako nemaš
+import { FaTwitter, FaInstagram, FaYoutube, FaLinkedin } from 'react-icons/fa'; 
 
 const Footer = () => {
   return (

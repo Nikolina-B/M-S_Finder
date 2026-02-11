@@ -9,7 +9,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    name: "", // Better Auth koristi 'name' za puno ime
+    name: "", 
     email: "",
     password: ""
   });
@@ -37,7 +37,7 @@ export default function RegisterPage() {
       email: formData.email,
       password: formData.password,
       name: formData.name,
-      callbackURL: "/", // Kamo preusmjeriti nakon uspjeha
+      callbackURL: "/", 
     }, {
       onRequest: () => {
         setLoading(true);
@@ -46,7 +46,7 @@ export default function RegisterPage() {
         setLoading(false);
       },
       onError: (ctx) => {
-        // Prikazuje točnu grešku (npr. "Email already in use")
+        // Prikazuje točnu grešku 
         setError(ctx.error.message);
       },
       onSuccess: () => {
@@ -68,7 +68,7 @@ export default function RegisterPage() {
             <label className={styles.label}>Full Name</label>
             <input 
               type="text" 
-              name="name" // Promijenjeno u 'name' kako bi odgovaralo authClient-u
+              name="name"
               className={styles.input} 
               placeholder="Enter your name"
               value={formData.name}
@@ -94,14 +94,14 @@ export default function RegisterPage() {
             <label className={styles.label}>Password</label>
             <div className={styles.passwordWrapper}>
              <input 
-  type={showPassword ? "text" : "password"} // ✅ text ili password
-  name="password"                             // OBAVEZNO za handleChange
-  className={`${styles.input} ${styles.passwordInput}${error ? styles.inputError : ""}`}
-  placeholder="Enter your password" 
-  value={formData.password}
-  onChange={handleChange}
-  required
-/>
+                type={showPassword ? "text" : "password"} 
+                name="password"                             
+                className={`${styles.input} ${styles.passwordInput}${error ? styles.inputError : ""}`}
+                placeholder="Enter your password" 
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
 
               <button
                       type="button"

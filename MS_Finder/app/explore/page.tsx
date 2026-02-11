@@ -307,7 +307,7 @@ const filteredResults = useMemo(() => {
            <div 
             className={styles.arrowIcon} 
             onClick={() => router.push(`/explore/${movie.imdbID}-${createSlug(movie.Title)}`)}
-            style={{ cursor: 'pointer' }} // Osigurava da korisnik vidi da je klikabilno
+            style={{ cursor: 'pointer' }}
              >
             <HiOutlineArrowRight />
           </div>

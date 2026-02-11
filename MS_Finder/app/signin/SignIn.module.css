@@ -49,11 +49,11 @@
   color: white;
 }
 .inputError {
-  border-color: #ef4444 !important; /* Crvena boja sa slike greške */
-  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.2); /* Opcionalni blagi crveni sjaj */
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.2); 
 }
 
-/* Ako želiš da i labela pocrveni kad je greška (opcionalno) */
+
 .inputError::placeholder {
   color: rgba(239, 68, 68, 0.6);
 }
@@ -253,7 +253,7 @@
   }
 
   .input {
-    font-size: 16px; /* Jako važno: sprečava iOS auto-zoom na inpute */
+    font-size: 16px; 
     padding: 12px 15px;
   }
 

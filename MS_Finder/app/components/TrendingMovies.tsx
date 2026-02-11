@@ -10,7 +10,7 @@ import {authClient} from "@/app/lib/auth/auth-client"
 import Link from 'next/link'; 
 import { toggleWatchlistAction } from '../actions/watchlist'; 
 import { useRouter } from 'next/navigation'; 
-
+import { client } from "@/sanity/lib/client";
  
 
  
@@ -19,7 +19,7 @@ const API_KEY = process.env.NEXT_PUBLIC_MOVIE_DB_API_KEY;
 const API_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`; 
 
 
-const TRENDING_IDS = ["tt33046197","tt8740790","tt8036976","tt32642706","tt12637874", "tt31193180", "tt1399664", "tt4574334","tt30144839", "tt27543632", "tt32916440", "tt14186672"]; 
+//const TRENDING_IDS = ["tt33046197","tt8740790","tt8036976","tt32642706","tt12637874", "tt31193180", "tt1399664", "tt4574334","tt30144839", "tt27543632", "tt32916440", "tt14186672"]; 
 
  
 
@@ -61,31 +61,63 @@ export default function TrendingMovies() {
 
  /* --- 1. Dohvaćanje podataka o filmovima --- */ 
 
-    useEffect(() => { 
+    // useEffect(() => { 
 
-        const fetchTrending = async () => { 
-            setLoading(true); 
+    //     const fetchTrending = async () => { 
+    //         setLoading(true); 
 
-            try { 
+    //         try { 
 
-                const promises = TRENDING_IDS.map(id => fetch(`${API_URL}&i=${id}`).then(res => res.json())); 
-                const results = await Promise.all(promises); 
-                setMovies(results.filter(m => m.Response === "True")); 
+    //             const promises = TRENDING_IDS.map(id => fetch(`${API_URL}&i=${id}`).then(res => res.json())); 
+    //             const results = await Promise.all(promises); 
+    //             setMovies(results.filter(m => m.Response === "True")); 
 
-            } catch (err) { 
+    //         } catch (err) { 
 
-                console.error("Error fetching trending movies:", err); 
+    //             console.error("Error fetching trending movies:", err); 
 
-            } finally { 
-                setLoading(false); 
-            } 
+    //         } finally { 
+    //             setLoading(false); 
+    //         } 
 
-        }; 
+    //     }; 
 
-        fetchTrending(); 
+    //     fetchTrending(); 
 
-    }, []); 
+    // }, []); 
 
+    useEffect(() => {
+        const fetchTrending = async () => {
+            setLoading(true);
+            try {
+             
+                const query = `*[_type == "movie"] | order(_createdAt desc) {
+                    "imdbID": externalId,
+                    "Title": title,
+                    "Poster": poster.asset->url,
+                    "imdbRating": rating,
+                    "Year": year,
+                    "Genre": genres
+                }`;
+                
+                const data = await client.fetch(query);
+                
+                
+                const formattedData = data.map((m: any) => ({
+                    ...m,
+                    Genre: m.Genre ? m.Genre.join(', ') : "N/A"
+                }));
+
+                setMovies(formattedData);
+            } catch (err) {
+                console.error("Error fetching from Sanity:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTrending();
+    }, []);
  
 
  /* --- 2. Sinkronizacija Watchlist i Favorites ID-ova --- */ 

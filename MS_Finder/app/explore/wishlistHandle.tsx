@@ -17,7 +17,7 @@ interface MovieResult {
 interface FavoritesButtonProps {
   movie: MovieResult;
   initialFavoritesIds: string[];
-  session: any; // Dolazi iz authClient.useSession()
+  session: any; 
 }
 
 export default function FavoritesButton({ movie, initialFavoritesIds, session }: FavoritesButtonProps) {

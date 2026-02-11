@@ -1,825 +1,346 @@
 .pageContainer { 
-
   padding-top: 90px; 
-
   padding-bottom: 60px; 
-
   min-height: 100vh; 
-
   background: #0C0D32; 
-
   color: white; 
-
 } 
-
- 
 
 /* Outer wrapper */ 
-
 .cardsContainer { 
-
   max-width: 1150px; 
-
   margin: auto; 
-
   padding: 20px; 
-
 } 
-
- 
 
 /* Main Detail Card */ 
-
 .detailCard { 
-
   display: grid; 
-
   grid-template-columns: 300px 1fr; 
-
   gap: 32px; 
-
   background: rgba(255, 255, 255, 0.05); 
-
   backdrop-filter: blur(14px); 
-
   border-radius: 18px; 
-
   padding: 26px; 
-
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55); 
-
   border: 1px solid #6246ea; 
-
 } 
 
- 
-
 /* Poster */ 
-
- 
-
 .poster { 
-
   width: 100%; 
-
   border-radius: 16px; 
-
   object-fit: cover; 
-
   transition: transform 0.35s ease, box-shadow 0.35s ease; 
-
 } 
 
 .posterWrapper { 
-
-    display: flex; 
-
-    position: relative; 
-
-    flex-direction: column;  
-
-    align-items: center;     
-
-    gap: 10px;               
-
-    flex-shrink: 0;          
-
-} 
-
- 
-
- 
+  display: flex; 
+  flex-direction: column;  
+  align-items: center; 
+  position: relative;     
+  flex-shrink: 0;          
+}
 
 .ratingUnderPoster { 
-
-    display: flex; 
-
-    align-items: center; 
-
-    width: 100%; 
-
-     
-
-     
-
-} 
-
+  position: absolute;   
+  top: 30px;              
+  left: 150px;             
+  z-index: 10;             
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  width: auto;             
+}
+.detailCard { 
+  display: grid; 
+  grid-template-columns: 300px 1fr; 
+  gap: 32px; 
+  align-items: start;      /* Važno: drži vrhove u ravnini */
+  background: rgba(255, 255, 255, 0.05); 
+  backdrop-filter: blur(14px); 
+  border-radius: 18px; 
+  padding: 26px; 
+  border: 1px solid #6246ea; 
+}
+.poster { 
+  width: 100%; 
+  border-radius: 16px; 
+  object-fit: cover; 
+  display: block;          /* Uklanja mali prazan prostor ispod slike */
+  transition: transform 0.35s ease, box-shadow 0.35s ease; 
+}
 .poster:hover { 
-
   transform: scale(1.04); 
-
   box-shadow: 0 12px 30px rgba(0,0,0,0.6); 
-
 } 
 
 .titleContainer  { 
-
-    display: flex; 
-
-    align-items: center;  
-
-    width: 100%; 
-
-    gap: 15px;            
-
-    position: relative; 
-
-    flex-wrap: wrap;     
-
+  display: flex; 
+  align-items: center;  
+  width: 100%; 
+  gap: 15px;            
+  position: relative; 
+  flex-wrap: wrap;     
 } 
-
- 
 
 .titleContainer h2 { 
-
-    margin: 0; 
-
-    font-size: 2rem; 
-
-    font-weight: bold; 
-
-    color: white; 
-
-    width: auto;  
-
+  margin: 0; 
+  font-size: 2rem; 
+  font-weight: bold; 
+  color: white; 
+  width: auto;  
 } 
 
- 
-
- 
-
 .wishButtonOverlay { 
-
-     
-
-    margin-left: auto;  
-
-    display: flex; 
-
-    align-items: center; 
-
+  margin-left: auto;  
+  display: flex; 
+  align-items: center; 
 } 
 
 .typeContainer{ 
-
-    margin-bottom: 15px; 
-
+  margin-bottom: 15px; 
 } 
-
- 
 
 /* Info Section */ 
-
 .infoContainer h2 { 
-
   font-size: 30px; 
-
   font-weight: 800; 
-
   margin-bottom: 6px; 
-
   letter-spacing: 0.3px; 
-
 } 
-
- 
 
 .metaInfo { 
-
   font-size: 14px; 
-
   color: #9ca3af; 
-
   margin-top: 20px; 
-
   margin-bottom: 18px; 
-
   display: flex; 
-
   gap: 20px; 
-
 } 
-
- 
 
 /* Genre / tags */ 
-
 .genreContainer { 
-
-    display: flex; 
-
-    flex-wrap: wrap;  
-
-    gap: 10px; 
-
-    margin-bottom: 20px; 
-
+  display: flex; 
+  flex-wrap: wrap;  
+  gap: 10px; 
+  margin-bottom: 20px; 
 } 
-
- 
 
 .Tag { 
-
-    background-color: #121629; 
-
-    border: 1px solid #6246ea; 
-
-    color: #b8c1ec; 
-
-    padding: 6px 16px; 
-
-    border-radius: 20px;  
-
-    font-size: 0.85rem; 
-
-    font-weight: 400; 
-
-    letter-spacing: 0.5px; 
-
-    transition: background-color 0.2s ease; 
-
+  background-color: #121629; 
+  border: 1px solid #6246ea; 
+  color: #b8c1ec; 
+  padding: 6px 16px; 
+  border-radius: 20px;  
+  font-size: 0.85rem; 
+  font-weight: 400; 
+  letter-spacing: 0.5px; 
+  transition: background-color 0.2s ease; 
 } 
-
- 
-
- 
-
- 
 
 /* Section Titles */ 
-
 .sectionTitle { 
-
   margin-top: 20px; 
-
   font-size: 15px; 
-
   font-weight: 700; 
-
   text-transform: uppercase; 
-
   letter-spacing: 0.06em; 
-
-  color: #e5e7eb; 
-
+  color: #6246ea;
 } 
-
- 
 
 /* Plot */ 
-
 .plot { 
-
   margin-top: 10px; 
-
   margin-bottom: 25px; 
-
   line-height: 1.75; 
-
   font-size: 15px; 
-
   color: #d1d5db; 
-
 } 
-
- 
 
 /* Credits Grid */ 
-
 .gridInfo { 
-
   margin-top: 14px; 
-
   display: grid; 
-
   grid-template-columns: repeat(2, 1fr); 
-
   gap: 12px 26px; 
-
   font-size: 14px; 
-
 } 
-
- 
 
 .label { 
-
-  color: #9ca3af; 
-
+  color:#e5e7eb;
   font-weight: 500; 
-
   margin-right: 4px; 
-
 } 
 
- 
-
 .value { 
-
   color: #f9fafb; 
-
   font-weight: 600; 
-
 } 
 
 /* Action Row */ 
-
 .actionRow { 
-
   display: flex; 
-
   gap: 14px; 
-
   margin: 18px 0 10px; 
-
 } 
-
- 
 
 /* Play Button */ 
-
 .playButton { 
-
   display: inline-flex; 
-
   align-items: center; 
-
   gap: 10px; 
-
   background: linear-gradient(135deg, #e50914, #ff3b3b); 
-
   color: white; 
-
   font-weight: 700; 
-
   font-size: 15px; 
-
   padding: 12px 22px; 
-
   border-radius: 999px; 
-
   border: none; 
-
   cursor: pointer; 
-
   transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease; 
-
   box-shadow: 0 10px 30px rgba(229, 9, 20, 0.45); 
-
 } 
-
- 
 
 .playButton:hover { 
-
   transform: translateY(-2px) scale(1.03); 
-
   box-shadow: 0 14px 45px rgba(229, 9, 20, 0.6); 
-
 } 
 
- 
-
-/* Trailer Modal */ 
-
-.trailerOverlay { 
-
-  position: fixed; 
-
-  inset: 0; 
-
-  background: rgba(0,0,0,0.75); 
-
-  backdrop-filter: blur(8px); 
-
-  display: flex; 
-
-  align-items: center; 
-
-  justify-content: center; 
-
-  z-index: 9999; 
-
-} 
-
- 
-
-.trailerModal { 
-
-  width: 90%; 
-
-  max-width: 960px; 
-
-  aspect-ratio: 16 / 9; 
-
-  background: black; 
-
-  border-radius: 18px; 
-
-  overflow: hidden; 
-
-  box-shadow: 0 30px 90px rgba(0,0,0,0.8); 
-
-  animation: scaleIn 0.2s ease; 
-
-} 
-
- 
-
-@keyframes scaleIn { 
-
-  from { transform: scale(0.92); opacity: 0; } 
-
-  to { transform: scale(1); opacity: 1; } 
-
-} 
-
- 
-
- 
-
-/* season and episode css*/ 
-
- 
-
+/* Season and episode css */ 
 .seasonSelector { 
-
   position: relative; 
-
   margin-bottom: 30px; 
-
 } 
-
- 
 
 .seasonButton { 
-
   display: flex; 
-
   align-items: center; 
-
   justify-content: space-between; 
-
   width: 180px; 
-
   padding: 12px 18px; 
-
   background-color: #121629; 
-
   border: 1px solid #6246ea; 
-
   color: #b8c1ec; 
-
   border-radius: 25px; 
-
   font-weight: 700; 
-
   cursor: pointer; 
-
   font-size: 1rem; 
-
   transition: all 0.3s ease; 
-
 } 
-
- 
-
-.seasonButton:hover { 
-
-    box-shadow: 0 0 15px rgba(98, 70, 234, 0.4); 
-
-} 
-
- 
 
 .seasonDropdown { 
-
   position: absolute; 
-
   top: 110%; 
-
   left: 0; 
-
   width: 180px; 
-
   background-color: #121629; 
-
   border: 1px solid #6246ea; 
-
   color: #b8c1ec; 
-
   border-radius: 10px; 
-
   list-style: none; 
-
-  padding: 10px 0; 
-
+  padding: 10px 0;
   z-index: 100; 
-
 } 
-
- 
-
-.seasonDropdown li { 
-
-  text-align: center; 
-
-  padding: 10px 20px; 
-
-  cursor: pointer; 
-
-  transition: all 0.2s; 
-
-} 
-
- 
-
-.seasonDropdown li:hover { 
-
-  transform: scale(1.1); 
-
-  color: #fffffe; 
-
-   
-
-} 
-
- 
 
 /* --- EPISODES LIST (ACCORDION) --- */ 
-
-.episodesList { 
-
+.episodeList {
   display: flex; 
-
   flex-direction: column; 
-
   gap: 12px; 
-
 } 
-
- 
-
- 
 
 .accordionItem { 
-
   background: rgba(255, 255, 255, 0.05); 
-
   border-radius: 8px;  
-
   border: 1px solid rgba(255, 255, 255, 0.1); 
-
   transition: all 0.3s ease; 
-
   overflow: hidden;  
-
 } 
-
- 
 
 .accordionItem:hover { 
-
   background: rgba(255, 255, 255, 0.08); 
-
   box-shadow: 0 10px 30px rgba(98, 70, 234, 0.2); 
-
   border-color: #6246ea; 
-
 } 
-
- 
-
- 
 
 .accordionHeader { 
-
   width: 100%; 
-
   display: flex; 
-
   justify-content: space-between; 
-
   align-items: center; 
-
   padding: 18px 25px; 
-
   background: transparent; 
-
   border: none; 
-
   color: #fffffe; 
-
   cursor: pointer; 
-
-  font-family: inherit; 
-
 } 
-
- 
 
 .epTitleGroup { 
-
   display: flex; 
-
   gap: 12px; 
-
   align-items: center; 
-
+  flex: 1; 
 } 
-
- 
 
 .epNumber { 
-
   font-weight: 700; 
-
   color: #ffffff; 
-
   font-size: 1.1rem; 
-
 } 
-
- 
 
 .epTitle { 
-
   font-weight: 500; 
-
   font-size: 1.05rem; 
-
 } 
-
- 
-
-/* --- PLOT SEKCIJA --- */ 
 
 .accordionContent { 
-
   max-height: 0; 
-
   overflow: hidden; 
-
   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-
 } 
-
- 
 
 .accordionContent.show { 
-
   max-height: 400px;  
-
 } 
-
- 
 
 .innerContent { 
-
   padding: 0 25px 25px 55px;  
-
 } 
-
- 
-
-.epMeta { 
-
-  color: #b8c1ec; 
-
-  font-size: 0.85rem; 
-
-  margin-bottom: 10px; 
-
-  display: block; 
-
-} 
-
- 
-
- 
 
 .plotText { 
-
   color: #ffffff; 
-
   font-size: 0.95rem; 
-
   line-height: 1.6; 
-
-  margin: 0; 
-
   opacity: 0.8; 
-
-  animation: slideDown 0.3s ease-out; 
-
 } 
 
 .runtimeContainer{ 
-
-    display: flex; 
-
-    align-items: center; 
-
-    justify-content: center; 
-
-    
-
+  display: flex; 
+  align-items: center; 
 } 
 
 .epRuntimeBadge { 
-
-    font-size: 0.75rem; 
-
-    background: rgba(98, 70, 234, 0.2); 
-
-    color: #b8c1ec; 
-
-    padding: 2px 8px; 
-
-    border-radius: 25px; 
-
-    margin-left: 10px; 
-
-    border: 1px solid rgba(98, 70, 234, 0.4); 
-
-     
-
+  font-size: 0.75rem; 
+  background: rgba(98, 70, 234, 0.2); 
+  color: #b8c1ec; 
+  padding: 2px 8px; 
+  border-radius: 25px; 
+  margin-left: 10px;
+  border: 1px solid rgba(98, 70, 234, 0.4); 
 } 
-
- 
-
-/* --- IKONE I ANIMACIJE --- */ 
 
 .chevron { 
-
   transition: transform 0.3s ease; 
-
   font-size: 0.9rem; 
-
   color: #b8c1ec; 
-
 } 
 
- 
-
-.rotate { 
-
-  transform: rotate(180deg); 
-
-} 
-
- 
-
-@keyframes slideDown { 
-
-  from { opacity: 0; transform: translateY(-10px); } 
-
-  to { opacity: 1; transform: translateY(0); } 
-
-} 
-
-/* Mobile Responsive */ 
+.rotate { transform: rotate(180deg); } 
 
 @media (max-width: 900px) { 
-
-  .detailCard { 
-
-    grid-template-columns: 1fr; 
-
-  } 
-
- 
-
-  .poster { 
-
-    max-width: 320px; 
-
-    margin: auto; 
-
-  } 
-
- 
-
-  .infoContainer h2 { 
-
-    text-align: center; 
-
-  } 
-
- 
-
-  .metaInfo { 
-
-    text-align: center; 
-
-  } 
-
- 
-
-  .badges { 
-
-    justify-content: center; 
-
-  } 
-
-} 
+  .detailCard { grid-template-columns: 1fr; } 
+  .poster { max-width: 320px; margin: auto; } 
+  .infoContainer h2 { text-align: center; } 
+  .metaInfo { text-align: center; justify-content: center; } 
+}
