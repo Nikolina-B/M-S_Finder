@@ -19,8 +19,8 @@
 
 ### Semester Project
 
-- Link to your production version: [**Production Version**](URL_TO_PRODUCTION_VERSION) <!-- Replace with actual URL -->
-- Link to your final report: [**Final Report**](URL_TO_FINAL_REPORT) <!-- Replace with actual URL -->
+- Link to your production version: [**Production Version**](https://m-s-finder-sigma.vercel.app/) <!-- Replace with actual URL -->
+- Link to your final report: [**Final Report**](https://www.notion.so/M-S-Finder-Izvje-taj-3025f3eb82a48018a082f88c03fa9607?source=copy_link) <!-- Replace with actual URL -->
 <!-- Add more as necessary -->
 
 ### Semester Assignments
