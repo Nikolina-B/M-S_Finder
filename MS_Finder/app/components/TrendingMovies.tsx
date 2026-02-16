@@ -54,8 +54,18 @@ export default function TrendingMovies() {
   const [loading, setLoading] = useState(true); 
   const [watchlistIds, setWatchlistIds] = useState<string[]>([]); 
   const [favoritesIds, setFavoritesIds] = useState<string[]>([]); 
+  const [showAuthModal,setShowAuthModal] = useState(false);
 
- 
+  const checkAuth = (isInitial: boolean = false) => {
+      if (!session) {
+        if (!isInitial) {
+          setShowAuthModal(true); // Otvara tvoj custom prozor
+        }
+        return false;
+      }
+      return true;
+    };
+
 
  
 
@@ -184,7 +194,7 @@ export default function TrendingMovies() {
 
         e.preventDefault(); e.stopPropagation(); 
 
-        if (!session) return alert("Please login!"); 
+        // if (!session) return alert("Please login!"); 
 
         const isAlreadyIn = watchlistIds.includes(movie.imdbID); 
 
@@ -237,23 +247,33 @@ export default function TrendingMovies() {
                                         alt={movie.Title} 
                                         className={styles.trailerImage} 
                                     /> 
-                                </Link> 
+                                </Link>
+                                
 
                                 <div className={styles.WishWatchbuttons}> 
                                     <button 
                                         className={`${styles.addBtn} ${watchlistIds.includes(movie.imdbID) ? styles.added : ""}`} 
-                                        onClick={(e) => handleWatchlistToggle(e, movie)} 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            if (checkAuth()) {
+                                                handleWatchlistToggle(e, movie);
+                                            }
+                                            }}
                                     > 
                                         {watchlistIds.includes(movie.imdbID) ? "✓" : "+"} 
                                     </button> 
                                     <FavoritesButton 
                                         movie={movie} 
-                                        initialFavoritesIds={favoritesIds} 
+                                        initialFavoritesIds={favoritesIds}
                                         session={session} 
-                                    /> 
-                                </div> 
+                                        onAuthRequired={() => setShowAuthModal(true)} 
+                                      />
+                                </div>
                                 <div className={styles.gradientOverlay}></div> 
-                                <IMBDRating rating={movie.imdbRating} /> 
+                                <div className={styles.ratingPositioner}>
+                                    <IMBDRating rating={movie.imdbRating}  />
+                                </div>
+                                
                             </div> 
 
  
@@ -262,23 +282,27 @@ export default function TrendingMovies() {
                             <div className={styles.cardFooter}> 
                                 <span className={styles.movieTitle}>{movie.Title}</span> 
                                 <span className={styles.year}>{movie.Year}</span> 
-                                <div className={styles.genreContainer}> 
-                                    {movie.Genre !== "N/A" ? ( 
-                                        movie.Genre.split(',').slice(0, 2).map((g: string) => ( 
-                                            <span key={g} className={styles.genreTag}>{g.trim()}</span> 
+                                <div className={styles.genreandArrowConatainer}>
+                                    <div className={styles.genreContainer}> 
+                                        {movie.Genre !== "N/A" ? ( 
+                                            movie.Genre.split(',').slice(0, 2).map((g: string) => ( 
+                                                <span key={g} className={styles.genreTag}>{g.trim()}</span> 
 
-                                        )) 
-                                    ) : <span className={styles.genreTag}>N/A</span>} 
-                                </div> 
-                            </div> 
+                                            )) 
+                                        ) : <span className={styles.genreTag}>N/A</span>} 
+                                    </div> 
+                                    {/* Strelica */} 
+                                    <div
+                                    className={styles.arrowIcon} 
+                                    onClick={() => router.push(`/explore/${movie.imdbID}-${createSlug(movie.Title)}`)} 
+                                    > 
+                                    <HiOutlineArrowRight /> 
+                                    </div> 
+                                </div>
+                        </div> 
 
-                            {/* Strelica */} 
-                            <div
-                                className={styles.arrowIcon} 
-                                onClick={() => router.push(`/explore/${movie.imdbID}-${createSlug(movie.Title)}`)} 
-                            > 
-                                <HiOutlineArrowRight /> 
-                            </div> 
+                            
+                            
                         </div> 
                     ))} 
                 </div> 
@@ -289,7 +313,24 @@ export default function TrendingMovies() {
                     &#10095; 
                 </button> 
             </div> 
+            {showAuthModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h2>Sign In Required</h2>
+            <p>Please sign in to unlock search, filters, and watchlists.</p>
+            <div className={styles.modalButtons}>
+              <button onClick={() => router.push("/signin")} className={styles.modalSignInBtn}>
+                Sign In
+              </button>
+              <button onClick={() => setShowAuthModal(false)} className={styles.modalCancelBtn}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
         </section> 
+        
 
     ); 
 

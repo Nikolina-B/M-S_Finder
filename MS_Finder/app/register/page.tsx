@@ -11,13 +11,17 @@ export default function RegisterPage() {
   const [formData, setFormData] = useState({
     name: "", 
     email: "",
-    password: ""
+    password: "",
+    confirmPassword: ""
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+
+
+  const passwordsMatch = formData.password === formData.confirmPassword || formData.confirmPassword === "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,6 +36,10 @@ export default function RegisterPage() {
     setError("");
     setSuccess("");
 
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
     // Pozivamo Better Auth signUp metodu umjesto fetch-a
     await authClient.signUp.email({
       email: formData.email,
@@ -97,11 +105,12 @@ export default function RegisterPage() {
                 type={showPassword ? "text" : "password"} 
                 name="password"                             
                 className={`${styles.input} ${styles.passwordInput}${error ? styles.inputError : ""}`}
-                placeholder="Enter your password" 
+                placeholder="At least 8 characters" 
                 value={formData.password}
                 onChange={handleChange}
                 required
               />
+
 
               <button
                       type="button"
@@ -112,6 +121,30 @@ export default function RegisterPage() {
                       {showPassword ? <AiOutlineEye size={16}/> : <AiOutlineEyeInvisible size={16}/>}
               </button>
             </div>
+          </div>
+          {/* Confirm Password*/}
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Confirm Password</label>
+            <div className={styles.passwordWrapper}>
+              <input 
+                type={showPassword ? "text" : "password"} 
+                name="confirmPassword"                             
+                className={`${styles.input} ${!passwordsMatch ? styles.inputError : ""}`}
+                placeholder="Repeat your password" 
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+              <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className={styles.passwordToggle}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? <AiOutlineEye size={16}/> : <AiOutlineEyeInvisible size={16}/>}
+              </button>
+            </div>
+             
           </div>
 
           {error && <p style={{ color: "#ef4444", fontSize: "0.9rem", marginTop: "10px" }}>{error}</p>}

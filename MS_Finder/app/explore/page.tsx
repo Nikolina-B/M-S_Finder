@@ -71,7 +71,18 @@ export default function ExplorePage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [currentQuery, setCurrentQuery] = useState(DEFAULT_SEARCH_TERM);
+    const [showAuthModal, setShowAuthModal] = useState(false);
   
+
+    const checkAuth = (isInitial: boolean = false) => {
+      if (!session) {
+        if (!isInitial) {
+          setShowAuthModal(true); // Otvara tvoj custom prozor
+        }
+        return false;
+      }
+      return true;
+    };
 
 // dohvacanje id-a kod ucitavanja za watchlistu
   useEffect(() => {
@@ -105,6 +116,10 @@ export default function ExplorePage() {
 
    //  Glavna funkcija za API poziv prema OMDB bazi
   const fetchMovies = async (query: string, page: number, append: boolean = false) => {
+
+      const isInitialLoad = query === DEFAULT_SEARCH_TERM;
+        if (!isInitialLoad && !checkAuth(false)) return;
+
       setIsLoading(true);
       setError(null);
     try {
@@ -175,10 +190,10 @@ const filteredResults = useMemo(() => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!session) {
-      alert("Please login to manage your watchlist!");
-      return;
-    }
+    // if (!session) {
+    //   alert("Please login to manage your watchlist!");
+    //   return;
+    // }
 
     const isAlreadyIn = watchlistIds.includes(movie.imdbID);
 
@@ -228,21 +243,25 @@ const filteredResults = useMemo(() => {
             <DropdownType
               TYPE={TYPE}
               typeFilter={filter}
-              setTypeFilter={(value)=> setFilter(value as 'All' | 'Movie' | 'Series')}
+              setTypeFilter={(value) => {
+                            if (checkAuth()) setFilter(value as 'All' | 'Movie' | 'Series');
+                        }}
               />
           {/* Žanrovi */}
             <DropdownGenre
                 GENRES={GENRES}
                 genreFilter={genreFilter}
-                setGenreFilter={setGenreFilter}
+                setGenreFilter={(value) => { if(checkAuth()) setGenreFilter(value); }}
             />
             <DropdownYear
             YEAR={YEAR}
             yearFilter={isNaN(Number(currentQuery)) ? "" : currentQuery}
             setYearFilter={(value) => {
-              setCurrentQuery(value);
-              fetchMovies(value, 1, false);
-            }}
+                            if (checkAuth()) {
+                                setCurrentQuery(value);
+                                fetchMovies(value, 1, false);
+                            }
+                        }}
             />
           </div>
         {/* Pretraga */}
@@ -271,46 +290,55 @@ const filteredResults = useMemo(() => {
             <div className={styles.WishWatchbuttons}>
               <button
                   className={`${styles.addBtn} ${watchlistIds.includes(movie.imdbID) ? styles.added : ""}`}
-                  onClick={(e) => handleWatchlistToggle(e, movie)}
+                  onClick={(e) => {
+                  e.preventDefault();
+                  if (checkAuth()) {
+                    handleWatchlistToggle(e, movie);
+                  }
+                }}
                   aria-label="Toggle Watchlist"
                 >
                   {watchlistIds.includes(movie.imdbID) ? "✓" : "+"}
                 </button>
-                <FavoritesButton 
-                  movie={movie} 
-                  initialFavoritesIds={favoritesIds}
-                  session={session} 
-                />
+                
+                    <FavoritesButton 
+                      movie={movie} 
+                      initialFavoritesIds={favoritesIds}
+                      session={session} 
+                      onAuthRequired={() => setShowAuthModal(true)} 
+                    />
               </div>
             <div className={styles.gradientOverlay}></div>
-            <IMDBRating  rating = {movie.imdbRating}/>
+           <div className={styles.ratingPositioner}>
+            <IMDBRating rating={movie.imdbRating}/>
+        </div>
             </div>
             
             {/* Footer s informacijama */}
             <div className={styles.cardFooter}>
               <span className={styles.movieTitle}>{movie.Title}</span>
               <span className={styles.year}>{movie.Year}</span>
-              <div className={styles.genreContainer}>
-                {movie.Genre && movie.Genre !== "N/A" ? (
-                  movie.Genre.split(',').map((g) => (
-                    <span key={g} className={styles.genreTag}>{g.trim()}</span>
-                  ))
-                ) : (
-                  <span className={styles.genreTag}>N/A</span>
-                )}
+              <div className={styles.genreandArrowConatainer}>
+                <div className={styles.genreContainer}>
+                    {movie.Genre && movie.Genre !== "N/A" ? (
+                      movie.Genre.split(',').slice(0, 2).map((g) => ( // Prikaz samo prva dva žanra radi preglednosti
+                        <span key={g} className={styles.genreTag}>{g.trim()}</span>
+                      ))
+                    ) : (
+                      <span className={styles.genreTag}>N/A</span>
+                    )}
+                </div>
+                  {/* Strelica za detalje */}
+                <div 
+                    className={styles.arrowIcon} 
+                    onClick={() => router.push(`/explore/${movie.imdbID}-${createSlug(movie.Title)}`)}
+                    style={{ cursor: 'pointer' }}
+                    >
+                    <HiOutlineArrowRight />
+                </div>
               </div>
-              
-            </div>
+              </div>
 
-
-            {/* Strelica za detalje */}
-           <div 
-            className={styles.arrowIcon} 
-            onClick={() => router.push(`/explore/${movie.imdbID}-${createSlug(movie.Title)}`)}
-            style={{ cursor: 'pointer' }}
-             >
-            <HiOutlineArrowRight />
-          </div>
           </div>
         ))}
       </div>
@@ -328,7 +356,25 @@ const filteredResults = useMemo(() => {
           </button>
         </div>
       )}
+
+      {showAuthModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h2>Sign In Required</h2>
+            <p>Please sign in to unlock search, filters, and watchlists.</p>
+            <div className={styles.modalButtons}>
+              <button onClick={() => router.push("/signin")} className={styles.modalSignInBtn}>
+                Sign In
+              </button>
+              <button onClick={() => setShowAuthModal(false)} className={styles.modalCancelBtn}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
+    
       
  );
 }

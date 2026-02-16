@@ -82,7 +82,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   width: 100%;
   max-width: 320px;
-  height: 420px;
+  height: auto;
   border-radius: 8px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.05);
@@ -124,23 +124,22 @@
 }
 /* --- CARD FOOTER --- */
 .cardFooter {
-  flex: 1; 
-  padding: 0.5rem 1rem;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  /* flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center; */
+  padding: 28px 1.2rem 1.2rem 1.2rem;
+  color: white; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start;
+  gap: 6px;
+  position: relative;
+  min-height: 180px;
  
 }
 
 .movieTitle {
   display: block;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
+  margin-top: 10px;
   margin-bottom: 0.5rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;  
@@ -154,34 +153,62 @@
   margin: 0 0 12px 0;
   font-weight: 600;
 }
-.genreContainer{
+.genreandArrowConatainer {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
+  justify-content: space-between; 
+  align-items: center; 
+  width: 100%;
+  margin-top: 12px;
+ 
 }
-.genreTag {
-  display: inline-block;
-  background-color: #121629;
-  border: 1px solid #6246ea;
-  color: #b8c1ec;
+
+.genreContainer { 
+  display: flex; 
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px; 
+  flex: 1;
+
+} 
+
+.genreTag { 
+  display: inline-flex; 
+  align-items: center;
+  justify-content: center;
+  background-color: #121629; 
+  border: 1px solid #6246ea; 
+  color: #b8c1ec; 
   padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  border-radius: 20px; 
+  height: 28px; 
+
+  font-weight: 600; 
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  
 }
 .imageContainer {
   position: relative; 
   width: 100%;
    height: 250px;
-   overflow: hidden;
+   overflow: visible;
 }
 
-.ratingBadge {
+.ratingPositioner{
   position: absolute;
-  bottom: 12px;
+  bottom: -15px; 
   left: 50%;
   transform: translateX(-50%);
+  z-index: 10; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ratingBadge {
+  /* position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%); */
   display: flex;
   align-items: center;
   gap: 6px;
@@ -252,24 +279,23 @@
   color: white !important;
 }
 
-.arrowIcon {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  color: white;
-  font-size: 1.5rem;
-  opacity: 0.8;
-  cursor: pointer;
-  transition: transform 0.2s;
-  display: flex;
-  align-items: center;
-}
+.arrowIcon { 
+  
+  color: #7c69ef;
+  font-size: 1.6rem; 
+  opacity: 0.8; 
+  cursor: pointer; 
+  transition: all 0.2s ease; 
+  display: flex; 
+  align-items: center; 
+ padding-left: 10px;
+} 
 
-.arrowIcon:hover {
-  transform: translateX(5px);
-  opacity: 1;
+.arrowIcon:hover { 
+  transform: translateX(5px); 
+  opacity: 1; 
+  color: #ffffff;
 }
-
 
 
 /* {--- filter-zanrovi---} */
@@ -438,8 +464,9 @@
     padding: 10px;
   }
   .movieTitle {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
+ 
 }
 
 
@@ -452,4 +479,68 @@
     width: 100%;
     max-width: 320px; 
   }
+
+}
+
+/* Popup alert window!*/
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+.modalContent {
+  background: #161955;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  max-width: 400px;
+}
+.modalContent p{
+  padding: 20px;
+   color: rgb(205, 205, 205);
+
+}
+.modalButtons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.modalSignInBtn {
+  background: #5D3FD3;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 25px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.modalSignInBtn:hover{
+  transform: scale(1.05);
+  box-shadow: 0 25px 50px rgba(98, 70, 234, 0.3);
+}
+.modalCancelBtn {
+  background: transparent;
+  color: #a1a1aa;
+  padding: 10px 25px;
+  border: 1px solid #6246ea;
+  border-radius: 25px;
+  cursor: pointer;
+}
+.modalCancelBtn:hover{
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px rgba(98, 70, 234, 0.3);
 }

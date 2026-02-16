@@ -17,6 +17,11 @@ export default function ForgotPasswordPage() {
   //const router = useRouter();
   const [success, setSuccess]=useState("");
 
+
+  const formatError = (msg: string) => {
+    if (msg.includes("Invalid email")) return "Please enter a valid email address.";
+    return msg;
+  };
 const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -39,9 +44,10 @@ const handleForgotPassword = async (e: React.FormEvent) => {
         );
 
       },
+      
       onError: (ctx) => {
         // Prikazuje grešku ako su podaci netočni
-        setError(ctx.error.message || "something went wrong. Please try again!");
+        setError(formatError(ctx.error.message || "Something went wrong."));
       },
     
     });

@@ -1,9 +1,12 @@
 .pageContainer { 
-  padding-top: 90px; 
+  padding-top: 100px; 
   padding-bottom: 60px; 
   min-height: 100vh; 
   background: #0C0D32; 
   color: white; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 } 
 
 /* Outer wrapper */ 
@@ -16,7 +19,7 @@
 /* Main Detail Card */ 
 .detailCard { 
   display: grid; 
-  grid-template-columns: 300px 1fr; 
+  grid-template-columns: 320px 1fr; 
   gap: 32px; 
   background: rgba(255, 255, 255, 0.05); 
   backdrop-filter: blur(14px); 
@@ -42,21 +45,17 @@
   flex-shrink: 0;          
 }
 
-.ratingUnderPoster { 
-  position: absolute;   
-  top: 30px;              
-  left: 150px;             
-  z-index: 10;             
-  display: flex; 
-  align-items: center; 
-  justify-content: center;
-  width: auto;             
+.ratingUnderPoster {
+  margin-top: -20px; 
+  z-index: 5;
+  padding: 5px;
+  border-radius: 25px;
 }
 .detailCard { 
   display: grid; 
   grid-template-columns: 300px 1fr; 
   gap: 32px; 
-  align-items: start;      /* Važno: drži vrhove u ravnini */
+  align-items: start;      
   background: rgba(255, 255, 255, 0.05); 
   backdrop-filter: blur(14px); 
   border-radius: 18px; 
@@ -160,23 +159,34 @@
 
 /* Credits Grid */ 
 .gridInfo { 
-  margin-top: 14px; 
-  display: grid; 
-  grid-template-columns: repeat(2, 1fr); 
-  gap: 12px 26px; 
-  font-size: 14px; 
+ margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px 40px;
+  font-size: 14px;
+  line-height: 1.6;
 } 
 
-.label { 
-  color:#e5e7eb;
-  font-weight: 500; 
-  margin-right: 4px; 
-} 
+.label {
+  display: block;
+  color: #9ca3af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
 
-.value { 
-  color: #f9fafb; 
-  font-weight: 600; 
-} 
+.value {
+  color: #f9fafb;
+  font-weight: 600;
+  display: block;
+  word-break: break-word;
+}
+.value:empty {
+  color: #6b7280;
+  font-weight: 400;
+}
 
 /* Action Row */ 
 .actionRow { 
@@ -343,4 +353,68 @@
   .poster { max-width: 320px; margin: auto; } 
   .infoContainer h2 { text-align: center; } 
   .metaInfo { text-align: center; justify-content: center; } 
+}
+
+
+/* Popup alert window!*/
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+.modalContent {
+  background: #161955;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  max-width: 400px;
+}
+.modalContent p{
+  padding: 20px;
+   color: rgb(205, 205, 205);
+
+}
+.modalButtons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.modalSignInBtn {
+  background: #5D3FD3;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 25px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.modalSignInBtn:hover{
+  transform: scale(1.05);
+  box-shadow: 0 25px 50px rgba(98, 70, 234, 0.3);
+}
+.modalCancelBtn {
+  background: transparent;
+  color: #a1a1aa;
+  padding: 10px 25px;
+  border: 1px solid #6246ea;
+  border-radius: 25px;
+  cursor: pointer;
+}
+.modalCancelBtn:hover{
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px rgba(98, 70, 234, 0.3);
 }

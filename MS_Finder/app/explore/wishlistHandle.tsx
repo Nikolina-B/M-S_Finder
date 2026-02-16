@@ -18,14 +18,18 @@ interface FavoritesButtonProps {
   movie: MovieResult;
   initialFavoritesIds: string[];
   session: any; 
+  onAuthRequired: () => void;
 }
 
-export default function FavoritesButton({ movie, initialFavoritesIds, session }: FavoritesButtonProps) {
+export default function FavoritesButton({ movie, initialFavoritesIds, session, onAuthRequired }: FavoritesButtonProps) {
   const [isFavorited, setIsFavorited] = useState(initialFavoritesIds.includes(movie.imdbID));
+  
 
   useEffect(() => {
     setIsFavorited(initialFavoritesIds.includes(movie.imdbID));
   }, [initialFavoritesIds, movie.imdbID]);
+
+  
 
   const handleFavoritesToggle = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -33,7 +37,8 @@ export default function FavoritesButton({ movie, initialFavoritesIds, session }:
 
     // Better-Auth provjera: session.data.user
     if (!session?.user) {
-      alert("Please login to add to favorites!");
+      onAuthRequired();
+      //alert("Please login to add to favorites!");
       return;
     }
 

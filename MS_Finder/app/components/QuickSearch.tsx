@@ -9,9 +9,10 @@ import { HiOutlineSearch } from "react-icons/hi";
 
 interface QuickSearchProps {
   onSearch?: (query: string) => void; 
+ 
 }
 
-export default function QuickSearch({ onSearch }: QuickSearchProps) {
+export default function QuickSearch({ onSearch}: QuickSearchProps) {
   const [query, setQuery] = useState("");
 
 

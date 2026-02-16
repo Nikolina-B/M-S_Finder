@@ -1,6 +1,6 @@
 "use client"; 
 import { useEffect, useState } from 'react'; 
-import { useParams } from 'next/navigation'; 
+import { useParams, useRouter } from 'next/navigation'; 
 import IMDBRating from '../imbdRating'; 
 import styles from './detailPage.module.css' 
 import { FaPlay } from "react-icons/fa"; 
@@ -52,6 +52,7 @@ interface Episode {
 export default function DetailPage() { 
 
     const params = useParams(); 
+    const router = useRouter();
     const rawIdSegment = String(params.id);  
 
     let actualMovieId: string | null = null; 
@@ -71,6 +72,7 @@ export default function DetailPage() {
     const { data: session } = authClient.useSession(); 
     const [initialFavoritesIds, setInitialFavoritesIds] = useState<string[]>([]); 
 
+    const [showAuthModal, setShowAuthModal] = useState(false);
      
     const [selectedSeason, setSelectedSeason] = useState<string>("1"); 
     const [episodes, setEpisodes] = useState<Episode[]>([]); 
@@ -83,7 +85,18 @@ export default function DetailPage() {
     // const [episodeData, setEpisodeData] = useState<Record<string, any>>({}); 
 
    
+    const formatValue = (value?: string) => {
+    if (!value || value === "N/A") return "Not available";
+    return value;
+    };
+    const formatAwards = (awards?: string) => {
+        if (!awards || awards === "N/A") return null;
 
+        const parts = awards.split(".");
+        return parts.map((part, i) => (
+            <div key={i}>{part.trim()}</div>
+        ));
+        };
   //useffect za dohvat detalja filma/serija 
 
     useEffect(() => { 
@@ -285,6 +298,7 @@ export default function DetailPage() {
                                     movie={movieDataForFavorite} 
                                     initialFavoritesIds={initialFavoritesIds} 
                                     session={session} 
+                                    onAuthRequired={() => setShowAuthModal(true)}
                                     /> 
                             </div> 
                         </div> 
@@ -376,7 +390,7 @@ export default function DetailPage() {
                                     <div className={`${styles.accordionContent} ${expandedEpisode === ep.imdbID ? styles.show : ""}`}> 
                                         <div className={styles.innerContent}> 
                                             <p className={styles.plotText}> 
-                                                {episodePlots[ep.imdbID]} 
+                                                {episodePlots[ep.imdbID]|| "Loading plot..."} 
                                             </p> 
                                         </div> 
                                     </div> 
@@ -396,7 +410,7 @@ export default function DetailPage() {
                             <div className={styles.gridInfo}> 
                                 <div> 
                                     <span className={styles.label}>Director:</span> 
-                                    <span className={styles.value}>{details.Director}</span> 
+                                    <span className={styles.value}> {formatValue(details.Director)}</span> 
                                 </div> 
                                 <div> 
 
@@ -414,12 +428,24 @@ export default function DetailPage() {
                                 </div> 
                                 <div> 
                                     <span className={styles.label}>Awards:</span> 
-                                    <span className={styles.value}>{details.Awards}</span> 
+                                    <span className={styles.value}> {formatAwards(details.Awards)}</span> 
                                 </div> 
                             </div> 
                     </div> 
                 </div>
             </div> 
+            {showAuthModal && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <h2>Sign In Required</h2>
+                        <p>Please sign in to add movies to your favorites.</p>
+                        <div className={styles.modalButtons}>
+                            <button onClick={() => router.push("/signin")} className={styles.modalSignInBtn}>Sign In</button>
+                            <button onClick={() => setShowAuthModal(false)} className={styles.modalCancelBtn}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div> 
     ); 
 

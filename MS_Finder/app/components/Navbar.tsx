@@ -117,7 +117,7 @@ export default function Navbar() {
             <Link href="/" className={pathname === "/" ? styles.active : ""}>Home</Link>
           </li>
           <li>
-            <Link href="/explore" className={pathname === "/explore" ? styles.active : ""}>Explore</Link>
+            <Link href="/explore" className={pathname.startsWith("/explore")  ? styles.active : ""}>Explore</Link>
           </li>
           <li>
             <Link href="/community" className={pathname === "/community" ? styles.active : ""}>Community</Link>
