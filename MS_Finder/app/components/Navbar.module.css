@@ -113,15 +113,32 @@
   transition: all 0.3s;
   white-space: nowrap;
 }
-.signInBtn {
+/* .signInBtn {
   background: #5D3FD3;
   color: #ffffff;
   border: none;
+} */
+ .signInBtn {
+  background: #5D3FD3;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.3rem;
+  border-radius: 999px; /* Ključno za konzistentan oblik */
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  /* Dodajemo blagu sjenu za dubinu (kao na gornjoj slici) */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
 }
-
-.right button:hover {
+.signInBtn:hover {
+  background-color: #6e52e6; /* Malo svjetlija ljubičasta */
+  transform: translateY(-2px); /* Lagano se podigne, ali ne gubi oblik */
+  box-shadow: 0 6px 20px rgba(93, 63, 211, 0.4); /* Sjaj umjesto spljoštenosti */
+}
+/* .right button:hover {
   transform: scale(1.05);
-}
+} */
 
 
 @keyframes fadeIn {
@@ -291,9 +308,13 @@
 } */
 
 .signInBtn.activePage {
-  background-color: #5D3FD3!important; 
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-  transform: scale(0.98);
+  background-color: #5D3FD3 !important; 
+  /* Mičemo inset shadow da gumb ostane ravan (flat) */
+  box-shadow: none; 
+  /* Mičemo scale efekt kako se gumb ne bi smanjio/deformirao */
+  transform: none; 
+  /* Opcionalno: dodaj blagi border da se ipak razlikuje od običnog stanja */
+  /* border: 1px solid rgba(255, 255, 255, 0.3); */
 }
 
 /* Za linkove u Sidebar-u na mobitelu */
