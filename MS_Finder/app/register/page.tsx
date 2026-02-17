@@ -22,6 +22,7 @@ export default function RegisterPage() {
 
 
   const passwordsMatch = formData.password === formData.confirmPassword || formData.confirmPassword === "";
+  const isPasswordTooShort = formData.password.length > 0 && formData.password.length < 8;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -99,12 +100,16 @@ export default function RegisterPage() {
           </div>
 
            <div className={styles.inputGroup}>
+            <div className={styles.labelRow}>
             <label className={styles.label}>Password</label>
+            {formData.password.length > 0 && formData.password.length < 8 && (
+              <span className={styles.inlineError}>Min. 8 characters</span>
+            )}</div>
             <div className={styles.passwordWrapper}>
              <input 
                 type={showPassword ? "text" : "password"} 
                 name="password"                             
-                className={`${styles.input} ${styles.passwordInput}${error ? styles.inputError : ""}`}
+                className={`${styles.input} ${isPasswordTooShort ? styles.inputError : ""}`}
                 placeholder="At least 8 characters" 
                 value={formData.password}
                 onChange={handleChange}
@@ -161,6 +166,7 @@ export default function RegisterPage() {
             Sign In
           </Link>
         </p>
+        
       </div>
     </main>
   );
