@@ -61,7 +61,7 @@ export default function CommunityPage() {
 
 
     
-      {/* JOIN MODAL */}
+     
       {activeModal === "join" && (
         <JoinButton
           session={session}
@@ -70,7 +70,7 @@ export default function CommunityPage() {
         />
       )}
 
-      {/* CREATE MODAL */}
+    
       {activeModal === "create" && (
         <CreateCommunity
           session={session}

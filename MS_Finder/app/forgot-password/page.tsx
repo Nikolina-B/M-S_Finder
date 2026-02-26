@@ -46,7 +46,7 @@ const handleForgotPassword = async (e: React.FormEvent) => {
       },
       
       onError: (ctx) => {
-        // Prikazuje grešku ako su podaci netočni
+        
         setError(formatError(ctx.error.message || "Something went wrong."));
       },
     
@@ -72,7 +72,7 @@ const handleForgotPassword = async (e: React.FormEvent) => {
             />
           </div>
           
-          {/* Prikaz greške ako prijava ne uspije */}
+        
           {error && <p style={{ color: "#ef4444", fontSize: "0.85rem", marginBottom: "10px" }}>{error}</p>}
           {success && <p style={{color:"#22c55e",fontSize: "0.85rem", marginBottom: "10px"}}>{success}</p>}
           <button 

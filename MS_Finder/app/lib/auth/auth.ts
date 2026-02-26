@@ -3,7 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/app/lib/db"; // your drizzle instance
 import { user, account, session, verification } from "@/app/lib/db/auth-schema";
 import { nextCookies } from "better-auth/next-js";
-import { Resend } from "resend"; // Importaj Resend
+import { Resend } from "resend"; 
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -47,7 +47,7 @@ export const auth = betterAuth({
 
 
     session: {
-    expiresIn: 60 * 60 * 24,           // 1 dan (default)
+    expiresIn: 60 * 60 * 24,           // 1 dan
     rememberMeExpiresIn: 60 * 60 * 24 * 30, // 30 dana
     updateAge: 60 * 60 * 24,           // refresh session
   },

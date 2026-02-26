@@ -123,7 +123,7 @@
   background: #7c69ef;
   box-shadow: 0 10px 30px rgba(98, 70, 234, 0.4);
 }
-/* ... ostali stilovi ostaju isti ... */
+
 
 .teamIntro {
   font-size: 1.2rem;
@@ -151,13 +151,13 @@
   color: white;
   margin-bottom: 20px;
   background: #6246ea;
-  /* Mekši sjaj za ugodniju atmosferu */
+ 
   box-shadow: 0 10px 20px rgba(98, 70, 234, 0.15);
   transition: all 0.3s ease;
 }
 
 .teamMember:hover .iconCircle {
-  transform: scale(1.1) rotate(5deg); /* Mali "veseli" pomak na hover */
+  transform: scale(1.1) rotate(5deg); 
   background: #7c69ef;
 }
 
@@ -175,7 +175,7 @@
 .teamSection {
   padding: 60px 20px;
   text-align: center;
-  background-color: #0b0d2b; /* Tamna pozadina kao na slici */
+  background-color: #0b0d2b; 
   color: #ffffff;
 }
 
@@ -186,13 +186,13 @@
   color: #ffffff;
 }
 
-/* Ako želiš "gradijent" efekt na naslovu kao gore */
+
 .sectionTitle::after {
   content: '';
   display: block;
   width: 50px;
   height: 4px;
-  background: #7b61ff; /* Ljubičasta boja s tvoje slike */
+  background: #7b61ff; 
   margin: 10px auto 0;
   border-radius: 2px;
 }
@@ -202,14 +202,14 @@
   margin: 0 auto;
   font-size: 1.1rem;
   line-height: 1.6;
-  color: #b0b3c1; /* Svjetlija siva za bolju čitljivost */
+  color: #b0b3c1; 
 }
 
 .teamIntro strong {
-  color: #7b61ff; /* Isticanje ljubičastom bojom */
+  color: #7b61ff; 
   font-weight: 600;
 }
-/* Suptilna linija razdvajanja */
+
 .divider {
   width: 100%;
   max-width: 900px;
@@ -234,7 +234,7 @@
   letter-spacing: -0.5px;
 }
 
-/* Stil za tekstualni sadržaj */
+
 .teamContent {
   display: flex;
   flex-direction: column;
@@ -244,24 +244,23 @@
 .teamIntro {
   font-size: 1.3rem;
   line-height: 1.7;
-  color: #ffffff; /* Bijela za primarnu misao */
+  color: #ffffff; 
 }
 
 .teamIntro strong {
-  color: #7b61ff; /* Ljubičasta s tvoje slike */
+  color: #7b61ff;
   font-weight: 600;
 }
 
 .teamMission {
   font-size: 1.15rem;
   line-height: 1.8;
-  color: #b8c1ec; /* Blago zatamnjena za sekundarni tekst */
-  max-width: 700px;
+  color: #b8c1ec; 
   margin: 0 auto;
 }
 
-/* CTA modifikacija da bolje sjedne ispod */
+
 .ctaSection {
-  margin-top: 60px; /* Smanjen razmak jer nema više ikona */
+  margin-top: 60px; 
   background: radial-gradient(circle, rgba(98, 70, 234, 0.08) 0%, transparent 70%);
 }

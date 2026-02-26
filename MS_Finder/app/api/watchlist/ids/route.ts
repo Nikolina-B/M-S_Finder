@@ -7,17 +7,17 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    // 1. Dohvati sesiju preko Better-Auth
+    // Dohvati sesiju preko Better-Auth
     const session = await auth.api.getSession({
       headers: await headers(),
     });
 
-    // 2. Ako korisnik nije prijavljen, vrati prazan niz (nije greška, samo nema liste)
+    // Ako korisnik nije prijavljen, vrati prazan niz (nije greška, samo nema liste)
     if (!session || !session.user) {
       return NextResponse.json([]);
     }
 
-    // 3. Dohvati samo movieId (imdbID) stupac iz baze za tog korisnika
+    //Dohvati samo movieId (imdbID) stupac iz baze za tog korisnika
     const userWatchlist = await db
       .select({
         movieId: watchlist.movieId,
@@ -25,7 +25,7 @@ export async function GET() {
       .from(watchlist)
       .where(eq(watchlist.userId, session.user.id));
 
-    // 4. Pretvori niz objekata [{movieId: 'tt123'}, ...] u niz stringova ['tt123', ...]
+    // Pretvori niz objekata [{movieId: 'tt123'}, ...] u niz stringova ['tt123', ...]
     const idsOnly = userWatchlist.map((item) => item.movieId);
 
     return NextResponse.json(idsOnly);

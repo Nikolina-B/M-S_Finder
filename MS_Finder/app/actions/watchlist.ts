@@ -1,8 +1,8 @@
 "use server"
 
 import { db } from "@/app/lib/db";
-import { watchlist } from "@/app/lib/db/schema"; // Putanja do tvoje definicije tablice
-import { auth } from "@/app/lib/auth/auth"; // Tvoja better-auth instanca
+import { watchlist } from "@/app/lib/db/schema"; // Putanja do definicije tablice
+import { auth } from "@/app/lib/auth/auth"; // better-auth instanca
 import { eq, and } from "drizzle-orm";
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
@@ -46,7 +46,7 @@ export async function toggleWatchlistAction(movie: {
       .limit(1);
 
     if (existingEntry.length > 0) {
-      // AKCIJA: UKLONI - Ako film postoji, brišemo ga
+      // UKLONI - Ako film postoji, brišemo ga
       await db
         .delete(watchlist)
         .where(
@@ -58,9 +58,9 @@ export async function toggleWatchlistAction(movie: {
       
       console.log(`Film ${movie.Title} uklonjen iz watchlist-e.`);
     } else {
-      // AKCIJA: DODAJ - Ako film ne postoji, ubacujemo ga
+      //  DODAJ - Ako film ne postoji, ubacujemo ga
       await db.insert(watchlist).values({
-        id: crypto.randomUUID(), // Generiranje unikatnog ID-a za redak u tablici
+        id: crypto.randomUUID(), // Generiranje ID-a za redak u tablici
         userId: userId,
         movieId: movie.imdbID,
         imdbRating:movie.imdbRating,

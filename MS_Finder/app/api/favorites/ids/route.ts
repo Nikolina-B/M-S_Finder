@@ -7,17 +7,17 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    // 1. Dohvacamo sesiju preko better autha
+    // Dohvacamo sesiju preko better autha
     const session = await auth.api.getSession({
       headers: await headers(),
     });
 
-    // 2. Ako korisnik nije prijavljen, vrati prazan niz 
+    // Ako korisnik nije prijavljen, vrati prazan niz 
     if (!session || !session.user) {
       return NextResponse.json([]);
     }
 
-    // 3. Dohvati samo movieId (imdbID) stupac iz baze za tog korisnika
+    // Dohvati samo movieId  stupac iz baze za tog korisnika
     const userFavorites = await db
       .select({
         movieId: favorites.movieId,

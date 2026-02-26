@@ -1,11 +1,11 @@
-/* --- CONTAINER --- */
+đ
 .exploreContainer {
   padding-top: 80px;
   padding-bottom: 40px;
   padding-left: 20px;
   padding-right: 20px;
   min-height: 100vh;
-  background: #0C0D32;/* Tamna pozadina kao kod modernih streaming servisa */
+  background: #0C0D32;
   color: #ffffff;
 }
 
@@ -234,13 +234,13 @@
   left: 0;
   right: 0;
   display: flex;
-  justify-content: space-between; /* Plus lijevo, Srce desno */
+  justify-content: space-between; 
   padding: 0 10px;
-  z-index: 10; /* Iznad svega */
+  z-index: 10; 
   pointer-events: none;
 }
 .heartIconActive {
-  color: #e74c3c; /* Crvena boja za aktivno srce */
+  color: #e74c3c; 
   font-size: 18px;
 }
 
@@ -248,7 +248,7 @@
   font-size: 18px;
   color: #0b0e2a;
 }
-/* --- ACTION BUTTONS (addBtn i arrowIcon) --- */
+
 .addBtn {
   pointer-events: auto;
   bottom: 10px;
@@ -348,7 +348,7 @@
   transition: transform 0.2s ease;
 }
 
-/* Dropdown menu */
+
 .customDropdown {
   position: absolute;
   top: 120%;
@@ -433,7 +433,7 @@
   color: #0C0D32;
 }
 
-/* --- MEDIA QUERIES--- */
+
 @media (max-width: 1024px) {
   .exploreContainer { 
     padding: 80px 1.5rem; 

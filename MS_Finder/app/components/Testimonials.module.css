@@ -94,7 +94,7 @@
 }
 
 
-/* --- TABLET (max-width: 1024px)  za 2 osobe */
+
 @media (max-width: 1024px) {
   .sectionTitle {
     font-size: 2rem;
@@ -117,7 +117,7 @@
   }
 }
 
-/* --- MOBITEL (max-width: 650px) - 1 OSOBA --- */
+
 @media (max-width: 650px) {
   .testimonialsSection {
     padding: 40px 10px; 

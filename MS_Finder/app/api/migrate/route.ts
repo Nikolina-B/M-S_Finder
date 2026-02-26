@@ -5,7 +5,7 @@ async function runMigration() {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-    // Execute SQL through Supabase REST API
+    
     const response = await fetch(`${supabaseUrl}/rest/v1/rpc/setup_users_table`, {
       method: 'POST',
       headers: {
@@ -15,7 +15,7 @@ async function runMigration() {
       }
     }).catch(() => null)
 
-    // If RPC doesn't exist, try direct SQL execution
+    
     if (!response || response.status === 404) {
       const sqlResponse = await fetch(
         'https://api.supabase.io/platform/v1/projects/efsgkttzlznxgobbxtxw/database/setup',
@@ -47,7 +47,7 @@ async function runMigration() {
       }
     }
 
-    // If both fail, return helpful message
+    
     return {
       status: 'info',
       message: '⚠️ Please create users table manually in Supabase dashboard. Instructions sent to console.',

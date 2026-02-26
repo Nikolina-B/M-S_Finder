@@ -4,18 +4,18 @@ import { Pool } from 'pg'
 
 export async function GET() {
   try {
-    // Test 1: Check if Supabase client is initialized
+    //Provjera je li Supabase klijent inicijaliziran
     if (!supabase) {
       return NextResponse.json(
-        { status: 'error', message: 'Supabase client not initialized' },
+        { status: 'error', message: 'Supabase klijent nije inicijaliziran' },
         { status: 500 }
       )
     }
 
-    // Test 2: Get Supabase auth data to verify connection
+    // Dohvaćanje podataka o autentifikaciji 
     const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-    // Test 3: Test direct PostgreSQL connection
+    // Testiranje veze s PostgreSQL bazom
     let postgresConnected = false
     let postgresError = null
     
@@ -28,13 +28,13 @@ export async function GET() {
         postgresConnected = !!result
         await pool.end()
       } catch (err) {
-        postgresError = err instanceof Error ? err.message : 'Unknown error'
+        postgresError = err instanceof Error ? err.message : 'Nepoznata pogreška'
       }
     }
 
     return NextResponse.json({
       status: 'success',
-      message: '✅ Successfully connected to Supabase!',
+      message: '✅ Uspješno povezivanje sa Supabase platformom!',
       url: process.env.NEXT_PUBLIC_SUPABASE_URL,
       details: {
         apiKeyConnected: true,
@@ -47,7 +47,7 @@ export async function GET() {
     return NextResponse.json(
       { 
         status: 'error', 
-        message: error instanceof Error ? error.message : 'Unknown error' 
+        message: error instanceof Error ? error.message : 'Nepoznata pogreška' 
       },
       { status: 500 }
     )
