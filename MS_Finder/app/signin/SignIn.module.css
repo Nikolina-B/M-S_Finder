@@ -173,8 +173,8 @@
 
 .dividerLineBorder {
   width: 100%;
-  border-top: 1px solid hsl(240 10% 25%); /* Malo tamnija linija */
-  margin-bottom: 0; /* Makni onih 3rem */
+  border-top: 1px solid hsl(240 10% 25%); 
+  margin-bottom: 0; 
 }
 .dividerText {
   position: relative;
@@ -265,7 +265,7 @@
     font-size: 0.9rem;
   }
 
-  /* Održavamo ih u istom redu osim na jako malim mobitelima */
+ 
   .options {
     flex-direction: row; 
     justify-content: space-between;
@@ -288,7 +288,7 @@
   }
 }
 
-/* Ekstremno mali uređaji (ispod 380px) */
+/*mali uređaji (ispod 380px) */
 @media (max-width: 380px) {
   .options {
     flex-direction: column;

@@ -81,7 +81,7 @@
 
 
 .sectionTitle {
-  color: #ffffff; /* Boja tvog brenda */
+  color: #ffffff; 
   font-size: 1.3rem;
   margin-bottom: 15px;
   padding-left: 10px;
@@ -306,7 +306,7 @@
   margin-top: 15px;
 }
 
-/* Crvena poruka za grešku/upozorenje */
+
 .statusError {
   color: #e74c3c;
   background: rgba(231, 76, 60, 0.1);
@@ -316,7 +316,7 @@
   margin-top: 15px;
 }
 
-/* Stil za upozorenje prije slanja */
+
 .authWarning {
   background: rgba(241, 196, 15, 0.1);
   border: 1px solid rgba(241, 196, 15, 0.3);
@@ -328,7 +328,7 @@
   color: #f1c40f;
 }
 
-/* Vizualno "ugasimo" gumb ako je onemogućen */
+
 .submitBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;

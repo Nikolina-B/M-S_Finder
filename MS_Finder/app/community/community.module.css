@@ -30,7 +30,7 @@
 }
 /* Dodaj razmak od navbar-a samo za prvi card */
 .sectionCard:first-child {
-  margin-top: 80px; /* prilagodi po želji */
+  margin-top: 80px; 
 }
 
 .title {

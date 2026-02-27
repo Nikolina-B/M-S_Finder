@@ -56,7 +56,7 @@ export default async function WishlistPage() {
                     Genre: movie.genre || "",
                     Poster: movie.poster || ""
                 });
-                // Ovo je ključno: revalidatePath prisiljava Next.js da osvježi podatke
+                
                 revalidatePath("/profile");
                 revalidatePath("/profile/favorites");
               }}>

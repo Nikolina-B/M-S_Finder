@@ -41,7 +41,7 @@ export default function RegisterPage() {
       setError("Passwords do not match!");
       return;
     }
-    // Pozivamo Better Auth signUp metodu umjesto fetch-a
+    // Pozivamo Better Auth signup metodu umjesto fetch-a
     await authClient.signUp.email({
       email: formData.email,
       password: formData.password,

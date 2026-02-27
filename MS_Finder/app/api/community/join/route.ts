@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   try {
     const { communityId } = await req.json();
 
-    //  Da li je korisnik već član?
+    // Je korisnik već član?
     const existing = await db
       .select()
       .from(community_members)

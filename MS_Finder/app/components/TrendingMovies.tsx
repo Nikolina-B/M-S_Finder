@@ -69,32 +69,7 @@ export default function TrendingMovies() {
 
  
 
- /* --- 1. Dohvaćanje podataka o filmovima --- */ 
-
-    // useEffect(() => { 
-
-    //     const fetchTrending = async () => { 
-    //         setLoading(true); 
-
-    //         try { 
-
-    //             const promises = TRENDING_IDS.map(id => fetch(`${API_URL}&i=${id}`).then(res => res.json())); 
-    //             const results = await Promise.all(promises); 
-    //             setMovies(results.filter(m => m.Response === "True")); 
-
-    //         } catch (err) { 
-
-    //             console.error("Error fetching trending movies:", err); 
-
-    //         } finally { 
-    //             setLoading(false); 
-    //         } 
-
-    //     }; 
-
-    //     fetchTrending(); 
-
-    // }, []); 
+ 
 
     useEffect(() => {
         const fetchTrending = async () => {

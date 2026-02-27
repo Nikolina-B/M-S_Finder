@@ -22,7 +22,7 @@ export default function SignInPage() {
 const handleGoogleSignIn = async () => {
     await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/", // kamo ide korisnik nakon što se ulogira
+        callbackURL: "/", 
     });
 };
 

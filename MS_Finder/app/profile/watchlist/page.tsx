@@ -57,7 +57,7 @@ export default async function WatchlistPage() {
                 });
                 revalidatePath("/profile");
   revalidatePath("/profile/watchlist");
-  // ✨ update localStorage i event
+
   // const stored = JSON.parse(localStorage.getItem("watchlist") || "[]");
   // const updated = stored.filter((id: string) => id !== movie.movieId);
   // localStorage.setItem("watchlist", JSON.stringify(updated));
@@ -72,7 +72,7 @@ export default async function WatchlistPage() {
 
               <div className={styles.gradientOverlay}></div>
               
-              {/* Prikaz rejtinga (ako ga spremaš u bazu, inače možeš izbaciti) */}
+              {/* Prikaz rejtinga  */}
               <div className={styles.ratingBadge}>
                 <span className={styles.starIcon}><FaStar/></span>
                 <span className={styles.ratingValue}>{movie.imdbRating}</span>
@@ -89,7 +89,7 @@ export default async function WatchlistPage() {
               </div>
             </div>
 
-            {/* Strelica za detalje - u Server komponenti koristimo Link umjesto router.push */}
+            {/* Strelica za detalje u server komponenti koristimo Link umjesto router.push */}
             <Link 
               href={`/explore/${movie.movieId}-${createSlug(movie.title)}`}
               className={styles.arrowIcon}

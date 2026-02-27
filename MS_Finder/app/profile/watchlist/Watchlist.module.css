@@ -9,7 +9,7 @@
   text-align: center;
 }
 
-/* Tekst "Your watchlist is empty" */
+
 .errorMessage {
   color: #9ca3af;
   font-style: italic;
@@ -197,7 +197,7 @@
   transform: translateX(5px);
   opacity: 1;
 }
-/* Kopiraj sve iz explore.module.css i dodaj/izmjeni: */
+
 
 .trashBtn {
   position: absolute;
@@ -222,10 +222,10 @@
   transform: scale(1.1);
 }
 
-/* Osiguraj da je arrowIcon pozicioniran relativno na card */
+
 .card {
   position: relative;
-  /* ostali stilovi koje već imaš */
+ 
 }
 
 .arrowIcon {
@@ -252,16 +252,16 @@
 .backLink {
   display: flex;
   align-items: center;
-  color: #1e3a8a; /* Tamno plava (npr. Tailwind blue-900) */
+  color: #1e3a8a;
   text-decoration: none;
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .backLink:hover {
-  color: #3b82f6; /* Svjetlija plava na hover za feedback */
-  transform: translateX(-2px); /* Lagani pomak ulijevo */
+  color: #3b82f6; 
+  transform: translateX(-2px); 
 }
 
 .backLink svg {
-  font-size: 1.6rem; /* Smanjena veličina strelice */
+  font-size: 1.6rem;
 }
